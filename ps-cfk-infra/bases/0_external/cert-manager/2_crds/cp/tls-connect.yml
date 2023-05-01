@@ -1,0 +1,67 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: connect-cert
+spec:
+  commonName: connect
+  dnsNames:
+    - 'connect'
+
+    - 'connect.confluent'
+    - 'connect.dev'
+    - 'connect.test'
+    - 'connect.qa'
+    - 'connect.prod'
+    - 'connect.dr'
+
+    - 'connect.confluent.svc'
+    - 'connect.dev.svc'
+    - 'connect.test.svc'
+    - 'connect.uat.svc'
+    - 'connect.prod.svc'
+    - 'connect.dr.svc'
+
+    - 'connect.confluent.svc.cluster.local'
+    - 'connect.dev.svc.cluster.local'
+    - 'connect.test.svc.cluster.local'
+    - 'connect.qa.svc.cluster.local'
+    - 'connect.prod.svc.cluster.local'
+    - 'connect.dr.svc.cluster.local'
+
+    - '*.kafka.nermdev.io'
+    - '*.confluent.kafka.nermdev.io'
+    - '*.dev.kafka.nermdev.io'
+    - '*.test.kafka.nermdev.io'
+    - '*.qa.kafka.nermdev.io'
+    - '*.prod.kafka.nermdev.io'
+    - '*.dr.kafka.nermdev.io'
+
+
+
+    - '*.confluent.svc.cluster.local'
+    - '*.dev.svc.cluster.local'
+    - '*.test.svc.cluster.local'
+    - '*.qa.svc.cluster.local'
+    - '*.prod.svc.cluster.local'
+    - '*.dr.svc.cluster.local'
+
+
+    - '*.connect.confluent.svc.cluster.local'
+    - '*.connect.dev.svc.cluster.local'
+    - '*.connect.test.svc.cluster.local'
+    - '*.connect.qa.svc.cluster.local'
+    - '*.connect.prod.svc.cluster.local'
+    - '*.connect.dr.svc.cluster.local'
+
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-connect

@@ -1,0 +1,159 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+spec:
+  metrics:
+    prometheus:
+      blacklist:
+        - kafka.consumer:type=*,id=*
+        - kafka.consumer:type=*,client-id=*
+        - kafka.consumer:type=*,client-id=*,node-id=*
+        - kafka.producer:type=*,id=*
+        - kafka.producer:type=*,client-id=*
+        - kafka.producer:type=*,client-id=*,node-id=*
+        - kafka.*:type=kafka-metrics-count,*
+        - kafka.admin.client:*
+        - kafka.server:type=*,cipher=*,protocol=*,listener=*,networkProcessor=*
+        - kafka.server:type=*
+      rules:
+        - labels:
+            partition: $5
+            topic: $4
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), topic=(.+), partition=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            clientId: $3
+            partition: $5
+            topic: $4
+          name: kafka_server_$1_$2
+          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), topic=(.+), partition=(.*)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            broker: $4:$5
+            clientId: $3
+          name: kafka_server_$1_$2
+          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+),
+            brokerPort=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            $6: $7
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            $6: $7
+            quantile: 0.$8
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.*), (.+)=(.+)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+            $7: $8
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          valueFactor: "1"
+        - labels:
+            $4: $5
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $3: $4
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+)><>Value
+          valueFactor: "1"
+        - name: kafka_server_kafkarequesthandlerpool_requesthandleravgidlepercent_total
+          pattern: kafka.server<type=KafkaRequestHandlerPool, name=RequestHandlerAvgIdlePercent><>OneMinuteRate
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client_software_name: $1
+            client_software_version: $2
+            listener: $3
+            network_processor: $4
+          name: kafka_server_socketservermetrics_connections
+          pattern: kafka.server<type=socket-server-metrics, clientSoftwareName=(.+),
+            clientSoftwareVersion=(.+), listener=(.+), networkProcessor=(.+)><>connections
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            listener: $1
+            network_processor: $2
+          name: kafka_server_socketservermetrics_$3
+          pattern: 'kafka.server<type=socket-server-metrics, listener=(.+), networkProcessor=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - name: kafka_coordinator_$1_$2_$3
+          pattern: kafka.coordinator.(\w+)<type=(.+), name=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            quantile: 0.$6
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.*)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            quantile: 0.$4
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+            $7: $8
+          name: confluent_$1_$2
+          pattern: confluent.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+          name: confluent_$1_$2
+          pattern: confluent.(.+)<type=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+          name: confluent_$1_$2
+          pattern: confluent.(.+)<type=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client-id: $3
+            user: $2
+          name: kafka_server_$1_$4
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), user=(.+), client-id=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            user: $2
+          name: kafka_server_$1_$3
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), user=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client-id: $2
+          name: kafka_server_$1_$3
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), client-id=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"

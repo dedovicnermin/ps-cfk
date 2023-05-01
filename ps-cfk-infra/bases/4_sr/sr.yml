@@ -1,0 +1,27 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: sr
+spec:
+  license:
+    globalLicense: true
+  replicas: 1
+  image:
+    application: confluentinc/cp-schema-registry:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  tls:
+    secretRef: tls-sr
+  configOverrides:
+    jvm:
+      - -XX:+UseG1GC
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9071
+      authentication:
+        type: mtls
+      tls:
+        enabled: true
+  passwordEncoder:
+    secretRef: password-encoder-secret
+  enableSchemaExporter: true
+

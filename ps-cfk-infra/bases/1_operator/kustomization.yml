@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: confluent
+
+resources:
+  - namespace.yml
+  - license-secret.yml
+#  - telemetry-secret.yml
+  - gke/storageclass-gke-delete.yml
+#  - kind/sc.yml
+#  - digital_ocean/storageclass-do-delete.yml
+
+
+helmCharts:
+  - name: confluent-for-kubernetes
+    repo: https://packages.confluent.io/helm
+    version: 0.771.13
+    releaseName: confluent-operator
+    namespace: confluent
+    valuesFile: values.yml
+    includeCRDs: true
+
+

@@ -1,0 +1,33 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksql
+  
+spec:
+  license:
+    globalLicense: true
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 516Mi
+  replicas: 1
+  image:
+    application: confluentinc/cp-ksqldb-server:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 10Gi
+  storageClass:
+    name: cfk-storage-delete
+  tls:
+    secretRef: tls-ksql
+  configOverrides:
+    jvm:
+      - -XX:+UseG1GC
+  dependencies:
+    schemaRegistry:
+      url: https://sr.confluent.svc.cluster.local:8081
+      tls:
+        enabled: true
+    interceptor:
+      enabled: true
+

@@ -1,0 +1,29 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+spec:
+  replicas: 3
+  image:
+    application: confluentinc/cp-zookeeper:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 10Gi
+  logVolumeCapacity: 10Gi
+  storageClass:
+    name: cfk-storage-delete
+  authentication:
+    type: mtls
+    principalMappingRules:
+      - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+  tls:
+    secretRef: tls-zookeeper
+  podTemplate:
+    resources:
+      requests:
+        cpu: 216m
+        memory: 515Mi
+  configOverrides:
+    jvm:
+      - -XX:+UseG1GC
+  license:
+    globalLicense: true

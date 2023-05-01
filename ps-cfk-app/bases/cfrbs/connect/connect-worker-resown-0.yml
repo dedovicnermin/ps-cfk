@@ -1,0 +1,27 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: connect-worker-resown-0
+  labels:
+    principal: connect
+    type: connect
+    role: resourceowner
+    cscope: kafka
+spec:
+  principal:
+    name: connect
+    type: user
+  resourcePatterns:
+    - name: dlq
+      patternType: PREFIXED
+      resourceType: Topic
+    - name: _confluent-command
+      patternType: LITERAL
+      resourceType: Topic
+    - name: reporter
+      patternType: PREFIXED
+      resourceType: Topic
+  role: ResourceOwner
+
+
+

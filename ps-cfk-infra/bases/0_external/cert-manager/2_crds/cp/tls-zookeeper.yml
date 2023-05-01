@@ -1,0 +1,76 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: zookeeper-cert
+spec:
+  commonName: zookeeper
+  dnsNames:
+    - 'zookeeper'
+
+    - 'zookeeper.confluent'
+    - 'zookeeper.dev'
+    - 'zookeeper.test'
+    - 'zookeeper.prod'
+    - 'zookeeper.qa'
+    - 'zookeeper.dr'
+
+    - 'zookeeper.confluent.svc'
+    - 'zookeeper.dev.svc'
+    - 'zookeeper.test.svc'
+    - 'zookeeper.qa.svc'
+    - 'zookeeper.prod.svc'
+    - 'zookeeper.dr.svc'
+
+    - 'zookeeper.confluent.svc.cluster.local'
+    - 'zookeeper.dev.svc.cluster.local'
+    - 'zookeeper.test.svc.cluster.local'
+    - 'zookeeper.prod.svc.cluster.local'
+    - 'zookeeper.qa.svc.cluster.local'
+    - 'zookeeper.dr.svc.cluster.local'
+
+    - '*.zookeeper.confluent.svc.cluster.local'
+    - '*.zookeeper.dev.svc.cluster.local'
+    - '*.zookeeper.test.svc.cluster.local'
+    - '*.zookeeper.prod.svc.cluster.local'
+    - '*.zookeeper.qa.svc.cluster.local'
+    - '*.zookeeper.dr.svc.cluster.local'
+
+    - '*.confluent.svc.cluster.local'
+    - '*.dev.svc.cluster.local'
+    - '*.test.svc.cluster.local'
+    - '*.qa.svc.cluster.local'
+    - '*.prod.svc.cluster.local'
+    - '*.dr.svc.cluster.local'
+
+    - 'zookeeper.kafka.nermdev.io'
+    - '*.kafka.nermdev.io'
+    - '*.confluent.kafka.nermdev.io'
+    - '*.dev.kafka.nermdev.io'
+    - '*.test.kafka.nermdev.io'
+    - '*.qa.kafka.nermdev.io'
+    - '*.prod.kafka.nermdev.io'
+    - '*.dr.kafka.nermdev.io'
+
+    - '*.zookeeper.kafka.nermdev.io'
+    - '*.zookeeper.confluent.kafka.nermdev.io'
+    - '*.zookeeper.dev.kafka.nermdev.io'
+    - '*.zookeeper.test.kafka.nermdev.io'
+    - '*.zookeeper.qa.kafka.nermdev.io'
+    - '*.zookeeper.prod.kafka.nermdev.io'
+    - '*.zookeeper.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-zookeeper
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  renewBefore: 24h
+  duration: 17520h # two years
+
+---

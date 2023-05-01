@@ -1,0 +1,85 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kafka-cert
+spec:
+  commonName: kafka
+  dnsNames:
+    - 'kafka'
+
+    - 'kafka.confluent'
+    - 'kafka.dev'
+    - 'kafka.test'
+    - 'kafka.qa'
+    - 'kafka.prod'
+    - 'kafka.dr'
+
+    - 'kafka.confluent.svc'
+    - 'kafka.dev.svc'
+    - 'kafka.test.svc'
+    - 'kafka.qa.svc'
+    - 'kafka.prod.svc'
+    - 'kafka.dr.svc'
+
+    - 'kafka.confluent.svc.cluster.local'
+    - 'kafka.dev.svc.cluster.local'
+    - 'kafka.test.svc.cluster.local'
+    - 'kafka.qa.svc.cluster.local'
+    - 'kafka.prod.svc.cluster.local'
+    - 'kafka.dr.svc.cluster.local'
+
+    - '*.kafka.confluent.svc.cluster.local'
+    - '*.kafka.dev.svc.cluster.local'
+    - '*.kafka.test.svc.cluster.local'
+    - '*.kafka.qa.svc.cluster.local'
+    - '*.kafka.prod.svc.cluster.local'
+    - '*.kafka.dr.svc.cluster.local'
+
+#bootstrap.
+    - '*.kafka.nermdev.io'
+    - '*.confluent.kafka.nermdev.io'
+    - '*.dev.kafka.nermdev.io'
+    - '*.test.kafka.nermdev.io'
+    - '*.qa.kafka.nermdev.io'
+    - '*.prod.kafka.nermdev.io'
+    - '*.dr.kafka.nermdev.io'
+
+    - '*.kafka.nermdev.io'
+
+
+    - '*.plain.kafka.nermdev.io'
+    - '*.plain.confluent.kafka.nermdev.io'
+    - '*.plain.dev.kafka.nermdev.io'
+    - '*.plain.test.kafka.nermdev.io'
+    - '*.plain.qa.kafka.nermdev.io'
+    - '*.plain.prod.kafka.nermdev.io'
+    - '*.plain.dr.kafka.nermdev.io'
+
+    - '*.mtls.kafka.nermdev.io'
+    - '*.mtls.confluent.kafka.nermdev.io'
+    - '*.mtls.dev.kafka.nermdev.io'
+    - '*.mtls.test.kafka.nermdev.io'
+    - '*.mtls.qa.kafka.nermdev.io'
+    - '*.mtls.prod.kafka.nermdev.io'
+    - '*.mtls.dr.kafka.nermdev.io'
+
+    - '*.none.kafka.nermdev.io'
+    - '*.none.confluent.kafka.nermdev.io'
+    - '*.none.dev.kafka.nermdev.io'
+    - '*.none.test.kafka.nermdev.io'
+    - '*.none.qa.kafka.nermdev.io'
+    - '*.none.prod.kafka.nermdev.io'
+    - '*.none.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two hours
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-kafka

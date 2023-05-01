@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards2
+  namespace: {{ include "grafana.namespace" $ }}
+  labels:
+    grafana_dashboard: "2"
+    {{- include "grafana.labels" $ | nindent 4 }}
+
+
+data:
+  zk.json: |
+{{ .Files.Get "grafana-dashboards/zk.json" | indent 4 }}

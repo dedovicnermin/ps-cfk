@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards7
+  namespace: {{ include "grafana.namespace" $ }}
+  labels:
+    grafana_dashboard: "7"
+    {{- include "grafana.labels" $ | nindent 4 }}
+
+
+data:
+  ksql.json: |
+{{ .Files.Get "grafana-dashboards/ksql.json" | indent 4 }}

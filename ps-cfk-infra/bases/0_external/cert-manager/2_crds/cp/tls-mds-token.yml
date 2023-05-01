@@ -1,0 +1,65 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mds-cert
+spec:
+  commonName: mds
+  dnsNames:
+    - 'mds'
+
+    - 'mds.confluent'
+    - 'mds.dev'
+    - 'mds.test'
+    - 'mds.qa'
+    - 'mds.prod'
+    - 'mds.de'
+
+    - 'mds.confluent.svc'
+    - 'mds.dev.svc'
+    - 'mds.test.svc'
+    - 'mds.qa.svc'
+    - 'mds.prod.svc'
+    - 'mds.dr.svc'
+
+    - 'mds.confluent.svc.cluster.local'
+    - 'mds.dev.svc.cluster.local'
+    - 'mds.test.svc.cluster.local'
+    - 'mds.qa.svc.cluster.local'
+    - 'mds.prod.svc.cluster.local'
+    - 'mds.dr.svc.cluster.local'
+
+    - '*.mds.confluent.svc.cluster.local'
+    - '*.mds.dev.svc.cluster.local'
+    - '*.mds.test.svc.cluster.local'
+    - '*.mds.qa.svc.cluster.local'
+    - '*.mds.prod.svc.cluster.local'
+    - '*.mds.dr.svc.cluster.local'
+
+    - 'mds.kafka.nermdev.io'
+    - 'mds.confluent.kafka.nermdev.io'
+    - 'mds.dev.kafka.nermdev.io'
+    - 'mds.test.kafka.nermdev.io'
+    - 'mds.qa.kafka.nermdev.io'
+    - 'mds.prod.kafka.nermdev.io'
+    - 'mds.dr.kafka.nermdev.io'
+
+    - '*.mds.kafka.nermdev.io'
+    - '*.mds.confluent.kafka.nermdev.io'
+    - '*.mds.dev.kafka.nermdev.io'
+    - '*.mds.test.kafka.nermdev.io'
+    - '*.mds.qa.kafka.nermdev.io'
+    - '*.mds.prod.kafka.nermdev.io'
+    - '*.mds.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1 # pkcs1 https://docs.confluent.io/platform/current/kafka/configure-mds/index.html#create-a-pem-key-pair
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-mds

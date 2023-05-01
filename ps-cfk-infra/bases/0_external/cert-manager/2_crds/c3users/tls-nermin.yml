@@ -1,0 +1,48 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nermin-cert
+spec:
+  commonName: nermin
+  dnsNames:
+    - '*.nermdev.io'
+    - 'localhost'
+
+    - '*.confluent.svc.cluster.local'
+    - '*.dev.svc.cluster.local'
+    - '*.test.svc.cluster.local'
+    - '*.prod.svc.cluster.local'
+    - '*.qa.svc.cluster.local'
+    - '*.dr.svc.cluster.local'
+
+    - '*.kafka.nermdev.io'
+    - '*.confluent.kafka.nermdev.io'
+    - '*.dev.kafka.nermdev.io'
+    - '*.test.kafka.nermdev.io'
+    - '*.qa.kafka.nermdev.io'
+    - '*.dr.kafka.nermdev.io'
+    - '*.prod.kafka.nermdev.io'
+  secretName: tls-nermin
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  renewBefore: 24h
+  duration: 17520h # two years
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef:
+        name: jks-password
+        key: jksPassword
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: jks-password
+        key: jksPassword
+
+

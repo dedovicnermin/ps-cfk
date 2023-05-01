@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  basic.txt: dXNlcm5hbWU9ZGV2MQpwYXNzd29yZD1kZXYxLXNlY3JldA==
+  bearer.txt: dXNlcm5hbWU9ZGV2MQpwYXNzd29yZD1kZXYxLXNlY3JldA==
+kind: Secret
+metadata:
+  name: mds-dev1

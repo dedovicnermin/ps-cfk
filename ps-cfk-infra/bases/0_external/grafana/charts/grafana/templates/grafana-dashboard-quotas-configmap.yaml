@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards11
+  namespace: {{ include "grafana.namespace" $ }}
+  labels:
+    grafana_dashboard: "11"
+    {{- include "grafana.labels" $ | nindent 4 }}
+
+data:
+  quotas.json: |
+{{ .Files.Get "grafana-dashboards/quotas.json" | indent 4 }}

@@ -1,0 +1,14 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: kafka-sysadm-0
+  labels:
+    principal: kafka
+    role: systemadmin
+    cscope: kafka
+spec:
+  principal:
+    name: kafka
+    type: user
+  role: SystemAdmin
+

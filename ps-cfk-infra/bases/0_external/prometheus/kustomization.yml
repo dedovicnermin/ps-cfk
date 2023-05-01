@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+
+resources:
+  - namespace.yml
+  - ing/ingress.yml
+
+helmCharts:
+  - name: prometheus
+    namespace: monitoring
+    releaseName: prometheus
+    repo: https://prometheus-community.github.io/helm-charts
+    includeCRDs: true
+    version: 20.1.0
+    valuesFile: values.yml

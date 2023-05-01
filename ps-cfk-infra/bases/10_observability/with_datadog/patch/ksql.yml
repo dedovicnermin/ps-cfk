@@ -1,0 +1,24 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksql
+spec:
+  podTemplate:
+    labels:
+      admission.datadoghq.com/enabled: "true" # Enable Admission Controller to mutate new pods in this deployment
+      tags.datadoghq.com/env: "confluent"
+      tags.datadoghq.com/source: "confluentjmx"
+      tags.datadoghq.com/site: "gke-ndedovic-cluster"
+      tags.datadoghq.com/version: "1.0.0"
+    annotations:
+      admission.datadoghq.com/java-lib.version: "v1.10.1"
+      ad.datadoghq.com/tags: |
+        {"env": "confluent","application": "confluent-kafka", "site": "gke-ndedovic-cluster", "source": "confluentjmx"}
+      ad.datadoghq.com/ksql.check_names: |
+        ["confluent_platform"]
+      ad.datadoghq.com/ksql.init_configs: |
+        [{"is_jmx": true, "collect_default_metrics": true, "service_check_prefix": "confluent", "new_gc_metrics": true, "collect_default_jvm_metrics": true}]
+      ad.datadoghq.com/ksql.instances: |
+        [{"host": "%%host%%","port":"7203","max_returned_metrics":3000,"name":"%%kube_pod_name%%"}]
+      ad.datadoghq.com/ksql.logs: |
+        [{"source":"confluent_platform","service":"confluent_platform"}]

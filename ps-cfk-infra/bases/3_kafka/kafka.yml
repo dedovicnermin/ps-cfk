@@ -1,0 +1,41 @@
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+spec:
+  replicas: 3
+  storageClass:
+    name: cfk-storage-delete
+  image:
+    application: confluentinc/cp-server:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  dataVolumeCapacity: 50Gi
+  passwordEncoder:
+    secretRef: password-encoder-secret
+  tls:
+    secretRef: tls-kafka
+  listeners:
+    internal:
+      authentication:
+        type: mtls
+        principalMappingRules:
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+      tls:
+        enabled: true
+  dependencies:
+    zookeeper:
+      endpoint: zookeeper.confluent.svc.cluster.local:2182
+      authentication:
+        type: mtls
+      tls:
+        enabled: true
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+
+
+
+---

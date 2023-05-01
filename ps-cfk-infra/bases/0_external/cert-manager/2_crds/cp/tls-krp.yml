@@ -1,0 +1,58 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: krp-cert
+spec:
+  commonName: krp
+  dnsNames:
+    - 'krp'
+
+    - 'krp.confluent'
+    - 'krp.dev'
+    - 'krp.test'
+    - 'krp.qa'
+    - 'krp.prod'
+    - 'krp.dr'
+
+    - 'krp.confluent.svc'
+    - 'krp.dev.svc'
+    - 'krp.test.svc'
+    - 'krp.qa.svc'
+    - 'krp.prod.svc'
+    - 'krp.dr.svc'
+
+    - 'krp.confluent.svc.cluster.local'
+    - 'krp.dev.svc.cluster.local'
+    - 'krp.test.svc.cluster.local'
+    - 'krp.qa.svc.cluster.local'
+    - 'krp.prod.svc.cluster.local'
+    - 'krp.dr.svc.cluster.local'
+
+    - '*.krp.confluent.svc.cluster.local'
+    - '*.krp.dev.svc.cluster.local'
+    - '*.krp.test.svc.cluster.local'
+    - '*.krp.qa.svc.cluster.local'
+    - '*.krp.prod.svc.cluster.local'
+    - '*.krp.dr.svc.cluster.local'
+
+    - 'krp.kafka.nermdev.io'
+    - 'krp.confluent.kafka.nermdev.io'
+    - 'krp.dev.kafka.nermdev.io'
+    - 'krp.test.kafka.nermdev.io'
+    - 'krp.qa.kafka.nermdev.io'
+    - 'krp.prod.kafka.nermdev.io'
+    - 'krp.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-krp
+

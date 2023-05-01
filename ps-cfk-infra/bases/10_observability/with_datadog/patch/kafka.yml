@@ -1,0 +1,25 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+spec:
+  podTemplate:
+    labels:
+      admission.datadoghq.com/enabled: "true"
+      tags.datadoghq.com/env: "confluent"
+      tags.datadoghq.com/source: "confluentjmx"
+      tags.datadoghq.com/site: "gke-ndedovic-cluster"
+      tags.datadoghq.com/version: "1.0.0"
+    annotations:
+      kafkacluster-manual-roll: "4"
+      admission.datadoghq.com/java-lib.version: "v1.10.1"
+      ad.datadoghq.com/tags: |
+        {"env": "confluent","application": "confluent-kafka", "site": "gke-ndedovic-cluster", "source": "confluentjmx"}
+      ad.datadoghq.com/kafka.check_names: |
+        ["confluent_platform"]
+      ad.datadoghq.com/kafka.init_configs: |
+        [{"is_jmx": true, "collect_default_metrics": true, "service_check_prefix": "confluent", "new_gc_metrics": true, "collect_default_jvm_metrics": true}]
+      ad.datadoghq.com/kafka.instances: |
+        [{"host": "%%host%%", "port": "7203", "max_returned_metrics": 3000, "name": "%%kube_pod_name%%"}]
+      ad.datadoghq.com/kafka.logs: |
+        [{"source":"confluent_platform","service":"confluent_platform"}]

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mds-ksql
+data:
+  bearer.txt: dXNlcm5hbWU9a3NxbApwYXNzd29yZD1rc3FsLXNlY3JldAo=
+  plain.txt: dXNlcm5hbWU9a3NxbApwYXNzd29yZD1rc3FsLXNlY3JldAo=
+  basic.txt: dXNlcm5hbWU9a3NxbApwYXNzd29yZD1rc3FsLXNlY3JldAo=

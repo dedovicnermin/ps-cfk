@@ -1,0 +1,14 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: restproxy-sysadm-0
+  labels:
+    principal: krp
+    role: systemadmin
+    cscope: kafka
+    type: kafka
+spec:
+  principal:
+    name: krp
+    type: user
+  role: SystemAdmin

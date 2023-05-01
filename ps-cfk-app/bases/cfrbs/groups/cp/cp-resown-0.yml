@@ -1,0 +1,25 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: cp-resown-0
+  labels:
+    principal: cp
+    role: resourceowner
+    cscope: kafka
+    group: "true"
+spec:
+  principal:
+    name: cp
+    type: group
+  resourcePatterns:
+    - name: '*'
+      resourceType: Topic
+      patternType: LITERAL
+    - name: '*'
+      resourceType: Group
+      patternType: LITERAL
+    - name: kafka-cluster
+      resourceType: Cluster
+      patternType: LITERAL
+
+  role: ResourceOwner

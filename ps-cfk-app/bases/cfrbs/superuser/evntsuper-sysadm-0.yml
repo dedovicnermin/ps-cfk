@@ -1,0 +1,14 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: evntsuper-sysadm-0
+  labels:
+    principal: nermin
+    role: systemadmin
+    cscope: kafka
+spec:
+  principal:
+    name: nermin
+    type: user
+  role: SystemAdmin
+---

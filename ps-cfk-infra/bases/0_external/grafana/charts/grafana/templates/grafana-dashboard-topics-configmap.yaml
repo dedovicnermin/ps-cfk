@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards8
+  namespace: {{ include "grafana.namespace" $ }}
+  labels:
+    grafana_dashboard: "8"
+    {{- include "grafana.labels" $ | nindent 4 }}
+
+
+data:
+  topics.json: |
+{{ .Files.Get "grafana-dashboards/topics.json" | indent 4 }}

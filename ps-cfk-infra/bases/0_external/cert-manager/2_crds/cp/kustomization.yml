@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - tls-c3.yml
+  - tls-connect.yml
+  - tls-kafka.yml
+  - tls-krp.yml
+  - tls-ksql.yml
+  - tls-mds-token.yml
+  - tls-sr.yml
+  - tls-zookeeper.yml

@@ -1,0 +1,27 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: evntsuper-resown-2
+  labels:
+    principal: nermin
+    role: resourceowner
+    cscope: kafka
+spec:
+  principal:
+    name: nermin
+    type: user
+  resourcePatterns:
+    - name: '*'
+      resourceType: Topic
+      patternType: LITERAL
+    - name: '*'
+      resourceType: Group
+      patternType: LITERAL
+    - name: '*'
+      resourceType: TransactionalId
+      patternType: LITERAL
+    - name: 'kafka-cluster'
+      resourceType: Cluster
+      patternType: LITERAL
+  role: ResourceOwner
+---

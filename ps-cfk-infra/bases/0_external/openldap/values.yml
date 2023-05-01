@@ -1,0 +1,473 @@
+name: ldap
+image: osixia/openldap:1.5.0
+tls:
+  enabled: false
+  fullchain: |
+    -----BEGIN CERTIFICATE-----
+    MIIDqjCCApKgAwIBAgIRAPS676JbCNRV6Ssv970fmY0wDQYJKoZIhvcNAQELBQAw
+    ETEPMA0GA1UEAxMGVGVzdENBMB4XDTIyMTEyMjE5MzYxM1oXDTIzMDIyMDE5MzYx
+    M1owDzENMAsGA1UEAxMEbGRhcDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+    ggEBAMduJaC77pUnF4nmk/oaBxVV81cZePvgrXRrCrzUz/uPLmo2F6UT6qPm3gGg
+    EvR7Nq8YeM7XNCQolajKBplRujlY1k9o1b2WlPQOc4OZxRJuZHbr0vebEZgZ/i1F
+    34Hs1MPPU6VGXPgUEQAd8gyPCi1BmfcOxw+7EbAqjSAgYrDmDDOUYKUfMG9oFY+2
+    W4CfUC+4LIxRNH7eKf3+5QSVq2PiaN9TophWiN2bdkbk+1WFVuCpl4h2pMtaJBJK
+    2Hnmbvax+rcU/IFV4GsX46eT5giKuQKzT8C2sykkPamPaowq/+V9QcbUHi8okyFZ
+    aaP0+mJgOf+SCFF3sYLbpvdX8u8CAwEAAaOB/jCB+zAOBgNVHQ8BAf8EBAMCBaAw
+    DAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBQ1RsrJyUNP32eC8Kpag9L5nnnDeTCB
+    uQYDVR0RBIGxMIGugiAqLmNmay1vcGVyYXRvci5zdmMuY2x1c3Rlci5sb2NhbIIj
+    bGRhcC5jZmstb3BlcmF0b3Iuc3ZjLmNsdXN0ZXIubG9jYWyCJSoubGRhcC5jZmst
+    b3BlcmF0b3Iuc3ZjLmNsdXN0ZXIubG9jYWyCBmxkYXAtMIIEbGRhcIIRbGRhcC5j
+    Zmstb3BlcmF0b3KCE2xkYXAtMC5jZmstb3BlcmF0b3KCCGxkYXAtMC4qMA0GCSqG
+    SIb3DQEBCwUAA4IBAQA69wu/ig84qrEu7nYQdRmDaaZvU27JO4pnh1N+3/ONtvud
+    wUqB4utaOp0AI0LpfVUK64Z1ZMx2f867bvpZWqDsiwORl6XWrCP3YZ6J2uzY32Lq
+    0HRJ+EWtFiDn37gWjtThPUFWqNVLloOFhesgHIyk9ou6jxMC5er/I6ulUkWgYU0t
+    lqKR7HlL3M53Eaih/Vf1IaLFJjjwAzqB5+dHJI3JDGX4W3Jgen1z74S5vx7uVYNc
+    GFh9aVzWXr1l05VKaBrUEw6cww81tRLfU/quU8GEKzuJBurridQ1qjgaDXhWEkbV
+    Gwr+U+V8aLuV9LWcpc+iLPnQhbDJQ86A4/TotWy+
+    -----END CERTIFICATE-----
+  privkey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEAx24loLvulScXieaT+hoHFVXzVxl4++CtdGsKvNTP+48uajYX
+    pRPqo+beAaAS9Hs2rxh4ztc0JCiVqMoGmVG6OVjWT2jVvZaU9A5zg5nFEm5kduvS
+    95sRmBn+LUXfgezUw89TpUZc+BQRAB3yDI8KLUGZ9w7HD7sRsCqNICBisOYMM5Rg
+    pR8wb2gVj7ZbgJ9QL7gsjFE0ft4p/f7lBJWrY+Jo31OimFaI3Zt2RuT7VYVW4KmX
+    iHaky1okEkrYeeZu9rH6txT8gVXgaxfjp5PmCIq5ArNPwLazKSQ9qY9qjCr/5X1B
+    xtQeLyiTIVlpo/T6YmA5/5IIUXexgtum91fy7wIDAQABAoIBAQC/3kz9U1G61h1j
+    Yx9DI/9km4i+Z5dqXUMEGmf+PJDM6XgyX1BoVb0Na3R0A9m4tUJrOxQfjBRyJUm3
+    Vob6wxJzUfD9/VKGUHWGSNEB79MWZHbrov8ZkWtf9sIANJVQntYkfTdwbz3KvyOM
+    BUN2qbeUyuSiOOlzTPs7jfSwz/ejUDyNJzZ8VoKdO9XsR2PPNFl/5ZUTzSxuy72n
+    3+V/b3FpKIJdEOrdAY8Vmhr/EeS2wRxjjAaEFxL3y+5eS32tyT2qgxVpNgohKHgd
+    iXDo2fjUSxg7UULvyKebVk5P8qHViOc6sKzzQ25vnSnuxuytH/owB3zIogohb58Y
+    eKQOQD3hAoGBANCl+x6dSEK9vKM1rikfgRA03acwO3zB2lp6YDNQtnCJJCH5BGT/
+    hKf2qeNl19MyURMjzUKrQ2bj6teSH4MRipM7nc9BMN/7NGyLRUm/YnhSgWiwNpe6
+    UxjdzN9ZKz7zbA34L9qae1jGM3jlvRfIemf83x+zBZWMMItYJmYS9WU1AoGBAPSw
+    nUEr9FxTZkgTuKZwrQzi1mh6djfcOoHJ0lE8hCpmfEshzTgNFZXG1MsEmS8NqWlI
+    gvexBPXEnpUiutGxBgNPXkrBP9+PZLtsDbkg2D6rUWMinsQi3EXHSBAnwOm1QNFV
+    dBbpoQS8Xt74pbWCXTpbO8S6HLwIr3XHFufl+bATAoGAVLLMWgUnDFDRfr+Pz4nG
+    brnHMNNXkrFu3kPHQY2GQfCqBlB8BDPluflbxb/V+Rn353klHedAGUh0UMY0nJRG
+    WLZevX+NQ59KDLYMjn9ujcGQXtsJjlZI3VNMk24zK/7M4m7ZnjgP0l3DD1TTihAM
+    AKKaQNf/cFHUcvx5uf4AN/ECgYAWB0Bg+aAKH8f5fS0GbuZlXpaG2V+DL+RkgtLY
+    VWZgmtFdwjFDdooW7cuCa2uO/N/fhpOj0N/tcEIGkxXWguVTrvWCLVueuL4M0XF6
+    1SYinjG5hwhcB/dkoMgwDCQl5hdrwRGubmH8lyjDUgc5C/9wnX4H++lSVEXXiJDb
+    V6ze2QKBgBCfXc4kftAjJtyaefOkrGwg95t9ukmnh3juSNKqrsHI0xZiOnu1FNqY
+    RboQia+S34KvAMCmRI4WzpqcPdIucAr3OP3/o5StnVww0FbvWY6cBjhbI5nOGMF5
+    Yz8KkAtzplSPD5oEsSFCuTdzWbnaajTpBmBj4AB9VPGVMA5lKsfU
+    -----END RSA PRIVATE KEY-----
+  cacerts: |
+    -----BEGIN CERTIFICATE-----
+    MIIDVzCCAj+gAwIBAgIQATYKoGEh+WalOx1MWxnLbDANBgkqhkiG9w0BAQsFADAR
+    MQ8wDQYDVQQDEwZUZXN0Q0EwHhcNMjIxMTIyMTcwNzI0WhcNMjMwMjIwMTcwNzI0
+    WjARMQ8wDQYDVQQDEwZUZXN0Q0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+    AoIBAQDBMT89eEKeS8yqcENhytUON4VtPCO3HvQvAK2j115+IILO5lMV+EEld1iA
+    CvrOBfr/HM/XMjXWBOzpqmJJAiqUclS54Vm+rddDBTiyZ4hgid33i9FeTJK1dIsr
+    wvOMRx1EYdTkm7HllzSb/6hA/SJfNHFJnBaxQyE+4qXgrP0e++2SvTXFtt5dV9Je
+    z8ip7cCceRiWr+PcY4N8GI3bqPvQnIJuWOV9go8Z8XkDReOdNnDdSaY0ir/hyiLb
+    ApUS91fIKtydryq8cpkeFhYVmp5Tq+UZtsQaxVvDJoTjoPecpjznTsdd1W8XBCcI
+    h+Xyob3/B0Dk7xPIt2S6tneEzL0hAgMBAAGjgaowgacwDgYDVR0PAQH/BAQDAgKk
+    MA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFDVGysnJQ0/fZ4LwqlqD0vmeecN5
+    MGUGA1UdEQReMFyCGSouc3RvcmUuc3ZjLmNsdXN0ZXIubG9jYWyCHCoucGhhcm1h
+    Y3kuc3ZjLmNsdXN0ZXIubG9jYWyCDCoubmVybWRldi5pb4ITKi5zdmMuY2x1c3Rl
+    ci5sb2NhbDANBgkqhkiG9w0BAQsFAAOCAQEAW5x3H4xO2ZEaBs5w1LLdg0XIZzz7
+    j4CtTe3rVC4VEWUA9pJ93cM8u2bZGjdZ6+W4EKnvMpbQir+hRzLZSYcCPSsj5hN+
+    yW6+UMWOvtNRwtcm6iyhlR7ebptO0DLeEk6W7hljJy+tnstOm87xdR3NinqZz7mY
+    VLUZKkPt4qqFagprcQTnlXuEKAXIEfzpW7A3rHSFGwSF2/V5qDJRIlUdP3Kapbnz
+    HynX7RGQh37hefUUDLdsz7HsxsfiZmyX2UiQglnuRlGJoVtg+VsVsHaSKVN0aLnJ
+    LoYq8R1deJSrgXBE90woN0R6xkuQ0c/SpktCOvd/sblp070RJpP5m82qEw==
+    -----END CERTIFICATE-----
+env:
+  LDAP_ORGANISATION: "Test Inc."
+  LDAP_DOMAIN: "nermdev.io"
+  LDAP_ADMIN_PASSWORD: "admin-secret"
+  LDAP_CONFIG_PASSWORD: "config-secret"
+  LDAP_READONLY_USER: "true"
+  LDAP_READONLY_USER_USERNAME: "mds"
+  LDAP_READONLY_USER_PASSWORD: "mds-secret"
+  LDAP_BASE_DN: "dc=nermdev,dc=io"
+
+
+# Adding integer before ldif name to allow sequence order.
+ldifs:
+  000_kafkabase.ldif: |-
+    dn: cn=basekafka,{{ LDAP_BASE_DN }}
+    userPassword: kafka-secret-base
+    description: kafka user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basekafka
+  001_erp.ldif: |-
+    dn: cn=erp,{{ LDAP_BASE_DN }}
+    userPassword: erp-secret
+    description: erp user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: erp
+  002_srbase.ldif: |-
+    dn: cn=basesr,{{ LDAP_BASE_DN }}
+    userPassword: sr-secret-base
+    description: schema registry user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basesr
+  003_c3base.ldif: |-
+    dn: cn=basec3,{{ LDAP_BASE_DN }}
+    userPassword: c3-secret-base
+    description: control center user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basec3
+  004_ksqlbase.ldif: |-
+    dn: cn=baseksql,{{ LDAP_BASE_DN }}
+    userPassword: ksql-secret
+    description: ksql user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: baseksql
+  005_connectbase.ldif: |-
+    dn: cn=connectbase,{{ LDAP_BASE_DN }}
+    userPassword: connect-secret
+    description: connect user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: baseconnect
+  006_replicator.ldif: |-
+    dn: cn=replicator,{{ LDAP_BASE_DN }}
+    userPassword: replicator-secret
+    description: replicator user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: replicator
+  007_krp.ldif: |-
+    dn: cn=krp,{{ LDAP_BASE_DN }}
+    userPassword: krp-secret
+    description: krp user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: krp
+  008_c3-test.ldif: |-
+    dn: cn=testadmin,{{ LDAP_BASE_DN }}
+    userPassword: testadmin
+    description: testadmin user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: testadmin
+  009_c3-groupou.ldif: |-
+    dn: ou=users,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: Users
+    
+    dn: ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: Groups
+  010_c3usersgroup.ldif: |-
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: c3users
+    gidNumber: 5000
+  011_readonlyusersgroup.ldif: |-
+    dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: readonlyusers
+    gidNumber: 5000
+  012_cp_group.ldif: |-
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: cp
+    gidNumber: 5000
+  013_alice.ldif:  |-
+    dn: cn=alice,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: alice
+    sn: LookingGlass
+    givenName: Alice
+    cn: alice
+    displayName: Alice LookingGlass
+    uidNumber: 10000
+    gidNumber: 5000
+    userPassword: alice-secret
+    gecos: alice
+    loginShell: /bin/bash
+    homeDirectory: /home/alice
+  014_james.ldif:  |-
+    dn: cn=james,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: james
+    sn: LookingGlass
+    givenName: James
+    cn: james
+    displayName: James Logan
+    uidNumber: 10001
+    gidNumber: 5000
+    userPassword: james-secret
+    gecos: james
+    loginShell: /bin/bash
+    homeDirectory: /home/james
+  015_client.ldif: |-
+    dn: cn=client,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: client-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: client
+    sn: LookingGlass
+    givenName: Client
+    cn: client
+    displayName: Client
+    uidNumber: 10002
+    gidNumber: 5000
+    gecos: client
+    loginShell: /bin/bash
+    homeDirectory: /home/client
+  016_nermin.ldif: |-
+    dn: cn=nermin,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: nermin-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: nermin
+    sn: LookingGlass
+    givenName: Nermin
+    cn: nermin
+    displayName: Nermin
+    uidNumber: 10003
+    gidNumber: 5000
+    gecos: nermin
+    loginShell: /bin/bash
+    homeDirectory: /home/nermin
+  017_nejra.ldif: |-
+    dn: cn=nejra,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: nejra
+    sn: LookingGlass
+    givenName: Nejra
+    cn: nejra
+    displayName: Nejra
+    uidNumber: 10004
+    gidNumber: 5000
+    userPassword: nejra-secret
+    gecos: nejra
+    loginShell: /bin/bash
+    homeDirectory: /home/nejra
+  018_alex.ldif: |-
+    dn: cn=alex,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: alex
+    sn: LookingGlass
+    givenName: Alex
+    cn: alex
+    displayName: Alex Logan
+    uidNumber: 10005
+    gidNumber: 5000
+    userPassword: alex-secret
+    gecos: alex
+    loginShell: /bin/bash
+    homeDirectory: /home/alex
+  019_kafka_user.ldif: |-
+    dn: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: kafka
+    sn: LookingGlass
+    givenName: Kafka
+    cn: kafka
+    displayName: Apache Kafka
+    uidNumber: 10006
+    gidNumber: 5000
+    userPassword: kafka-secret
+    gecos: kafka
+    loginShell: /bin/bash
+    homeDirectory: /home/kafka
+  020_sr_user.ldif: |-
+    dn: cn=sr,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: sr
+    sn: LookingGlass
+    givenName: Schema Registry
+    cn: sr
+    displayName: Confluent Schema Registry
+    uidNumber: 10007
+    gidNumber: 5000
+    userPassword: sr-secret
+    gecos: sr
+    loginShell: /bin/bash
+    homeDirectory: /home/sr
+  021_connect_user.ldif: |-
+    dn: cn=connect,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: connect
+    sn: LookingGlass
+    givenName: Kafka Connect
+    cn: connect
+    displayName: Apache Kafka Connect
+    uidNumber: 10008
+    gidNumber: 5000
+    userPassword: connect-secret
+    gecos: connect
+    loginShell: /bin/bash
+    homeDirectory: /home/connect
+  022_ksql_user.ldif: |-
+    dn: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: ksql
+    sn: LookingGlass
+    givenName: KSQLDB
+    cn: ksql
+    displayName: KSQLDB
+    uidNumber: 10009
+    gidNumber: 5000
+    userPassword: ksql-secret
+    gecos: ksql
+    loginShell: /bin/bash
+    homeDirectory: /home/ksql
+  023_c3_user.ldif: |-
+    dn: cn=c3,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: c3
+    sn: LookingGlass
+    givenName: Control Center
+    cn: c3
+    displayName: Control Center
+    uidNumber: 10010
+    gidNumber: 5000
+    userPassword: c3-secret
+    gecos: c3
+    loginShell: /bin/bash
+    homeDirectory: /home/c3
+  024_krp_user.ldif: |-
+    dn: cn=krp,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: krp
+    sn: LookingGlass
+    givenName: KRP
+    cn: krp
+    displayName: Kafka Rest Proxy
+    uidNumber: 10011
+    gidNumber: 5000
+    userPassword: krp-secret
+    gecos: krp
+    loginShell: /bin/bash
+    homeDirectory: /home/krp
+  025_cl_user.ldif: |-
+    dn: cn=cl,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: cl
+    sn: LookingGlass
+    givenName: ClusterLink
+    cn: cl
+    displayName: ClusterLink
+    uidNumber: 10012
+    gidNumber: 5000
+    userPassword: cl-secret
+    gecos: cl
+    loginShell: /bin/bash
+    homeDirectory: /home/cl
+  026_se_user.ldif: |-
+    dn: cn=se,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: se
+    sn: LookingGlass
+    givenName: SchemaExporter
+    cn: se
+    displayName: Schema Exporter
+    uidNumber: 10013
+    gidNumber: 5000
+    userPassword: se-secret
+    gecos: se
+    loginShell: /bin/bash
+    homeDirectory: /home/se
+  027_addgroup.ldif:  |-
+    dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=alice,ou=users,{{ LDAP_BASE_DN }}
+  
+    dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=nejra,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=alex,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=james,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=client,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=nermin,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=sr,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=connect,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=c3,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=krp,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=cl,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=se,ou=users,{{ LDAP_BASE_DN }}    
+    

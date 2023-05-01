@@ -1,0 +1,57 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sr-cert
+spec:
+  commonName: sr
+  dnsNames:
+    - 'sr'
+
+    - 'sr.confluent'
+    - 'sr.dev'
+    - 'sr.test'
+    - 'sr.qa'
+    - 'sr.prod'
+    - 'sr.dr'
+
+    - 'sr.confluent.svc'
+    - 'sr.dev.svc'
+    - 'sr.test.svc'
+    - 'sr.qa.svc'
+    - 'sr.prod.svc'
+    - 'sr.dr.svc'
+
+    - 'sr.confluent.svc.cluster.local'
+    - 'sr.dev.svc.cluster.local'
+    - 'sr.test.svc.cluster.local'
+    - 'sr.prod.svc.cluster.local'
+    - 'sr.qa.svc.cluster.local'
+    - 'sr.dr.svc.cluster.local'
+
+    - '*.sr.confluent.svc.cluster.local'
+    - '*.sr.dev.svc.cluster.local'
+    - '*.sr.test.svc.cluster.local'
+    - '*.sr.qa.svc.cluster.local'
+    - '*.sr.prod.svc.cluster.local'
+    - '*.sr.dr.svc.cluster.local'
+
+    - '*.kafka.nermdev.io'
+    - '*.confluent.kafka.nermdev.io'
+    - '*.dev.kafka.nermdev.io'
+    - '*.test.kafka.nermdev.io'
+    - '*.qa.kafka.nermdev.io'
+    - '*.prod.kafka.nermdev.io'
+    - '*.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-sr
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  renewBefore: 24h
+  duration: 17520h # two years

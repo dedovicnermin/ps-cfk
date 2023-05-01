@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: cfk-operator
+
+resources:
+  - namespace.yml
+
+helmCharts:
+  - name: openldap
+    releaseName: cfk-ldap
+    namespace: cfk-operator
+    includeCRDs: false
+    valuesFile: ./values.yml
+

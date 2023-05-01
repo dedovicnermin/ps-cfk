@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards6
+  namespace: {{ include "grafana.namespace" $ }}
+  labels:
+    grafana_dashboard: "6"
+    {{- include "grafana.labels" $ | nindent 4 }}
+
+
+data:
+  cp.json: |
+{{ .Files.Get "grafana-dashboards/cp.json" | indent 4 }}

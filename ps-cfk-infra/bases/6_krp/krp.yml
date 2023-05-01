@@ -1,0 +1,38 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestProxy
+metadata:
+  name: krp
+spec:
+  license:
+    globalLicense: true
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 516Mi
+  replicas: 1
+  image:
+    application: confluentinc/cp-kafka-rest:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  tls:
+    secretRef: tls-krp
+  configOverrides:
+    jvm:
+      - -XX:+UseG1GC
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9071
+      authentication:
+        type: mtls
+      tls:
+        enabled: true
+    schemaRegistry:
+      url: https://sr.confluent.svc.cluster.local:8081
+      tls:
+        enabled: true
+    interceptor:
+      enabled: true
+      publishMs: 15000
+
+
+

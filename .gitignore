@@ -1,0 +1,12 @@
+.idea
+*.iml
+**/.idea
+ps-cfk-infra/bases/0_external/prometheus/charts
+ps-cfk-infra/bases/0_external/ingress-nginx/charts
+ps-cfk-infra/bases/0_external/datadog/charts
+ps-cfk-infra/bases/0_external/elk/charts
+ps-cfk-infra/bases/0_external/openldap/charts
+ps-cfk-infra/bases/1_operator/charts
+ps-cfk-tf/gke/.terraform
+ps-cfk-tf/gke/.terraform.lock.hcl
+ps-cfk-tf/gke/terraform.tfstate

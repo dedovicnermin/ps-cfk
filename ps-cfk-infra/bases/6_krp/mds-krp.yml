@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mds-krp
+data:
+  bearer.txt: dXNlcm5hbWU9a3JwCnBhc3N3b3JkPWtycC1zZWNyZXQK
+  basic.txt: dXNlcm5hbWU9a3JwCnBhc3N3b3JkPWtycC1zZWNyZXQK
+  plain.txt: dXNlcm5hbWU9a3JwCnBhc3N3b3JkPWtycC1zZWNyZXQK

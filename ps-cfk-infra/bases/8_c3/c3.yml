@@ -1,0 +1,31 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ControlCenter
+metadata:
+  name: c3
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-enterprise-control-center:7.3.3
+    init: confluentinc/confluent-init-container:2.6.0
+  license:
+    globalLicense: true
+  configOverrides:
+    server:
+      - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
+      - confluent.controlcenter.mode.enable=management
+#      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
+#      - confluent.metadata.enable.server.urls.refresh=false
+    jvm:
+      - -XX:+UseG1GC
+      - -XX:MaxRAMPercentage=70
+  dataVolumeCapacity: 10Gi
+  tls:
+    secretRef: tls-c3
+
+
+
+  podTemplate:
+    resources:
+      requests:
+        cpu: 2
+        memory: 1Gi

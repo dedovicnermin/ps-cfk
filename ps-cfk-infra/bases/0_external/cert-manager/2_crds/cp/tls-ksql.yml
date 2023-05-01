@@ -1,0 +1,65 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ksql-cert
+spec:
+  commonName: ksql
+  dnsNames:
+    - 'ksql'
+
+    - 'ksql.confluent'
+    - 'ksql.dev'
+    - 'ksql.test'
+    - 'ksql.qa'
+    - 'ksql.prod'
+    - 'ksql.de'
+
+    - 'ksql.confluent.svc'
+    - 'ksql.dev.svc'
+    - 'ksql.test.svc'
+    - 'ksql.qa.svc'
+    - 'ksql.prod.svc'
+    - 'ksql.dr.svc'
+
+    - 'ksql.confluent.svc.cluster.local'
+    - 'ksql.dev.svc.cluster.local'
+    - 'ksql.test.svc.cluster.local'
+    - 'ksql.qa.svc.cluster.local'
+    - 'ksql.prod.svc.cluster.local'
+    - 'ksql.dr.svc.cluster.local'
+
+    - '*.ksql.confluent.svc.cluster.local'
+    - '*.ksql.dev.svc.cluster.local'
+    - '*.ksql.test.svc.cluster.local'
+    - '*.ksql.qa.svc.cluster.local'
+    - '*.ksql.prod.svc.cluster.local'
+    - '*.ksql.dr.svc.cluster.local'
+
+    - 'ksql.kafka.nermdev.io'
+    - 'ksql.confluent.kafka.nermdev.io'
+    - 'ksql.dev.kafka.nermdev.io'
+    - 'ksql.test.kafka.nermdev.io'
+    - 'ksql.qa.kafka.nermdev.io'
+    - 'ksql.prod.kafka.nermdev.io'
+    - 'ksql.dr.kafka.nermdev.io'
+
+    - '*.ksql.kafka.nermdev.io'
+    - '*.ksql.confluent.kafka.nermdev.io'
+    - '*.ksql.dev.kafka.nermdev.io'
+    - '*.ksql.test.kafka.nermdev.io'
+    - '*.ksql.qa.kafka.nermdev.io'
+    - '*.ksql.prod.kafka.nermdev.io'
+    - '*.ksql.dr.kafka.nermdev.io'
+
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-ksql

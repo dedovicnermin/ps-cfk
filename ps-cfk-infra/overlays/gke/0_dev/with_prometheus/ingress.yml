@@ -1,0 +1,80 @@
+#helm install ingress-nginx ingress-nginx/ingress-nginx \
+#--set controller.extraArgs.enable-ssl-passthrough="true"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-brokers
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - mds.kafka.nermdev.io
+        - connect.kafka.nermdev.io
+        - sr.kafka.nermdev.io
+        - c3.kafka.nermdev.io
+        - ksql.kafka.nermdev.io
+        - krp.kafka.nermdev.io
+  rules:
+    - host: mds.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: kafka-mds-bootstrap-np
+#                name: mds-bootstrap
+                port:
+                  number: 8090
+            pathType: ImplementationSpecific
+
+    - host: connect.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: connect-0-internal
+                port:
+                  number: 8083
+            pathType: ImplementationSpecific
+    - host: sr.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: sr-0-internal
+                port:
+                  number: 8081
+            pathType: ImplementationSpecific
+    - host: c3.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: c3-0-internal
+                port:
+                  number: 9021
+            pathType: ImplementationSpecific
+
+    - host: ksql.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: ksql-0-internal
+                port:
+                  number: 8088
+            pathType: ImplementationSpecific
+    - host: krp.kafka.nermdev.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: krp-0-internal
+                port:
+                  number: 8082
+            pathType: ImplementationSpecific

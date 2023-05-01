@@ -1,0 +1,24 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+spec:
+  connectorOverridePolicy: All
+  license:
+    globalLicense: true
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+  replicas: 1
+  image:
+    application: dedovicnermin/cfk-connect:1.1.0
+    init: confluentinc/confluent-init-container:2.6.0
+  tls:
+    secretRef: tls-connect
+  configOverrides:
+    server:
+      - log.retention.hours=4
+    jvm:
+      - -XX:+UseG1GC

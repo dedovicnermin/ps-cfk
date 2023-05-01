@@ -1,0 +1,27 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: readonly-devread-0
+  labels:
+    principal: readonlyusers
+    role: developerread
+    cscope: kafka
+    group: "true"
+spec:
+  principal:
+    name: readonlyusers
+    type: group
+  resourcePatterns:
+    - name: '*'
+      resourceType: Topic
+      patternType: LITERAL
+    - name: '*'
+      resourceType: Group
+      patternType: LITERAL
+    - name: kafka-cluster
+      resourceType: Cluster
+      patternType: LITERAL
+    - name: '*'
+      resourceType: TransactionalId
+      patternType: LITERAL
+  role: DeveloperRead

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - tls-kafka.yml
+  - mds-kafka.yml
+  - mds-token.yml
+  - ldaps-user.yml
+  - password-encoder-secret.yml
+  - kafka.yml
+  - kafkarestclass.yml

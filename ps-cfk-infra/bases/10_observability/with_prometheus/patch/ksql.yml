@@ -1,0 +1,112 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksql
+spec:
+  metrics:
+    prometheus:
+      blacklist:
+        - kafka.streams:type=kafka-metrics-count
+        - kafka.admin.client:*
+        - kafka.consumer:type=*,id=*
+        - kafka.consumer:type=*,client-id=*
+        - kafka.consumer:type=*,client-id=*,node-id=*
+        - kafka.producer:type=*,id=*
+        - kafka.producer:type=*,client-id=*
+        - kafka.producer:type=*,client-id=*,node-id=*
+        - kafka.streams:type=stream-processor-node-metrics,thread-id=*,task-id=*,processor-node-id=*
+        - kafka.*:type=kafka-metrics-count,*
+      rules:
+        - labels:
+            id: $3
+            key: $2
+          name: ksql_$1_$4
+          pattern: io.confluent.ksql.metrics<type=(.+), key=(.+), id=(.+)><>([^:]+)
+          valueFactor: 1
+        - labels:
+            ksql_cluster: $1
+          name: ksql_ksql_engine_query_stats_$2
+          pattern: io.confluent.ksql.metrics<type=_confluent-ksql-(.+)ksql-engine-query-stats><>([^:]+)
+          valueFactor: 1
+        - labels:
+            $4: $5
+            ksql_cluster: $2
+            ksql_query: $3
+          name: ksql_ksql_metrics_$1_$4
+          pattern: 'io.confluent.ksql.metrics<type=(.+), status=_confluent-ksql-(.+)query_(.+)><>(.+):
+              (.+)'
+          value: "1"
+          valueFactor: 1
+        - labels:
+            $4: $5
+            task_id: $3
+            thread_id: $2
+          name: kafka_streams_$1_$6
+          pattern: 'kafka.streams<type=(.+), thread-id=(.+), task-id=(.+), (.+)=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            task_id: $3
+            thread_id: $2
+          name: kafka_streams_$1_$4
+          pattern: 'kafka.streams<type=(.+), thread-id=(.+), task-id=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            $1: $2
+            $3: $4
+          name: kafka_streams_stream_metrics
+          pattern: 'kafka.streams<type=stream-metrics, (.+)=(.+)><>(state|alive-stream-threads|commit-id|version|application-id):
+              (.+)'
+          type: UNTYPED
+          value: "1"
+          valueFactor: 1
+        - labels:
+            $2: $3
+          name: kafka_streams_$1_$4
+          pattern: kafka.streams<type=(.+), (.+)=(.+)><>([^:]+)
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            $3: $4
+            client_id: $2
+            client_type: $1
+          name: kafka_$1_app_info
+          pattern: 'kafka.(.+)<type=app-info, client-id=(.+)><>(.+): (.+)'
+          type: UNTYPED
+          value: "1"
+          valueFactor: 1
+        - labels:
+            $3: $4
+            $5: $6
+            $7: $8
+            client_type: $1
+          name: kafka_$1_$2_$9
+          pattern: 'kafka.(.+)<type=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            $3: $4
+            $5: $6
+            client_type: $1
+          name: kafka_$1_$2_$7
+          pattern: 'kafka.(.+)<type=(.+), (.+)=(.+), (.+)=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            $3: $4
+            client_type: $1
+          name: kafka_$1_$2_$5
+          pattern: 'kafka.(.+)<type=(.+), (.+)=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: 1
+        - labels:
+            client_type: $1e
+          name: kafka_$1_$2_$3
+          pattern: 'kafka.(.+)<type=(.+)><>(.+):'
+          valueFactor: 1
+      whitelist:
+        - io.confluent.ksql.metrics:*
+        - kafka.consumer:*
+        - kafka.producer:*
+        - kafka.streams:*

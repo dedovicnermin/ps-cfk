@@ -1,0 +1,57 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: controlcenter-cert
+spec:
+  commonName: c3
+  dnsNames:
+    - 'c3'
+    - 'c3.confluent'
+    - 'c3.dev'
+    - 'c3.test'
+    - 'c3.qa'
+    - 'c3.dr'
+    - 'c3.prod'
+    - 'c3.confluent.svc'
+    - 'c3.dev.svc'
+    - 'c3.qa.svc'
+    - 'c3.prod.svc'
+    - 'c3.test.svc'
+    - 'c3.dr.svc'
+    - 'c3.confluent.svc.cluster.local'
+    - 'c3.dev.svc.cluster.local'
+    - 'c3.test.svc.cluster.local'
+    - 'c3.qa.svc.cluster.local'
+    - 'c3.prod.svc.cluster.local'
+    - 'c3.dr.svc.cluster.local'
+    - '*.c3.confluent.svc.cluster.local'
+    - '*.c3.dev.svc.cluster.local'
+    - '*.c3.test.svc.cluster.local'
+    - '*.c3.qa.svc.cluster.local'
+    - '*.c3.prod.svc.cluster.local'
+    - '*.c3.dr.svc.cluster.local'
+    - '*.confluent.nermdev.io'
+    - '*.dev.nermdev.io'
+    - '*.test.nermdev.io'
+    - '*.qa.nermdev.io'
+    - '*.prod.nermdev.io'
+    - '*.dr.nermdev.io'
+    - 'c3.kafka.nermdev.io'
+    - 'c3.dev.kafka.nermdev.io'
+    - 'c3.test.kafka.nermdev.io'
+    - 'c3.qa.kafka.nermdev.io'
+    - 'c3.prod.kafka.nermdev.io'
+    - 'c3.dr.kafka.nermdev.io'
+    - 'c3.confluent.kafka.nermdev.io'
+    - 'localhost'
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-c3

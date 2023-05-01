@@ -1,0 +1,15 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: ksqldb-sysadm-0
+  labels:
+    principal: ksql
+    role: systemadmin
+    type: ksqldb
+    cscope: kafka
+spec:
+  principal:
+    name: ksql
+    type: user
+  role: SystemAdmin
+---
