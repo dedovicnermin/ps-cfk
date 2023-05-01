@@ -2,13 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../2_zookeeper
-  - ../../3_kafka
-  - ../../4_sr
-  - ../../5_connect
-  - ../../6_krp
-  - ../../7_ksql
-  - ../../8_c3
+  - ../../02_zookeeper
+  - ../../03_kafka
+  - ../../04_sr
+  - ../../05_connect
+  - ../../06_krp
+  - ../../07_ksql
+  - ../../08_c3
 
 patches:
   - target:

@@ -3,7 +3,7 @@ kind: Kustomization
 
 
 resources:
-  - ../../../../bases/0_external/datadog
-  - ../../../../bases/0_external/openldap
-  - ../../../../bases/0_external/ingress-nginx
-  - ../../../../bases/1_operator
+  - ../../../../bases/00_external/datadog
+  - ../../../../bases/00_external/openldap
+  - ../../../../bases/00_external/ingress-nginx
+  - ../../../../bases/01_operator

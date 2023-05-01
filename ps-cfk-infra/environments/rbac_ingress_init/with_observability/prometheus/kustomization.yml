@@ -3,8 +3,8 @@ kind: Kustomization
 
 
 resources:
-  - ../../../../bases/0_external/openldap
-  - ../../../../bases/0_external/ingress-nginx
-  - ../../../../bases/0_external/prometheus
-  - ../../../../bases/0_external/grafana
-  - ../../../../bases/1_operator
+  - ../../../../bases/00_external/openldap
+  - ../../../../bases/00_external/ingress-nginx
+  - ../../../../bases/00_external/prometheus
+  - ../../../../bases/00_external/grafana
+  - ../../../../bases/01_operator

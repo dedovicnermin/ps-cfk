@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: prod
 
 resources:
-  - ../../../../bases/9_client_auth
+  - ../../../../bases/09_client_auth
   - ../../../../overlays/gke/3_prod/with_prometheus
