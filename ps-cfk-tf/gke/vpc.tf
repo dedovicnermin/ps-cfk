@@ -3,18 +3,15 @@
 
 
 
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
+
 
 data "google_compute_network" "default" {
-  name = "default"
+  name    = "default"
   project = var.project_id
 }
 
 data "google_compute_subnetwork" "subnet" {
-  name = "default"
+  name   = "default"
   region = var.region
 }
 

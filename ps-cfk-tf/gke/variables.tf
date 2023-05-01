@@ -1,15 +1,15 @@
 variable "cluster_name" {
-  default = "ndedovic-cluster"
+  default     = "ndedovic-cluster"
   description = "Name for gke cluster"
 }
 
 variable "owner_label" {
-  default = "ndedovic"
+  default     = "ndedovic"
   description = "GKE resource metadata included for all infra provisioned"
 }
 variable "project_id" {
   description = "project id"
-  default = "solutionsarchitect-01"
+  default     = "solutionsarchitect-01"
 }
 
 variable "region" {
@@ -19,18 +19,9 @@ variable "region" {
 
 variable "node_locations" {
   default = ["us-central1-c"]
-  type = list(string)
+  type    = list(string)
 }
 
-variable "gke_username" {
-  default     = ""
-  description = "gke username"
-}
-
-variable "gke_password" {
-  default     = ""
-  description = "gke password"
-}
 
 variable "node_count_zk" {
   default     = 3
@@ -38,11 +29,38 @@ variable "node_count_zk" {
 }
 
 variable "node_count_bk" {
-  default = 3
+  default     = 3
   description = "number of gke nodes for broker node group"
 }
 
 variable "node_count_general" {
-  default = 4
+  default     = 4
   description = "number of gke nodes for general purpose node group"
+}
+
+variable "node_machine_type_general" {
+  default     = "e2-standard-2"
+  description = "Image type for nodes within the general worker node group"
+}
+
+variable "node_machine_type_bk" {
+  default     = "e2-standard-4"
+  description = "Image type for nodes within the broker worker node group"
+}
+
+variable "node_machine_type_zk" {
+  default     = "e2-small"
+  description = "Image type for nodes within the zookeeper worker node group"
+}
+
+variable "node_disk_size_gb_zk" {
+  default = "25"
+}
+
+variable "node_disk_size_gb_bk" {
+  default = "25"
+}
+
+variable "node_disk_size_gb_gen" {
+  default = "25"
 }
