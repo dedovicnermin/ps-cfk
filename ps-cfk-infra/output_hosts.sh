@@ -9,12 +9,14 @@ dns[1]="b1.$NAMESPACE.$SITE.confluentps.io"
 dns[2]="b2.$NAMESPACE.$SITE.confluentps.io"
 dns[3]="bootstrap.$NAMESPACE.$SITE.confluentps.io"
 
-
 i=0
-kubectl get services --all-namespaces -o json | jq -r '.items[] | .status.loadBalancer?|.ingress[]?|.ip' | while read line ; do
+kubectl get services -n qa -o json | jq -r '.items[] | .status.loadBalancer?|.ingress[]?|.ip' | while read line; do
   echo "$line ${dns[$i]}"
   let "i+=1"
-  if [ $i -ge 5 ]; then
+done
+
+
+kubectl get services -n ingress-nginx -o json | jq -r '.items[] | .status.loadBalancer?|.ingress[]?|.ip' | while read line; do
     echo "$line ksql.$NAMESPACE.$SITE.confluentps.io"
     echo "$line sr.$NAMESPACE.$SITE.confluentps.io"
     echo "$line connect.$NAMESPACE.$SITE.confluentps.io"
@@ -24,12 +26,9 @@ kubectl get services --all-namespaces -o json | jq -r '.items[] | .status.loadBa
     echo "$line grafana.confluentps.io"
     echo "$line prometheus.confluentps.io"
     echo "$line c3.$NAMESPACE.$SITE.confluentps.io"
-#    echo "$line kibana.confluentps.io"
-#    echo "$line elastic.confluentps.io"
-
-
-  fi
-
-
 done
+
+
+
+
 
