@@ -1,7 +1,7 @@
 kind: ConfluentRolebinding
 apiVersion: platform.confluent.io/v1beta1
 metadata:
-  name: evntsuper-devread-1
+  name: admins-sysadm-2
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_prod
+    schemaRegistryClusterId: id_sr_qa

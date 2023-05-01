@@ -18,19 +18,19 @@ patches:
       version: v1beta1
       kind: ConfluentRolebinding
       name: cp-resown-1
-    path: patch/groups/cp-resown-1.yml
+    path: patch/groups/cp/cp-resown-1.yml
   - target:
       group: platform.confluent.io
       version: v1beta1
       kind: ConfluentRolebinding
       name: readonlyusers-devread-1
-    path: patch/groups/readonlyusers-devread-1.yml
+    path: patch/groups/readonlyusers/readonlyusers-devread-1.yml
   - target:
       group: platform.confluent.io
       version: v1beta1
       kind: ConfluentRolebinding
       name: readonlyusers-resown-0
-    path: patch/groups/readonlyusers-resown-0.yml
+    path: patch/groups/readonlyusers/readonlyusers-resown-0.yml
   - target:
       group: platform.confluent.io
       version: v1beta1
@@ -49,12 +49,6 @@ patches:
       kind: ConfluentRolebinding
       name: schemaregistry-sysadm-0
     path: patch/sr/schemaregistry-sysadm-0.yml
-  - target:
-      group: platform.confluent.io
-      version: v1beta1
-      kind: ConfluentRolebinding
-      name: evntsuper-devread-1
-    path: patch/superuser/evntsuper-devread-1.yml
   - target:
       group: platform.confluent.io
       version: v1beta1
@@ -85,3 +79,21 @@ patches:
       kind: ConfluentRolebinding
       name: evntsuper-sysadm-3
     path: patch/superuser/evntsuper-sysadm-3.yml
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: ConfluentRolebinding
+      name: admins-sysadm-1
+    path: patch/groups/admins/admins-sysadm-1.yml
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: ConfluentRolebinding
+      name: admins-sysadm-2
+    path: patch/groups/admins/admins-sysadm-2.yml
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: ConfluentRolebinding
+      name: admins-sysadm-3
+    path: patch/groups/admins/admins-sysadm-3.yml

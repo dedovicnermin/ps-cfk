@@ -6,7 +6,7 @@ metadata:
     principal: cp
     role: resourceowner
     cscope: kafka
-    group: "true"
+
 spec:
   principal:
     name: cp
