@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
-  basic.txt: dXNlcm5hbWU9Y2xpZW50CnBhc3N3b3JkPWNsaWVudC1zZWNyZXQ=
-  bearer.txt: dXNlcm5hbWU9Y2xpZW50CnBhc3N3b3JkPWNsaWVudC1zZWNyZXQ=
+  basic.txt: dXNlcm5hbWU9YWRtaW4yCnBhc3N3b3JkPWFkbWluMi1zZWNyZXQ=
+  bearer.txt: dXNlcm5hbWU9YWRtaW4yCnBhc3N3b3JkPWFkbWluMi1zZWNyZXQ=
 kind: Secret
 metadata:
-  name: mds-client
+  name: mds-admin2
 

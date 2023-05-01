@@ -18,6 +18,30 @@ spec:
   tls:
     secretRef: tls-zookeeper
   podTemplate:
+    tolerations:
+      - key: app
+        operator: Equal
+        value: zookeeper
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - zookeeper
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kafka
+                    - zookeeper
     resources:
       requests:
         cpu: 216m

@@ -16,7 +16,7 @@ spec:
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
   dependencies:
     mds:
-      endpoint: https://kafka.dev.svc.cluster.local:8090
+      endpoint: https://kafka.test.svc.cluster.local:8090
       tokenKeyPair:
         secretRef: mds-token
       authentication:
@@ -32,16 +32,16 @@ spec:
           secretRef: mds-krp
       tls:
         enabled: true
-      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
+      bootstrapEndpoint: kafka.test.svc.cluster.local:9073
     interceptor:
       configs:
-        - confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9073
+        - confluent.monitoring.interceptor.bootstrap.servers=kafka.test.svc.cluster.local:9073
       producer:
         authentication:
           type: oauthbearer
           oauthbearer:
             secretRef: mds-krp
-        bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
+        bootstrapEndpoint: kafka.test.svc.cluster.local:9073
         tls:
           enabled: true
       consumer:
@@ -49,6 +49,6 @@ spec:
           type: oauthbearer
           oauthbearer:
             secretRef: mds-krp
-        bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
+        bootstrapEndpoint: kafka.test.svc.cluster.local:9073
         tls:
           enabled: true

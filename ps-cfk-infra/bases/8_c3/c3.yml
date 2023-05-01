@@ -10,11 +10,6 @@ spec:
   license:
     globalLicense: true
   configOverrides:
-    server:
-      - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
-      - confluent.controlcenter.mode.enable=management
-#      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
-#      - confluent.metadata.enable.server.urls.refresh=false
     jvm:
       - -XX:+UseG1GC
       - -XX:MaxRAMPercentage=70
@@ -22,9 +17,25 @@ spec:
   tls:
     secretRef: tls-c3
 
-
-
   podTemplate:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - general
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - c3
     resources:
       requests:
         cpu: 2

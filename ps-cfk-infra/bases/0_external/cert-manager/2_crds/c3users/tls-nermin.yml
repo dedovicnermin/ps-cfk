@@ -5,7 +5,7 @@ metadata:
 spec:
   commonName: nermin
   dnsNames:
-    - '*.nermdev.io'
+    - '*.confluentps.io'
     - 'localhost'
 
     - '*.confluent.svc.cluster.local'
@@ -15,13 +15,34 @@ spec:
     - '*.qa.svc.cluster.local'
     - '*.dr.svc.cluster.local'
 
-    - '*.kafka.nermdev.io'
-    - '*.confluent.kafka.nermdev.io'
-    - '*.dev.kafka.nermdev.io'
-    - '*.test.kafka.nermdev.io'
-    - '*.qa.kafka.nermdev.io'
-    - '*.dr.kafka.nermdev.io'
-    - '*.prod.kafka.nermdev.io'
+    - '*.kafka.confluentps.io'
+    - '*.confluent.kafka.confluentps.io'
+    - '*.dev.kafka.confluentps.io'
+    - '*.test.kafka.confluentps.io'
+    - '*.qa.kafka.confluentps.io'
+    - '*.dr.kafka.confluentps.io'
+    - '*.prod.kafka.confluentps.io'
+    - '*.confluent.kafka.confluentps.io'
+    - '*.dr.kafka.confluentps.io'
+    - '*.dev.kafka.confluentps.io'
+    - '*.test.kafka.confluentps.io'
+    - '*.qa.kafka.confluentps.io'
+    - '*.prod.kafka.confluentps.io'
+    - '*.kafka.confluentps.io'
+    - '*.confluent.gke.confluentps.io'
+    - '*.dr.gke.confluentps.io'
+    - '*.dev.gke.confluentps.io'
+    - '*.test.gke.confluentps.io'
+    - '*.qa.gke.confluentps.io'
+    - '*.prod.gke.confluentps.io'
+    - '*.gke.confluentps.io'
+    - '*.confluent.eks.confluentps.io'
+    - '*.dr.eks.confluentps.io'
+    - '*.dev.eks.confluentps.io'
+    - '*.test.eks.confluentps.io'
+    - '*.qa.eks.confluentps.io'
+    - '*.prod.eks.confluentps.io'
+    - '*.eks.confluentps.io'
   secretName: tls-nermin
   issuerRef:
     kind: ClusterIssuer

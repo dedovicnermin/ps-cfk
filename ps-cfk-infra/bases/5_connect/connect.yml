@@ -7,6 +7,24 @@ spec:
   license:
     globalLicense: true
   podTemplate:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - general
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - connect
     resources:
       requests:
         cpu: 500m
@@ -22,3 +40,24 @@ spec:
       - log.retention.hours=4
     jvm:
       - -XX:+UseG1GC
+  connectorTLSCerts:
+    - secretRef: tls-connect
+    - secretRef: tls-nejra
+    - secretRef: tls-nermin
+    - secretRef: tls-niyi
+    - secretRef: tls-client
+    - secretRef: tls-admin1
+    - secretRef: tls-admin2
+    - secretRef: tls-dev1
+    - secretRef: tls-dev2
+    - secretRef: tls-dev3
+  mountedSecrets:
+    - secretRef: mds-nejra
+    - secretRef: mds-nermin
+    - secretRef: mds-niyi
+    - secretRef: mds-client
+    - secretRef: mds-admin1
+    - secretRef: mds-admin2
+    - secretRef: mds-dev1
+    - secretRef: mds-dev2
+    - secretRef: mds-dev3

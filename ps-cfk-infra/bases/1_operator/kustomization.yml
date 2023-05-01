@@ -1,14 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: confluent
+
 
 resources:
-  - namespace.yml
+  - namespace-confluent.yml
+  - namespace-dev.yml
+  - namespace-test.yml
+  - namespace-qa.yml
+  - namespace-prod.yml
   - license-secret.yml
 #  - telemetry-secret.yml
   - gke/storageclass-gke-delete.yml
-#  - kind/sc.yml
 #  - digital_ocean/storageclass-do-delete.yml
 
 
@@ -17,7 +20,7 @@ helmCharts:
     repo: https://packages.confluent.io/helm
     version: 0.771.13
     releaseName: confluent-operator
-    namespace: confluent
+    namespace: cfk-operator
     valuesFile: values.yml
     includeCRDs: true
 

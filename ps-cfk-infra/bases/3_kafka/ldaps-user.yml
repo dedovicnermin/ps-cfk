@@ -4,4 +4,4 @@ metadata:
   name: ldaps-user
 data:
   ldap.txt: |
-    dXNlcm5hbWU9Y249bWRzLGRjPW5lcm1kZXYsZGM9aW8KcGFzc3dvcmQ9bWRzLXNlY3JldA==
+    dXNlcm5hbWU9Y249bWRzLGRjPWNvbmZsdWVudHBzLGRjPWlvCnBhc3N3b3JkPW1kcy1zZWNyZXQ=

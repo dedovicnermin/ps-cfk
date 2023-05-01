@@ -5,35 +5,13 @@ metadata:
 spec:
   replicas: 1
   connectorOverridePolicy: All
-  connectorTLSCerts:
-    - secretRef: tls-connect
-    - secretRef: tls-nejra
-    - secretRef: tls-nermin
-    - secretRef: tls-client
-  mountedSecrets:
-    - secretRef: mds-nejra
-    - secretRef: mds-nermin
-    - secretRef: mds-client
-    - secretRef: confluent-secrets
-#    - secretRef: connector-secret-demo
-  mountedVolumes:
-    volumeMounts:
-      - mountPath: /mnt/configmap/schemas
-        name: leaderboard-scores
-    volumes:
-      - name: leaderboard-scores
-        configMap:
-          name: leaderboard-scores-schema
-          items:
-            - key: schema
-              path: leaderboard-score.avsc
   configOverrides:
     server:
       - plugin.path=/usr/share/java,/usr/share/confluent-hub-components,/mnt/plugins,/usr/share/filestream-connectors
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
       - producer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
-      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9071
+      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9071
       - producer.confluent.monitoring.interceptor.security.protocol=SSL
       - producer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
       - producer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
@@ -44,7 +22,7 @@ spec:
       - producer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
       - producer.confluent.monitoring.interceptor.client.id=connect.monitoring.producer.interceptor
       - consumer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
-      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9071
+      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9071
       - consumer.confluent.monitoring.interceptor.security.protocol=SSL
       - consumer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
       - consumer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
@@ -55,47 +33,29 @@ spec:
       - consumer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
       - consumer.confluent.monitoring.interceptor.client.id=connect.monitoring.consumer.interceptor
 
-  build:
-    type: onDemand
-    onDemand:
-      storageLimit: 256Mi
-      plugins:
-        locationType: confluentHub
-        confluentHub:
-          - name: kafka-connect-datagen
-            owner: confluentinc
-            version: latest
-          - name: kafka-connect-jdbc
-            owner: confluentinc
-            version: latest
-          - name: kafka-connect-http
-            owner: confluentinc
-            version: latest
-          - name: kafka-connect-salesforce
-            owner: confluentinc
-            version: latest
-          - name: kafka-connect-replicator
-            owner: confluentinc
-            version: latest
+#  build:
+#    type: onDemand
+#    onDemand:
+#      storageLimit: 256Mi
+##      plugins:
+##        locationType: confluentHub
+##        confluentHub:
+##          - name: kafka-connect-datagen
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-jdbc
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-http
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-salesforce
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-replicator
+##            owner: confluentinc
+##            version: latest
   podTemplate:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - general
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - connect
     resources:
       requests:
         cpu: 1.0
@@ -104,7 +64,7 @@ spec:
     type: rbac
   dependencies:
     kafka:
-      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9073
+      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
       authentication:
         type: oauthbearer
         oauthbearer:
@@ -113,7 +73,7 @@ spec:
         enabled: true
 
     mds:
-      endpoint: https://kafka.confluent.svc.cluster.local:8090
+      endpoint: https://kafka.dev.svc.cluster.local:8090
       tokenKeyPair:
         secretRef: mds-token
       authentication:
@@ -123,6 +83,6 @@ spec:
       tls:
         enabled: true
     schemaRegistry:
-      url: https://sr.confluent.svc.cluster.local:8081
+      url: https://sr.dev.svc.cluster.local:8081
       tls:
         enabled: true

@@ -6,67 +6,17 @@ spec:
   authorization:
     type: rbac
   podTemplate:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - general
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - krp
-            topologyKey: kubernetes.io/hostname
     resources:
       requests:
         cpu: 1.0
         memory: 1Gi
   configOverrides:
     server:
-#      - confluent.metadata.bootstrap.server.urls=https://kafka.confluent.svc.cluster.local:8090,https://kafka-0.kafka.confluent.svc.cluster.local:8090,https://kafka-1.kafka.confluent.svc.cluster.local:8090,https://kafka-2.kafka.confluent.svc.cluster.local:8090
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
-#      - client.bootstrap.servers=kafka.confluent.svc.cluster.local:9073
-#      - client.security.protocol=SASL_SSL
-#      - confluent.monitoring.interceptor.sasl.login.callback.handler.class=io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
-#      - confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9073
-#      - ssl.truststore.location=/mnt/sslcerts/truststore.p12
-#      - ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - security.protocol=SASL_SSL
-#      - sasl.mechanism=OAUTHBEARER
-#      - producer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
-#      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9071
-#      - producer.confluent.monitoring.interceptor.security.protocol=SSL
-#      - producer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
-#      - producer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - producer.confluent.monitoring.interceptor.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - producer.confluent.monitoring.interceptor.ssl.keystore.type=PKCS12
-#      - producer.confluent.monitoring.interceptor.ssl.truststore.location=/mnt/sslcerts/truststore.p12
-#      - producer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - producer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
-#      - producer.confluent.monitoring.interceptor.client.id=krp.monitoring.producer.interceptor
-#      - consumer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
-#      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9071
-#      - consumer.confluent.monitoring.interceptor.security.protocol=SSL
-#      - consumer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
-#      - consumer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - consumer.confluent.monitoring.interceptor.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - consumer.confluent.monitoring.interceptor.ssl.keystore.type=PKCS12
-#      - consumer.confluent.monitoring.interceptor.ssl.truststore.location=/mnt/sslcerts/truststore.p12
-#      - consumer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
-#      - consumer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
-#      - consumer.confluent.monitoring.interceptor.client.id=krp.monitoring.consumer.interceptor
-#
   dependencies:
     mds:
-      endpoint: https://kafka.confluent.svc.cluster.local:8090
+      endpoint: https://kafka.dev.svc.cluster.local:8090
       tokenKeyPair:
         secretRef: mds-token
       authentication:
@@ -82,16 +32,16 @@ spec:
           secretRef: mds-krp
       tls:
         enabled: true
-      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9073
+      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
     interceptor:
       configs:
-        - confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9073
+        - confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9073
       producer:
         authentication:
           type: oauthbearer
           oauthbearer:
             secretRef: mds-krp
-        bootstrapEndpoint: kafka.confluent.svc.cluster.local:9073
+        bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
         tls:
           enabled: true
       consumer:
@@ -99,6 +49,6 @@ spec:
           type: oauthbearer
           oauthbearer:
             secretRef: mds-krp
-        bootstrapEndpoint: kafka.confluent.svc.cluster.local:9073
+        bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
         tls:
           enabled: true

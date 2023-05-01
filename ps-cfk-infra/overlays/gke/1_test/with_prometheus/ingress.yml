@@ -4,7 +4,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dev-ingress-brokers
+  name: test-ingress-brokers
   annotations:
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -14,14 +14,14 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - mds.dev.kafka.confluentps.io
-        - connect.dev.kafka.confluentps.io
-        - sr.dev.kafka.confluentps.io
-        - c3.dev.kafka.confluentps.io
-        - ksql.dev.kafka.confluentps.io
-        - krp.dev.kafka.confluentps.io
+        - mds.test.gke.confluentps.io
+        - connect.test.gke.confluentps.io
+        - sr.test.gke.confluentps.io
+        - c3.test.gke.confluentps.io
+        - ksql.test.gke.confluentps.io
+        - krp.test.gke.confluentps.io
   rules:
-    - host: mds.dev.kafka.confluentps.io
+    - host: mds.test.gke.confluentps.io
       http:
         paths:
           - backend:
@@ -32,7 +32,7 @@ spec:
                   number: 8090
             pathType: ImplementationSpecific
 
-    - host: connect.dev.kafka.confluentps.io
+    - host: connect.test.gke.confluentps.io
       http:
         paths:
           - backend:
@@ -41,7 +41,7 @@ spec:
                 port:
                   number: 8083
             pathType: ImplementationSpecific
-    - host: sr.dev.kafka.confluentps.io
+    - host: sr.test.gke.confluentps.io
       http:
         paths:
           - backend:
@@ -50,7 +50,7 @@ spec:
                 port:
                   number: 8081
             pathType: ImplementationSpecific
-    - host: c3.dev.kafka.confluentps.io
+    - host: c3.test.gke.confluentps.io
       http:
         paths:
           - backend:
@@ -60,7 +60,7 @@ spec:
                   number: 9021
             pathType: ImplementationSpecific
 
-    - host: ksql.dev.kafka.confluentps.io
+    - host: ksql.test.gke.confluentps.io
       http:
         paths:
           - backend:
@@ -69,7 +69,7 @@ spec:
                 port:
                   number: 8088
             pathType: ImplementationSpecific
-    - host: krp.dev.kafka.confluentps.io
+    - host: krp.test.gke.confluentps.io
       http:
         paths:
           - backend:

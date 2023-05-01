@@ -1,0 +1,59 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dev1-cert
+spec:
+  commonName: dev1
+  dnsNames:
+    - '*.confluentps.io'
+    - 'localhost'
+    - '*.confluent.svc.cluster.local'
+    - '*.dev.svc.cluster.local'
+    - '*.test.svc.cluster.local'
+    - '*.qa.svc.cluster.local'
+    - '*.prod.svc.cluster.local'
+    - '*.dr.svc.cluster.local'
+    - '*.confluent.kafka.confluentps.io'
+    - '*.dr.kafka.confluentps.io'
+    - '*.dev.kafka.confluentps.io'
+    - '*.test.kafka.confluentps.io'
+    - '*.qa.kafka.confluentps.io'
+    - '*.prod.kafka.confluentps.io'
+    - '*.kafka.confluentps.io'
+    - '*.confluent.gke.confluentps.io'
+    - '*.dr.gke.confluentps.io'
+    - '*.dev.gke.confluentps.io'
+    - '*.test.gke.confluentps.io'
+    - '*.qa.gke.confluentps.io'
+    - '*.prod.gke.confluentps.io'
+    - '*.gke.confluentps.io'
+    - '*.confluent.eks.confluentps.io'
+    - '*.dr.eks.confluentps.io'
+    - '*.dev.eks.confluentps.io'
+    - '*.test.eks.confluentps.io'
+    - '*.qa.eks.confluentps.io'
+    - '*.prod.eks.confluentps.io'
+    - '*.eks.confluentps.io'
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  renewBefore: 24h
+  duration: 17520h # two years
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-dev1
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef:
+        name: jks-password
+        key: jksPassword
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        name: jks-password
+        key: jksPassword
+

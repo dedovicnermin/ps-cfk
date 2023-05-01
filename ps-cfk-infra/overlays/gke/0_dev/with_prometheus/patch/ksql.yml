@@ -3,43 +3,23 @@ kind: KsqlDB
 metadata:
   name: ksql
 spec:
-  mountedSecrets:
-    - secretRef: confluent-secrets
   tls:
     secretRef: tls-ksql
   authorization:
     type: rbac
 
   podTemplate:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - general
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - ksql
     resources:
       requests:
         cpu: 100m
         memory: 256Mi
   dependencies:
     schemaRegistry:
-      url: https://sr.confluent.svc.cluster.local:8081
+      url: https://sr.dev.svc.cluster.local:8081
       tls:
         enabled: true
     connect:
-      url: https://connect.confluent.svc.cluster.local:8083
+      url: https://connect.dev.svc.cluster.local:8083
       tls:
         enabled: true
     kafka:
@@ -50,7 +30,7 @@ spec:
       authentication:
         type: mtls
     mds:
-      endpoint: https://kafka.confluent.svc.cluster.local:8090
+      endpoint: https://kafka.dev.svc.cluster.local:8090
       tokenKeyPair:
         secretRef: mds-token
       authentication:
@@ -77,7 +57,7 @@ spec:
       - ksql.logging.processing.topic.replication.factor=3
       - ksql.access.validator.enable=on
       - confluent.metadata.server.urls.fail.on.401=true
-      - confluent.metadata.bootstrap.server.urls=https://kafka.confluent.svc.cluster.local:8090
+      - confluent.metadata.bootstrap.server.urls=https://kafka.dev.svc.cluster.local:8090
       - confluent.metadata.ssl.keystore.location=/mnt/sslcerts/keystore.p12
       - confluent.metadata.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - confluent.metadata.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
@@ -90,10 +70,10 @@ spec:
       - ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
 
-      - ksql.streams.consumer.client.id=ksql.nermdev.consumerclient
-      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9073
-      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.confluent.svc.cluster.local:9073
-      - ksql.streams.admin.client.id=ksql.nermdev.adminclient
+      - ksql.streams.consumer.client.id=ksql.dev.confluentps.consumerclient
+      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9073
+      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9073
+      - ksql.streams.admin.client.id=ksql.dev.confluentps.adminclient
 
 
     log4j:
@@ -105,10 +85,5 @@ spec:
         log4j.logger.processing=ERROR, stdout
       - log4j.additivity.processing=false
 
-
-
-
-  license:
-    globalLicense: true
   internalTopicReplicationFactor: 3
 

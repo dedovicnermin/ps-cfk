@@ -2,4 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  -
+  - tls-dev1.yml
+  - tls-dev2.yml
+  - tls-dev3.yml

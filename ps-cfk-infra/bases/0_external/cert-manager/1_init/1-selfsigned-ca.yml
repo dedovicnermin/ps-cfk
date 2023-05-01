@@ -5,7 +5,7 @@ metadata:
   namespace: cert-manager
 spec:
   isCA: true
-  commonName: CFKNermDevCA
+  commonName: CFKconfluentpsCA
   secretName: ca-key-pair
   duration: 45800h
   renewBefore: 100h

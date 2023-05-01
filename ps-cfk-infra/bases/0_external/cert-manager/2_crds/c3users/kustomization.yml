@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - tls-client.yml
   - tls-nermin.yml
+  - tls-niyi.yml

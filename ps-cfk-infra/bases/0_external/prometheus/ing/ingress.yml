@@ -11,10 +11,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - prometheus.kafka.nermdev.io
-        - grafana.kafka.nermdev.io
+        - prometheus.confluentps.io
+        - grafana.confluentps.io
   rules:
-    - host: prometheus.nermdev.io
+    - host: prometheus.confluentps.io
       http:
         paths:
           - backend:
@@ -23,7 +23,7 @@ spec:
                 port:
                   number: 80
             pathType: ImplementationSpecific
-    - host: grafana.nermdev.io
+    - host: grafana.confluentps.io
       http:
         paths:
           - backend:

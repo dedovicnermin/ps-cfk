@@ -23,14 +23,32 @@ spec:
           - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
       tls:
         enabled: true
-  dependencies:
-    zookeeper:
-      endpoint: zookeeper.confluent.svc.cluster.local:2182
-      authentication:
-        type: mtls
-      tls:
-        enabled: true
   podTemplate:
+    tolerations:
+      - key: app
+        operator: Equal
+        value: kafka
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kafka
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - kafka
+                    - zookeeper
+
     resources:
       requests:
         cpu: 500m

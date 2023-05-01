@@ -3,11 +3,8 @@ kind: Kustomization
 
 
 resources:
-  - dev.yml
-  - test.yml
-  - dr.yml
-  - ../../../../../bases/external/prometheus
-  - ../../../../../bases/external/grafana
-  - ../../../../../bases/external/openldap
-  - ../../../../../bases/external/ingress-nginx
-  - ../../../../../bases/confluent-operator
+  - ../../../../bases/0_external/openldap
+  - ../../../../bases/0_external/ingress-nginx
+  - ../../../../bases/0_external/prometheus
+  - ../../../../bases/0_external/grafana
+  - ../../../../bases/1_operator

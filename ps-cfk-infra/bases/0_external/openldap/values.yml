@@ -76,13 +76,13 @@ tls:
     -----END CERTIFICATE-----
 env:
   LDAP_ORGANISATION: "Test Inc."
-  LDAP_DOMAIN: "nermdev.io"
+  LDAP_DOMAIN: "confluentps.io"
   LDAP_ADMIN_PASSWORD: "admin-secret"
   LDAP_CONFIG_PASSWORD: "config-secret"
   LDAP_READONLY_USER: "true"
   LDAP_READONLY_USER_USERNAME: "mds"
   LDAP_READONLY_USER_PASSWORD: "mds-secret"
-  LDAP_BASE_DN: "dc=nermdev,dc=io"
+  LDAP_BASE_DN: "dc=confluentps,dc=io"
 
 
 # Adding integer before ldif name to allow sequence order.
@@ -176,7 +176,19 @@ ldifs:
     objectClass: posixGroup
     cn: cp
     gidNumber: 5000
-  013_alice.ldif:  |-
+  013_developer_group: |-
+    dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: developers
+    gidNumber: 5000
+  014_admin_group: |-
+    dn: cn=admins,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: developers
+    gidNumber: 5000
+  015_alice.ldif:  |-
     dn: cn=alice,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -192,7 +204,7 @@ ldifs:
     gecos: alice
     loginShell: /bin/bash
     homeDirectory: /home/alice
-  014_james.ldif:  |-
+  016_james.ldif:  |-
     dn: cn=james,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -208,7 +220,7 @@ ldifs:
     gecos: james
     loginShell: /bin/bash
     homeDirectory: /home/james
-  015_client.ldif: |-
+  017_client.ldif: |-
     dn: cn=client,ou=users,{{ LDAP_BASE_DN }}
     userPassword: client-secret
     objectClass: inetOrgPerson
@@ -224,7 +236,7 @@ ldifs:
     gecos: client
     loginShell: /bin/bash
     homeDirectory: /home/client
-  016_nermin.ldif: |-
+  018_nermin.ldif: |-
     dn: cn=nermin,ou=users,{{ LDAP_BASE_DN }}
     userPassword: nermin-secret
     objectClass: inetOrgPerson
@@ -240,7 +252,23 @@ ldifs:
     gecos: nermin
     loginShell: /bin/bash
     homeDirectory: /home/nermin
-  017_nejra.ldif: |-
+  019_niyi.ldif: |-
+    dn: cn=niyi,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: niyi-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: niyi
+    sn: LookingGlass
+    givenName: niyi
+    cn: niyi
+    displayName: Niyi
+    uidNumber: 11003
+    gidNumber: 5000
+    gecos: niyi
+    loginShell: /bin/bash
+    homeDirectory: /home/niyi
+  020_nejra.ldif: |-
     dn: cn=nejra,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -256,7 +284,7 @@ ldifs:
     gecos: nejra
     loginShell: /bin/bash
     homeDirectory: /home/nejra
-  018_alex.ldif: |-
+  021_alex.ldif: |-
     dn: cn=alex,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -272,7 +300,7 @@ ldifs:
     gecos: alex
     loginShell: /bin/bash
     homeDirectory: /home/alex
-  019_kafka_user.ldif: |-
+  022_kafka_user.ldif: |-
     dn: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -288,7 +316,7 @@ ldifs:
     gecos: kafka
     loginShell: /bin/bash
     homeDirectory: /home/kafka
-  020_sr_user.ldif: |-
+  023_sr_user.ldif: |-
     dn: cn=sr,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -304,7 +332,7 @@ ldifs:
     gecos: sr
     loginShell: /bin/bash
     homeDirectory: /home/sr
-  021_connect_user.ldif: |-
+  024_connect_user.ldif: |-
     dn: cn=connect,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -320,7 +348,7 @@ ldifs:
     gecos: connect
     loginShell: /bin/bash
     homeDirectory: /home/connect
-  022_ksql_user.ldif: |-
+  025_ksql_user.ldif: |-
     dn: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -336,7 +364,7 @@ ldifs:
     gecos: ksql
     loginShell: /bin/bash
     homeDirectory: /home/ksql
-  023_c3_user.ldif: |-
+  026_c3_user.ldif: |-
     dn: cn=c3,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -352,7 +380,7 @@ ldifs:
     gecos: c3
     loginShell: /bin/bash
     homeDirectory: /home/c3
-  024_krp_user.ldif: |-
+  027_krp_user.ldif: |-
     dn: cn=krp,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -368,7 +396,7 @@ ldifs:
     gecos: krp
     loginShell: /bin/bash
     homeDirectory: /home/krp
-  025_cl_user.ldif: |-
+  028_cl_user.ldif: |-
     dn: cn=cl,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -384,7 +412,7 @@ ldifs:
     gecos: cl
     loginShell: /bin/bash
     homeDirectory: /home/cl
-  026_se_user.ldif: |-
+  029_se_user.ldif: |-
     dn: cn=se,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -400,7 +428,87 @@ ldifs:
     gecos: se
     loginShell: /bin/bash
     homeDirectory: /home/se
-  027_addgroup.ldif:  |-
+  030_dev1_user.ldif: |-
+    dn: cn=dev1,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev1
+    sn: LookingGlass
+    givenName: Developer_1
+    cn: dev1
+    displayName: Developer number 1
+    uidNumber: 10014
+    gidNumber: 5000
+    userPassword: dev1-secret
+    gecos: dev1
+    loginShell: /bin/bash
+    homeDirectory: /home/dev1
+  031_dev2_user.ldif: |-
+    dn: cn=dev2,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev2
+    sn: LookingGlass
+    givenName: Developer_2
+    cn: dev2
+    displayName: Developer number 2
+    uidNumber: 10015
+    gidNumber: 5000
+    userPassword: dev2-secret
+    gecos: dev2
+    loginShell: /bin/bash
+    homeDirectory: /home/dev2
+  032_dev3_user.ldif: |-
+    dn: cn=dev3,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev3
+    sn: LookingGlass
+    givenName: Developer_3
+    cn: dev3
+    displayName: Developer number 3
+    uidNumber: 10016
+    gidNumber: 5000
+    userPassword: dev3-secret
+    gecos: dev3
+    loginShell: /bin/bash
+    homeDirectory: /home/dev3
+  033_admin1_user.ldif: |-
+    dn: cn=admin1,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: admin1
+    sn: LookingGlass
+    givenName: Admin_1
+    cn: admin1
+    displayName: Admin number 1
+    uidNumber: 10017
+    gidNumber: 5000
+    userPassword: admin1-secret
+    gecos: admin1
+    loginShell: /bin/bash
+    homeDirectory: /home/admin1
+  034_admin2_user.ldif: |-
+    dn: cn=admin2,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: admin2
+    sn: LookingGlass
+    givenName: Admin_2
+    cn: admin2
+    displayName: Admin number 2
+    uidNumber: 10018
+    gidNumber: 5000
+    userPassword: admin2-secret
+    gecos: admin2
+    loginShell: /bin/bash
+    homeDirectory: /home/admin2
+  035_addgroup.ldif:  |-
     dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
     add: memberuid
@@ -430,6 +538,11 @@ ldifs:
     changetype: modify
     add: memberuid
     memberuid: cn=nermin,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=niyi,ou=users,{{ LDAP_BASE_DN }}    
     
     dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
@@ -471,3 +584,27 @@ ldifs:
     add: memberuid
     memberuid: cn=se,ou=users,{{ LDAP_BASE_DN }}    
     
+    dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=dev1,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=dev2,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=dev3,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=admins,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=admin1,ou=users,{{ LDAP_BASE_DN }}
+    
+    dn: cn=admins,ou=groups,{{ LDAP_BASE_DN }}
+    changetype: modify
+    add: memberuid
+    memberuid: cn=admin2,ou=users,{{ LDAP_BASE_DN }}

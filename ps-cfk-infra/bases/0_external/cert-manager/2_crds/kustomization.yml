@@ -8,3 +8,5 @@ resources:
   - cp
   - c3users
   - readonly
+  - admins
+  - developers

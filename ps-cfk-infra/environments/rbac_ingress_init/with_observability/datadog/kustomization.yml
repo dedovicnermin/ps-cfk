@@ -3,8 +3,7 @@ kind: Kustomization
 
 
 resources:
-  - ../../../bases/external/datadog
-  - ../../../bases/external/openldap
-  - ../../../bases/external/ingress-nginx
-  - dr.yml
-  - ../../../bases/confluent-operator
+  - ../../../../bases/0_external/datadog
+  - ../../../../bases/0_external/openldap
+  - ../../../../bases/0_external/ingress-nginx
+  - ../../../../bases/1_operator

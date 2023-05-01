@@ -3,61 +3,33 @@ kind: SchemaRegistry
 metadata:
   name: sr
 spec:
-  mountedSecrets:
-    - secretRef: confluent-secrets
   authorization:
     type: rbac
   podTemplate:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - general
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                    - sr
+    resources:
+      requests:
+        cpu: 100m
+        memory: 216Mi
   dependencies:
     mds:
-      endpoint: https://kafka.confluent.svc.cluster.local:8090
+      endpoint: https://kafka.dev.svc.cluster.local:8090
       tokenKeyPair:
         secretRef: mds-token
       authentication:
         type: bearer
         bearer:
           secretRef: mds-sr
-
       tls:
         enabled: true
-
     kafka:
       authentication:
         type: oauthbearer
         oauthbearer:
           secretRef: mds-sr
-      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9073
+      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
       tls:
         enabled: true
   configOverrides:
-#    log4j:
-#      - log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-#      - log4j.appender.stdout.layout=org.apache.log4j.EnhancedPatternLayout
-#      - |
-#        log4j.appender.stdout.layout.ConversionPattern={"debug_level":"%p","debug_timestamp":"%d{ISO8601}","debug_thread":"%t","debug_file":"%F", "debug_line":"%L","debug_message":"%m"}%n
-#      - log4j.rootLogger=INFO, stdout
-#      - log4j.logger.org.apache.zookeeper=ERROR, stdout
-#      - log4j.logger.org.I0Itec.zkclient=ERROR, stdout
-#      - log4j.logger.org.reflections=ERROR, stdout
     server:
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
-#      - resource.extension.class=io.confluent.kafka.schemaregistry.rulehandler.RuleSetResourceExtension,io.confluent.kafka.schemaregistry.security.SchemaRegistrySecurityResourceExtension,io.confluent.schema.exporter.SchemaExporterResourceExtension
