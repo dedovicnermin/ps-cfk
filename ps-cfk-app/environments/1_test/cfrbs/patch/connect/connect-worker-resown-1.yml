@@ -1,0 +1,11 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: connect-worker-resown-1
+spec:
+  clustersScopeByIds:
+    connectClusterId: test.connect
+
+
+
+

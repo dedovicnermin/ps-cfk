@@ -1,7 +1,7 @@
 kind: ConfluentRolebinding
 apiVersion: platform.confluent.io/v1beta1
 metadata:
-  name: cp-sysadm-1
+  name: cp-resown-1
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_dev
+    schemaRegistryClusterId: id_sr_test

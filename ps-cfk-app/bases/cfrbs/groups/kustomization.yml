@@ -7,4 +7,4 @@ resources:
   - readonlyusers/readonlyusers-resown-0.yml
   - readonlyusers/readonlyusers-devrwrite-0.yml
   - cp/cp-resown-0.yml
-  - cp/cp-sysadm-1.yml
+  - cp/cp-resown-1.yml
