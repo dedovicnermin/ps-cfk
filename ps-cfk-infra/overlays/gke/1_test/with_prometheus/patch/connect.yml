@@ -32,11 +32,6 @@ spec:
       - consumer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - consumer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
       - consumer.confluent.monitoring.interceptor.client.id=connect.monitoring.consumer.interceptor
-
-  build:
-    type: onDemand
-    onDemand:
-      storageLimit: 256Mi
   podTemplate:
     resources:
       requests:
