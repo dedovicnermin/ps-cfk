@@ -4,4 +4,4 @@ metadata:
   name: ksqldb-sysadm-2
 spec:
   clustersScopeByIds:
-    connectClusterId: qa.connect
+    connectClusterId: prod.connect

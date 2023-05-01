@@ -4,4 +4,4 @@ metadata:
   name: readonly-resown-0
 spec:
   clustersScopeByIds:
-    ksqlClusterId: qa.ksql_
+    ksqlClusterId: prod.ksql_

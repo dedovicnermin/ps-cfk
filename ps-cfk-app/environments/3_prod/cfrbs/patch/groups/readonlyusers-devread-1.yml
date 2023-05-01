@@ -4,4 +4,4 @@ metadata:
   name: readonly-devread-1
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_qa
+    schemaRegistryClusterId: id_sr_prod

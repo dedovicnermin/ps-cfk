@@ -4,4 +4,4 @@ metadata:
   name: evntsuper-sysadm-1
 spec:
   clustersScopeByIds:
-    connectClusterId: qa.connect
+    connectClusterId: prod.connect

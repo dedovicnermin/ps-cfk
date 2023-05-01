@@ -4,4 +4,4 @@ metadata:
   name: evntsuper-sysadm-3
 spec:
   clustersScopeByIds:
-    ksqlClusterId: qa.ksql_
+    ksqlClusterId: prod.ksql_

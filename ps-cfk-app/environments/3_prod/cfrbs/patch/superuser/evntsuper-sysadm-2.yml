@@ -4,4 +4,4 @@ metadata:
   name: evntsuper-sysadm-2
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_qa
+    schemaRegistryClusterId: id_sr_prod

@@ -4,4 +4,4 @@ metadata:
   name: schemaregistry-sysadm-0
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_qa
+    schemaRegistryClusterId: id_sr_prod

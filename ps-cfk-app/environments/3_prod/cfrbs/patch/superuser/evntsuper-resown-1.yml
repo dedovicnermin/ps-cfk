@@ -4,4 +4,4 @@ metadata:
   name: evntsuper-resown-1
 spec:
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_qa
+    schemaRegistryClusterId: id_sr_prod

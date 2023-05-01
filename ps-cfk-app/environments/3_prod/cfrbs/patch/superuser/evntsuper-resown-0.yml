@@ -4,4 +4,4 @@ metadata:
   name: evntsuper-resown-0
 spec:
   clustersScopeByIds:
-    ksqlClusterId: qa.ksql_
+    ksqlClusterId: prod.ksql_
