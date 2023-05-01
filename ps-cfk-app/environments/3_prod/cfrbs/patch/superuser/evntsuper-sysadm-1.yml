@@ -1,0 +1,7 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: evntsuper-sysadm-1
+spec:
+  clustersScopeByIds:
+    connectClusterId: qa.connect

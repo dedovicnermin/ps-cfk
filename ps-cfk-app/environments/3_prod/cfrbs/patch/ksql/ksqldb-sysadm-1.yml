@@ -1,0 +1,7 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: ksqldb-sysadm-1
+spec:
+  clustersScopeByIds:
+    schemaRegistryClusterId: id_sr_qa

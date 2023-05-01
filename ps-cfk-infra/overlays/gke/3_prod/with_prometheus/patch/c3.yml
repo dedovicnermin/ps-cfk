@@ -1,0 +1,52 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ControlCenter
+metadata:
+  name: c3
+spec:
+  authorization:
+    type: rbac
+  dataVolumeCapacity: 100Gi
+  configOverrides:
+    server:
+      - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
+      - confluent.controlcenter.mode.enable=management
+  #      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
+  #      - confluent.metadata.enable.server.urls.refresh=false
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka.prod.svc.cluster.local:9073
+      authentication:
+        type: oauthbearer
+        oauthbearer:
+          secretRef: mds-c3
+      tls:
+        enabled: true
+    mds:
+      endpoint: https://kafka.prod.svc.cluster.local:8090
+      tokenKeyPair:
+        secretRef: mds-token
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-c3
+      tls:
+        enabled: true
+    connect:
+      - name: connect
+        url: https://connect.prod.svc.cluster.local:8083
+        tls:
+          enabled: true
+    ksqldb:
+      - name: ksql
+        url: https://ksql.prod.svc.cluster.local:8088
+        tls:
+          enabled: true
+    schemaRegistry:
+      url: https://sr.prod.svc.cluster.local:8081
+      tls:
+        enabled: true
