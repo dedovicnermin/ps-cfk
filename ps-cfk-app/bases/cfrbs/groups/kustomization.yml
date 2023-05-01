@@ -2,8 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - readonlyusers-devread-0.yml
-  - readonlyusers-devread-1.yml
-  - readonlyusers-resown-0.yml
-  - readonlyusers-devrwrite-0.yml
-  - cp-resown-0.yml
+  - readonlyusers/readonlyusers-devread-0.yml
+  - readonlyusers/readonlyusers-devread-1.yml
+  - readonlyusers/readonlyusers-resown-0.yml
+  - readonlyusers/readonlyusers-devrwrite-0.yml
+  - cp/cp-resown-0.yml
+  - cp/cp-sysadm-1.yml

@@ -2,22 +2,10 @@ apiVersion: platform.confluent.io/v1beta1
 kind: ConfluentRolebinding
 metadata:
   name: connect-worker-resown-1
-  labels:
-    principal: connect
-    type: connect
-    role: resourceowner
-    cscope: kafkaconnect
 spec:
-  principal:
-    name: connect
-    type: user
   clustersScopeByIds:
-    connectClusterId: confluent.connect
-  resourcePatterns:
-    - name: '*'
-      resourceType: Connector
-      patternType: LITERAL
-  role: ResourceOwner
+    connectClusterId: dev.connect
+
 
 
 

@@ -2,18 +2,6 @@ kind: ConfluentRolebinding
 apiVersion: platform.confluent.io/v1beta1
 metadata:
   name: evntsuper-resown-0
-  labels:
-    principal: nermin
-    role: resourceowner
-    cscope: kafkaksql
 spec:
-  principal:
-    name: nermin
-    type: user
   clustersScopeByIds:
-    ksqlClusterId: confluent.ksql_
-  resourcePatterns:
-    - name: ksql-cluster
-      resourceType: KsqlCluster
-      patternType: LITERAL
-  role: ResourceOwner
+    ksqlClusterId: dev.ksql_

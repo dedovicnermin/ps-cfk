@@ -2,19 +2,6 @@ kind: ConfluentRolebinding
 apiVersion: platform.confluent.io/v1beta1
 metadata:
   name: readonly-resown-0
-  labels:
-    principal: readonlyusers
-    role: resourceowner
-    cscope: kafkaksql
-    group: "true"
 spec:
-  principal:
-    name: readonlyusers
-    type: group
   clustersScopeByIds:
-    ksqlClusterId: confluent.ksql_
-  resourcePatterns:
-    - name: ksql-cluster
-      resourceType: KsqlCluster
-      patternType: LITERAL
-  role: ResourceOwner
+    ksqlClusterId: dev.ksql_

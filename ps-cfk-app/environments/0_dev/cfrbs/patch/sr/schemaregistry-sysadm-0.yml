@@ -2,15 +2,6 @@ apiVersion: platform.confluent.io/v1beta1
 kind: ConfluentRolebinding
 metadata:
   name: schemaregistry-sysadm-0
-  labels:
-    principal: sr
-    role: systemadmin
-    cscope: kafkasr
-    type: schemaregistry
 spec:
-  principal:
-    type: user
-    name: sr
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_confluent
-  role: SystemAdmin
+    schemaRegistryClusterId: id_sr_dev

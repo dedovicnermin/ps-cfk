@@ -1,20 +1,7 @@
 kind: ConfluentRolebinding
 apiVersion: platform.confluent.io/v1beta1
 metadata:
-  name: readonly-sysadm-1
-  labels:
-    principal: cp
-    role: systemadmin
-    cscope: kafkasr
-    group: "true"
+  name: cp-sysadm-1
 spec:
-  principal:
-    name: cp
-    type: group
   clustersScopeByIds:
-    schemaRegistryClusterId: id_sr_confluent
-  resourcePatterns:
-    - name: '*'
-      resourceType: Subject
-      patternType: LITERAL
-  role: SystemAdmin
+    schemaRegistryClusterId: id_sr_dev

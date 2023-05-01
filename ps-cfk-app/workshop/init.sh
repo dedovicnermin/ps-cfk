@@ -2,13 +2,7 @@
 
 #set -n
 
-declare -A principals
-principals[readonlyusers]="alex-secret"
-principals[c3users]="james-secret"
-principals[cp]="kafka-secret"
-principals[nermin]="nermin-secret"
-principals[client]="client-secret"
-principals[nejra]="nejra-secret"
+
 
 
 extract_credentials() {
@@ -31,11 +25,10 @@ extract_principal_mtls_sasl_ssl_credentials() {
 }
 
 
-#extract_principal_mtls_sasl_ssl_credentials tls-nermin users/nermin nermin nermin-secret
+#extract_principal_mtls_sasl_ssl_credentials tls-nermin nermin
 
-#extract_principal_mtls_sasl_ssl_credentials tls-nejra users/nejra nejra nejra-secret
+#extract_principal_mtls_sasl_ssl_credentials tls-nejra nejra
 
 
-extract_principal_mtls_sasl_ssl_credentials tls-client users/client client client-secret
+extract_principal_mtls_sasl_ssl_credentials "$1" $2
 
-#extract_principal_mtls_sasl
