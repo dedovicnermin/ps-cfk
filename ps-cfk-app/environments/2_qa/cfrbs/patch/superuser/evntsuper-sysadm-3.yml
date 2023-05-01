@@ -1,0 +1,7 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: evntsuper-sysadm-3
+spec:
+  clustersScopeByIds:
+    ksqlClusterId: qa.ksql_

@@ -1,0 +1,7 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: evntsuper-resown-1
+spec:
+  clustersScopeByIds:
+    schemaRegistryClusterId: id_sr_qa
