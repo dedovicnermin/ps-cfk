@@ -10,7 +10,7 @@ dns[2]="b2.$NAMESPACE.$SITE.confluentps.io"
 dns[3]="bootstrap.$NAMESPACE.$SITE.confluentps.io"
 
 i=0
-kubectl get services -n qa -o json | jq -r '.items[] | .status.loadBalancer?|.ingress[]?|.ip' | while read line; do
+kubectl get services -n "$NAMESPACE" -o json | jq -r '.items[] | .status.loadBalancer?|.ingress[]?|.ip' | while read line; do
   echo "$line ${dns[$i]}"
   let "i+=1"
 done
