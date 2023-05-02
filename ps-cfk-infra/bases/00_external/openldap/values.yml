@@ -176,17 +176,17 @@ ldifs:
     objectClass: posixGroup
     cn: cp
     gidNumber: 5000
-  013_developer_group: |-
+  013_developers_group.ldif: |-
     dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
     objectClass: top
     objectClass: posixGroup
     cn: developers
     gidNumber: 5000
-  014_admin_group: |-
+  014_admins_group.ldif: |-
     dn: cn=admins,ou=groups,{{ LDAP_BASE_DN }}
     objectClass: top
     objectClass: posixGroup
-    cn: developers
+    cn: admins
     gidNumber: 5000
   015_alice.ldif:  |-
     dn: cn=alice,ou=users,{{ LDAP_BASE_DN }}
@@ -542,7 +542,7 @@ ldifs:
     dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
     add: memberuid
-    memberuid: cn=niyi,ou=users,{{ LDAP_BASE_DN }}    
+    memberuid: cn=niyi,ou=users,{{ LDAP_BASE_DN }}
     
     dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
@@ -582,7 +582,7 @@ ldifs:
     dn: cn=cp,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
     add: memberuid
-    memberuid: cn=se,ou=users,{{ LDAP_BASE_DN }}    
+    memberuid: cn=se,ou=users,{{ LDAP_BASE_DN }}
     
     dn: cn=developers,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
