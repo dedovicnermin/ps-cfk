@@ -1,0 +1,27 @@
+kind: ConfluentRolebinding
+apiVersion: platform.confluent.io/v1beta1
+metadata:
+  name: admins-resown-0
+  labels:
+    principal: admins
+    role: systemadmin
+    cscope: kafka
+spec:
+  principal:
+    name: admins
+    type: group
+  role: ResourceOwner
+  resourcePatterns:
+    - name: '*'
+      resourceType: Topic
+      patternType: LITERAL
+    - name: '*'
+      resourceType: Group
+      patternType: LITERAL
+    - name: '*'
+      resourceType: TransactionalId
+      patternType: LITERAL
+    - name: 'kafka-cluster'
+      resourceType: Cluster
+      patternType: LITERAL
+---
