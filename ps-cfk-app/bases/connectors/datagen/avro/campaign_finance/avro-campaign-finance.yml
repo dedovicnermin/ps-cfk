@@ -1,0 +1,19 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: avro.campaign.finance
+spec:
+  class: "io.confluent.kafka.connect.datagen.DatagenConnector"
+  taskMax: 1
+  configs:
+    kafka.topic: "avro.campaign.finance"
+    quickstart: "campaign_finance"
+    key.converter: "org.apache.kafka.connect.storage.StringConverter"
+    value.converter: "io.confluent.connect.avro.AvroConverter"
+    max.interval: "10000"
+    iterations: "10000"
+    schema.compatibility: "BACKWARD"
+
+
+
+---

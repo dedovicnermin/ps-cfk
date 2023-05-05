@@ -1,0 +1,19 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: avro.field.mngnt.sensor
+  labels:
+    family: fleet
+spec:
+  class: "io.confluent.kafka.connect.datagen.DatagenConnector"
+  taskMax: 1
+  configs:
+    kafka.topic: "avro.field.mngnt.sensors"
+    quickstart: "fleet_mgmt_sensors"
+    key.converter: "org.apache.kafka.connect.storage.StringConverter"
+    value.converter: "io.confluent.connect.avro.AvroConverter"
+    max.interval: "1000"
+    iterations: "10000"
+    schema.compatibility: "BACKWARD"
+
+

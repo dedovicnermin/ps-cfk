@@ -1,0 +1,24 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  labels:
+    conntype: source
+  name: basesr
+spec:
+  configs:
+    value.converter.schema.registry.url: https://sr.confluent.svc.cluster.local:8081
+    value.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
+    value.converter.schema.registry.basic.auth.user.info: nermin:nermin-secret
+    value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    value.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
+
+  connectRest:
+    authentication:
+      type: bearer
+      bearer:
+        secretRef: mds-connect
+    tls:
+      secretRef: tls-connect
+    endpoint: https://connect.confluent.svc.cluster.local:8083
+
+

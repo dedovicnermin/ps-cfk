@@ -1,0 +1,44 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  labels:
+    conntype: source
+  name: basesr
+spec:
+  configs:
+    confluent.topic.bootstrap.servers: kafka.confluent.svc.cluster.local:9073
+    confluent.topic.security.protocol: SASL_SSL
+    confluent.topic.ssl.truststore.location: /mnt/sslcerts/truststore.p12
+    confluent.topic.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+    confluent.topic.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    confluent.topic.sasl.mechanism: OAUTHBEARER
+    confluent.topic.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.confluent.svc.cluster.local:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+    value.converter.schema.registry.url: https://sr.confluent.svc.cluster.local:8081
+    value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-nermin/truststore.p12
+    value.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
+    value.converter.schema.registry.ssl.truststore.type: "PKCS12"
+    value.converter.basic.auth.credentials.source: "USER_INFO"
+    value.converter.basic.auth.user.info: |
+      connect:connect-secret
+    producer.override.bootstrap.servers: kafka.confluent.svc.cluster.local:9073
+    producer.override.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    producer.override.ssl.truststore.password: |
+      ${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}
+    producer.override.ssl.truststore.type: PKCS12
+    producer.override.sasl.mechanism: OAUTHBEARER
+    producer.override.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    producer.override.security.protocol: SASL_SSL
+    producer.override.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.confluent.svc.cluster.local:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+
+  connectRest:
+    authentication:
+      type: bearer
+      bearer:
+        secretRef: mds-connect
+    tls:
+      secretRef: tls-connect
+    endpoint: https://connect.confluent.svc.cluster.local:8083
+
+

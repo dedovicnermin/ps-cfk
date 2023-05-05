@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  schema: avro
+
+resources:
+  - campaign_finance
+  - product
+  - credit_cards
+  - fleet_mngnt_location
+  - fleet_mngnt_sensors
+  - fleet_mngnt_description
+  - shoe_clickstream
+  - shoe_customers
+  - shoe_orders
+  - clickstream_users
+  - clickstream_codes
+  - clickstream_events
+

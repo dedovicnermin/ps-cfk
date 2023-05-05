@@ -1,0 +1,56 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  labels:
+    conntype: sink
+  name: base
+spec:
+  configs:
+    reporter.bootstrap.servers: kafka.confluent.svc.cluster.local:9073
+    reporter.result.topic.name: reporter.${connector}.success
+    reporter.result.topic.replication.factor: "2"
+    reporter.error.topic.replication.factor: "2"
+    reporter.error.topic.name: reporter.${connector}.error
+    reporter.admin.bootstrap.servers: kafka.confluent.svc.cluster.local:9073
+    reporter.admin.security.protocol: SASL_SSL
+    reporter.admin.sasl.mechanism: OAUTHBEARER
+    reporter.admin.ssl.truststore.location: /mnt/sslcerts/truststore.p12
+    reporter.admin.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+    reporter.admin.ssl.truststore.type: PKCS12
+    reporter.admin.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.confluent.svc.cluster.local:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+    reporter.admin.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    reporter.producer.bootstrap.servers: kafka.<>.svc.cluster.local:9073
+    reporter.producer.security.protocol: SASL_SSL
+    reporter.producer.sasl.mechanism: OAUTHBEARER
+    reporter.producer.ssl.truststore.location: /mnt/sslcerts/truststore.p12
+    reporter.producer.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+    reporter.producer.ssl.truststore.type: PKCS12
+    reporter.producer.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.confluent.svc.cluster.local:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+    reporter.producer.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    errors.tolerance: "all"
+    errors.deadletterqueue.topic.replication.factor: "3"
+    errors.deadletterqueue.context.headers.enable: "true"
+    errors.log.include.messages: "true"
+    errors.retry.delay.max.ms: "60000"
+    errors.retry.timeout: "300000"
+
+    value.converter.schema.registry.url: https://sr.confluent.svc.cluster.local:8081
+    value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    value.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
+    value.converter.schema.registry.ssl.truststore.type: "PKCS12"
+    value.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
+    value.converter.schema.registry.basic.auth.user.info: nermin:nermin-secret
+
+  connectRest:
+    authentication:
+      type: bearer
+      bearer:
+        secretRef: mds-connect
+    tls:
+      secretRef: tls-connect
+    endpoint: https://connect.confluent.svc.cluster.local:8083
+  connectClusterRef:
+    name: connect
+
