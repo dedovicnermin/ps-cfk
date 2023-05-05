@@ -1,11 +1,13 @@
+#!/usr/bin/env bash
+
 env=$1
 site=$2
 topic=$3
-key_serializer=$4
+key_deserializer=$4
 
-if [ -z $key_serializer ]; then
+if [ -z $key_deserializer ]; then
   kafka-avro-console-consumer \
-      --bootstrap-server bootstrap.plain.kafka.nermdev.io:9092 \
+      --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 \
       --topic "$topic"  \
       --property schema.registry.url=https://sr.$env.$site.confluentps.io \
       --property schema.registry.ssl.truststore.location=truststore.jks \
@@ -20,7 +22,7 @@ if [ -z $key_serializer ]; then
 else
 
   kafka-avro-console-consumer \
-        --bootstrap-server bootstrap.plain.kafka.nermdev.io:9092 \
+        --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 \
         --topic "$topic"  \
         --property schema.registry.url=https://sr.$env.$site.confluentps.io \
         --property schema.registry.ssl.truststore.location=truststore.jks \
@@ -33,7 +35,7 @@ else
         --property print.key=true \
         --property print.schema.ids=true \
         --property schema.id.separator=: \
-        --property key.deserializer=org.apache.kafka.common.serialization.$key_serializer
+        --property key.deserializer=org.apache.kafka.common.serialization."$key_deserializer"
 fi
 
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 env=$1
 site=$2
 topic=$3
@@ -5,7 +7,7 @@ schema_id=$4
 
 
 kafka-avro-console-producer \
-    --bootstrap-server bootstrap.$env.$site.confluentps.io:9092 --topic "$topic" \
+    --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 --topic "$topic" \
     --property value.schema.id="$schema_id" \
     --producer.config sasl_ssl.properties \
     --property schema.registry.url="https://sr.$env.$site.confluentps.io" \
