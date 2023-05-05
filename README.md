@@ -28,8 +28,10 @@ mv $TARGET/license-secret_changeme_and_rename_to_license-secret.yml $TARGET/lice
 
 ![tf_gke](assets/tf_gke.gif)
 
-
 <br>
+
+> **NOTE:** `terraform init` will not work if you have not authenticated with `gcloud` cli or if your accound does not have the required APIs enabled to deploy GKE.
+
 <br>
 <br>
 <br>
@@ -43,7 +45,7 @@ mv $TARGET/license-secret_changeme_and_rename_to_license-secret.yml $TARGET/lice
 <br>
 
 
-> **NOTE:** `terraform init` will not work if you have not authenticated with `gcloud` cli or if your accound does not have the required APIs enabled to deploy GKE. 
+
 
 
 <br>
@@ -83,12 +85,31 @@ mv $TARGET/license-secret_changeme_and_rename_to_license-secret.yml $TARGET/lice
 <br>
 <br>
 <br>
-<br>
 <hr>
 
 
 
 
-## Misc: Inspect ldap entries with `ldapsearch` 
+## Misc: Inspect ldap entries with `ldapsearch`
+
 
 ![ldapsearch](assets/ldapsearch.gif)
+
+<br>
+<br>
+<br>
+<br>
+<hr>
+
+## Misc: Datagen connectors
+
+![datagen](assets/connectors_datagen.gif)
+
+
+<br>
+<br>
+<br>
+<hr>
+
+
+> **NOTE:** [avro](ps-cfk-app/bases/connectors/datagen/avro/kustomization.yml) and [protobuf](ps-cfk-app/bases/connectors/datagen/protobuf/kustomization.yml) can be modified to include/exclude connectors that get deployed. Connectors deployed determined by values listed under `resources`   
