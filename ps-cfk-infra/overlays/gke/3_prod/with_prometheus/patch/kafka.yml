@@ -37,7 +37,7 @@ spec:
         nodePort:
           externalTrafficPolicy: Cluster
           host: mds.prod.gke.confluentps.io
-          nodePortOffset: 30001
+          nodePortOffset: 30031
       authentication:
         type: bearer
 
