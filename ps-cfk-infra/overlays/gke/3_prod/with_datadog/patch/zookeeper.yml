@@ -1,0 +1,16 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+spec:
+  podTemplate:
+    labels:
+      tags.datadoghq.com/env: "prod"
+      tags.datadoghq.com/site: "gke"
+    annotations:
+      ad.datadoghq.com/tags: |
+        {"env": "prod","application": "confluent-ps-cfk", "site": "gke"}
+    resources:
+      requests:
+        cpu: 200m
+        memory: 216Mi

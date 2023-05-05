@@ -1,0 +1,79 @@
+#helm install ingress-nginx ingress-nginx/ingress-nginx \
+#--set controller.extraArgs.enable-ssl-passthrough="true"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qa-ingress-brokers
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - mds.qa.gke.confluentps.io
+        - connect.qa.gke.confluentps.io
+        - sr.qa.gke.confluentps.io
+        - c3.qa.gke.confluentps.io
+        - ksql.qa.gke.confluentps.io
+        - krp.qa.gke.confluentps.io
+  rules:
+    - host: mds.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: kafka-mds-bootstrap-np
+                port:
+                  number: 8090
+            pathType: ImplementationSpecific
+
+    - host: connect.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: connect-0-internal
+                port:
+                  number: 8083
+            pathType: ImplementationSpecific
+    - host: sr.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: sr-0-internal
+                port:
+                  number: 8081
+            pathType: ImplementationSpecific
+    - host: c3.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: c3-0-internal
+                port:
+                  number: 9021
+            pathType: ImplementationSpecific
+
+    - host: ksql.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: ksql-0-internal
+                port:
+                  number: 8088
+            pathType: ImplementationSpecific
+    - host: krp.qa.gke.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: krp-0-internal
+                port:
+                  number: 8082
+            pathType: ImplementationSpecific

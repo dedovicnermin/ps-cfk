@@ -1,0 +1,52 @@
+
+agents:
+  image:
+    tagSuffix: jmx
+    repository: docker.io/datadog/agent
+  tolerations:
+    - effect: NoSchedule
+      key: app
+      operator: Equal
+      value: zookeeper
+    - effect: NoSchedule
+      key: app
+      operator: Equal
+      value: kafka
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 20%
+clusterChecksRunner:
+  image:
+    repository: docker.io/datadog/agent
+    tagSuffix: jmx
+datadog:
+  apm:
+    enabled: true
+    portEnabled: false
+  apiKey: CHANGEME          # NOTE
+  dogstatsd:
+    tags:
+      - env: pscfk
+      - application: confluent-ps-cfk
+      - site: gke
+  kubeStateMetricsCore:
+    enabled: true
+  kubeStateMetricsEnabled: false
+  kubelet:
+    tlsVerify: false
+  logs:
+    containerCollectAll: false
+    enabled: false
+  tags:
+    - env: pscfk
+    - application: confluent-ps-cfk
+    - site: gke
+targetSystem: linux
+registry: docker.io/datadog
+clusterAgent:
+  repository: docker.io/datadog/agent
+  env:
+    - name: DD_ADMISSION_CONTROLLER_AUTO_INSTRUMENTATION_CONTAINER_REGISTRY
+      value: docker.io/datadog
+image:
+  repository: docker.io/datadog/agent
