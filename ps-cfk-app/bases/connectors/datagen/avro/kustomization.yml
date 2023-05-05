@@ -3,6 +3,7 @@ kind: Kustomization
 
 commonLabels:
   schema: avro
+  plugin: datagen
 
 resources:
   - campaign_finance

@@ -3,6 +3,7 @@ kind: Kustomization
 
 commonLabels:
   schema: protobuf
+  plugin: datagen
 
 resources:
   - stock_trades
