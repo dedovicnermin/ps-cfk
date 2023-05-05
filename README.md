@@ -1,5 +1,18 @@
 # ps-cfk
 
+**BEFORE YOU BEGIN**:
+     
+1. [operator_base](ps-cfk-infra/bases/01_operator/kustomization.yml) expects file `license-secret.yml` to exist.
+2. Paste your license into [license-secret_changeme_and_rename_to_license-secret.yml](ps-cfk-infra/bases/01_operator/license-secret_changeme_and_rename_to_license-secret.yml)
+3. Rename the file to become `license-secret.yml` 
+
+
+```
+export TARGET="ps-cfk-infra/bases/01_operator/"
+mv $TARGET/license-secret_changeme_and_rename_to_license-secret.yml $TARGET/license-secret.yml
+```
+
+
 
 ## GKE Deployment (with prometheus)
 
