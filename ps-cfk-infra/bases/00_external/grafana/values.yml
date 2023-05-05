@@ -1,7 +1,7 @@
 persistence:
   enabled: true
-adminUser: nermin
-adminPassword: nermin-secret
+adminUser: pscfk
+adminPassword: pscfk-secret
 datasources:
   datasources.yaml:
     apiVersion: 1
