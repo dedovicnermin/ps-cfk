@@ -6,4 +6,4 @@ USERNAME=$3
 PASSWORD=$4
 
 
-ksql https://ksql.$NAMESPACE.$SITE.confluentps.io --user $USERNAME --password $PASSWORD --config-file ksql.properties
+ksql https://ksql."$NAMESPACE"."$SITE".confluentps.io --user "$USERNAME" --password "$PASSWORD" --config-file ksql.properties
