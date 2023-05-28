@@ -6,3 +6,4 @@ resources:
   - c3users
   - devs
   - readonlyusers
+  - mds-replicator.yml
