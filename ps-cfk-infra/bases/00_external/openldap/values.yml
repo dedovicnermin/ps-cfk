@@ -428,7 +428,23 @@ ldifs:
     gecos: se
     loginShell: /bin/bash
     homeDirectory: /home/se
-  030_dev1_user.ldif: |-
+  030_replicator_user.ldif: |-
+    dn: cn=replicator,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: replicator
+    sn: LookingGlass
+    givenName: Confluent Replicator
+    cn: replicator
+    displayName: Confluent Replicator
+    uidNumber: 10114
+    gidNumber: 5000
+    userPassword: replicator-secret
+    gecos: replicator
+    loginShell: /bin/bash
+    homeDirectory: /home/replicator
+  031_dev1_user.ldif: |-
     dn: cn=dev1,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -444,7 +460,7 @@ ldifs:
     gecos: dev1
     loginShell: /bin/bash
     homeDirectory: /home/dev1
-  031_dev2_user.ldif: |-
+  032_dev2_user.ldif: |-
     dn: cn=dev2,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -460,7 +476,7 @@ ldifs:
     gecos: dev2
     loginShell: /bin/bash
     homeDirectory: /home/dev2
-  032_dev3_user.ldif: |-
+  033_dev3_user.ldif: |-
     dn: cn=dev3,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -476,7 +492,7 @@ ldifs:
     gecos: dev3
     loginShell: /bin/bash
     homeDirectory: /home/dev3
-  033_admin1_user.ldif: |-
+  034_admin1_user.ldif: |-
     dn: cn=admin1,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -492,7 +508,7 @@ ldifs:
     gecos: admin1
     loginShell: /bin/bash
     homeDirectory: /home/admin1
-  034_admin2_user.ldif: |-
+  035_admin2_user.ldif: |-
     dn: cn=admin2,ou=users,{{ LDAP_BASE_DN }}
     objectClass: inetOrgPerson
     objectClass: posixAccount
@@ -508,7 +524,7 @@ ldifs:
     gecos: admin2
     loginShell: /bin/bash
     homeDirectory: /home/admin2
-  035_addgroup.ldif:  |-
+  036_addgroup.ldif:  |-
     dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
     changetype: modify
     add: memberuid

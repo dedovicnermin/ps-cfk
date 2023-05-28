@@ -8,7 +8,7 @@ owner_label    = "ndedovic"
 node_locations = ["us-central1-c"]
 
 node_count_zk        = 3
-node_machine_type_zk = "e2-small"
+node_machine_type_zk = "e2-medium"
 node_disk_size_gb_zk = "25"
 
 node_count_bk        = 3
