@@ -1,9 +1,11 @@
-# Deletes the specified subject and its associated compatibility lvl if registered.
-# Recomennded to use this API only when a topic needs to be recycled or in dev. env.
-# # $1 == subjectName
+#!/usr/bin/env bash
 
-# Options:
-#   : ?permanent=true
+NAMESPACE=$1
+SITE=$2
+SUBJ=$3
 
 
-curl localhost:8081/subjects/$1
+
+curl -s -k --user nermin:nermin-secret \
+  -X DELETE \
+  https://sr."$NAMESPACE"."$SITE".confluentps.io/subjects/$SUBJ

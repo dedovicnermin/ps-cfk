@@ -1,3 +1,9 @@
-SUBJ=$1
+#!/usr/bin/env bash
 
-curl localhost:8081/mode/$SUBJ
+NAMESPACE=$1
+SITE=$2
+SUBJ=$3
+
+
+curl -s -k --user nermin:nermin-secret \
+  https://sr."$NAMESPACE"."$SITE".confluentps.io/mode/"$SUBJ"

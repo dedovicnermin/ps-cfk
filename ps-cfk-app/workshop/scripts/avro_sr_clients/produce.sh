@@ -7,10 +7,10 @@ schema_id=$4
 
 
 kafka-avro-console-producer \
-    --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 --topic "$topic" \
+    --bootstrap-server <>:9092 --topic "$topic" \
     --property value.schema.id="$schema_id" \
     --producer.config sasl_ssl.properties \
-    --property schema.registry.url="https://sr.$env.$site.confluentps.io" \
+    --property schema.registry.url="https://:8081" \
     --property schema.registry.ssl.truststore.location=truststore.jks \
     --property schema.registry.basic.auth.credentials.source=USER_INFO \
     --property schema.registry.basic.auth.user.info=nermin:nermin-secret \

@@ -1,7 +1,15 @@
-# Deletes the subject level mode for the specified subj. and 
+#!/usr/bin/env bash
+
+NAMESPACE=$1
+SITE=$2
+SUBJ=$3
+
+# Deletes the subject level mode for the specified subj. and
 # reverts back to global default
 
-SUBJ=$1
 
-curl localhost:8081/mode/$SUBJ \
-  -X DELETE 
+
+curl -s -k --user nermin:nermin-secret \
+  -X DELETE \
+  https://sr."$NAMESPACE"."$SITE".confluentps.io/mode/"$SUBJ"
+

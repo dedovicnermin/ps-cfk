@@ -1,0 +1,12 @@
+{
+  "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+  "value.converter.schema.registry.url": "http://localhost:8081",
+  "quickstart": "Stock_Trades",
+  "tasks.max": "1",
+  "name": "STOCKTRADES",
+  "kafka.topic": "stock-trades",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "max.interval": "100",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "iterations": "300000000"
+}

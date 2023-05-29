@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+NAMESPACE=$1
+SITE=$2
+
 # Register a new schema under the specified subject.
 # Essentially, create a new schema.
 # If success, returns unique ID of schema in the registry.
@@ -6,10 +11,10 @@
 # If multiple SR instances in same cluster, request is forwarded to primary. Else, (primary down) fails.
 
 
-SUBJECT=$1
-SCHEMA_FILE=$2
+SUBJECT=$3
+SCHEMA_FILE=$4
 
 curl -X POST \
   -H 'Content-Type: application/vnd.schemaregistry.v1+json' \
-  localhost:8081/subjects/$SUBJECT/versions \
+  https://sr."$NAMESPACE"."$SITE".confluentps.io/subjects/$SUBJECT/versions \
   --data "@${SCHEMA}"

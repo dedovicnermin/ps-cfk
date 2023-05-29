@@ -1,4 +1,7 @@
-# get curr mode at a global level
+#!/usr/bin/env bash
 
-curl localhost:8081/mode
+NAMESPACE=$1
+SITE=$2
 
+curl -s -k --user nermin:nermin-secret \
+  https://sr."$NAMESPACE"."$SITE".confluentps.io/mode | jq
