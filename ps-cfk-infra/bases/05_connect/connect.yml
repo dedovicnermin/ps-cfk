@@ -31,7 +31,7 @@ spec:
         memory: 1Gi
   replicas: 1
   image:
-    application: dedovicnermin/cfk-connect:1.1.0
+    application: dedovicnermin/cfk-connect:1.3.0
     init: confluentinc/confluent-init-container:2.6.0
   tls:
     secretRef: tls-connect
@@ -61,3 +61,4 @@ spec:
     - secretRef: mds-dev1
     - secretRef: mds-dev2
     - secretRef: mds-dev3
+    - secretRef: mds-replicator

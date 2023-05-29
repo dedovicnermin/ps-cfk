@@ -8,7 +8,7 @@ spec:
   storageClass:
     name: cfk-storage-delete
   image:
-    application: confluentinc/cp-server:7.3.3
+    application: confluentinc/cp-server:7.4.0
     init: confluentinc/confluent-init-container:2.6.0
   dataVolumeCapacity: 50Gi
   passwordEncoder:

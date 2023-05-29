@@ -30,7 +30,7 @@ spec:
         memory: 516Mi
   replicas: 1
   image:
-    application: confluentinc/cp-kafka-rest:7.3.3
+    application: confluentinc/cp-kafka-rest:7.4.0
     init: confluentinc/confluent-init-container:2.6.0
   tls:
     secretRef: tls-krp
