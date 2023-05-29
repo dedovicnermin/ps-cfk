@@ -1,0 +1,25 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ConfluentRolebinding
+metadata:
+  name: repl-resown-0
+  labels:
+    principal: replicator
+    type: connector
+    role: resourceowner
+    cscope: kafka
+  namespace: dev
+spec:
+  principal:
+    name: replicator
+    type: user
+  resourcePatterns:
+    - name: '*'
+      patternType: LITERAL
+      resourceType: Topic
+    - name: replicator
+      patternType: PREFIXED
+      resourceType: Group
+  role: ResourceOwner
+
+
+

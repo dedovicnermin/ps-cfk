@@ -1,0 +1,20 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaExporter
+metadata:
+  name: se001
+spec:
+  sourceCluster:
+    schemaRegistryRest:
+      endpoint: https://sr.confluent.svc.cluster.local:8081
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-sr
+      tls:
+        secretRef: sr-pkcs12
+  destinationCluster:
+    schemaRegistryClusterRef:
+      name: sr
+
+  contextType: NONE
+

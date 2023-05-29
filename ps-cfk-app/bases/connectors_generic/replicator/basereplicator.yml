@@ -1,0 +1,53 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: basereplicator
+spec:
+  class: io.confluent.connect.replicator.ReplicatorSourceConnector
+  taskMax: 1
+  restartPolicy:
+    type: OnFailure
+    maxRetry: 3
+  connectRest:
+    authentication:
+      type: bearer
+      bearer:
+        secretRef: mds-connect
+    tls:
+      secretRef: tls-connect
+  connectClusterRef:
+    name: connect
+  configs:
+    key.converter: io.confluent.connect.replicator.util.ByteArrayConverter
+    value.converter: io.confluent.connect.replicator.util.ByteArrayConverter
+    header.converter: io.confluent.connect.replicator.util.ByteArrayConverter
+    provenance.header.enable: "true"
+    confluent.topic.bootstrap.servers: kafka:9073
+    confluent.topic.security.protocol: SASL_SSL
+    confluent.topic.ssl.truststore.location: /mnt/sslcerts/truststore.p12
+    confluent.topic.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+    confluent.topic.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    confluent.topic.sasl.mechanism: OAUTHBEARER
+    confluent.topic.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+
+    dest.kafka.bootstrap.servers: kafka:9073
+    dest.kafka.client.id: replicator_cfk_dest_client
+    dest.kafka.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-replicator/bearer.txt:username}" password="${file:/mnt/secrets/mds-replicator/bearer.txt:password}";
+    dest.kafka.request.timeout.ms: "45000"
+    dest.kafka.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    dest.kafka.sasl.mechanism: OAUTHBEARER
+    dest.kafka.security.protocol: SASL_SSL
+    dest.kafka.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    dest.kafka.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+
+
+    src.kafka.client.id: replicator_cfk_src_client
+    src.kafka.request.timeout.ms: "45000"
+    src.kafka.sasl.mechanism: OAUTHBEARER
+    src.kafka.security.protocol: SASL_SSL
+    src.kafka.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    src.kafka.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    src.kafka.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+

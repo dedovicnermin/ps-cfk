@@ -3,7 +3,7 @@ kind: KafkaTopic
 metadata:
   name: protobuf.stocktrades
 spec:
-  name: protobuf.stock_trades
+  name: default_avro.stock_trades
   replicas: 3
   partitionCount: 1
   kafkaClusterRef:

@@ -50,7 +50,6 @@ spec:
         secretRef: mds-admin1
     tls:
       secretRef: tls-admin1
-    endpoint: https://connect.confluent.svc.cluster.local:8083
   connectClusterRef:
     name: connect
 

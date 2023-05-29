@@ -45,13 +45,20 @@ spec:
     errors.retry.delay.max.ms: "60000"
     errors.retry.timeout: "300000"
 
-    value.converter.schema.registry.url: "https://sr:8081"
+    key.converter.schema.registry.url: https://sr:8081
+    key.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    key.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
+    key.converter.schema.registry.ssl.truststore.type: "PKCS12"
+    key.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
+    key.converter.schema.registry.basic.auth.user.info: |
+      nermin:nermin-secret
+    value.converter.schema.registry.url: https://sr:8081
     value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
     value.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
     value.converter.schema.registry.ssl.truststore.type: "PKCS12"
     value.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
-    value.converter.schema.registry.basic.auth.user.info: "nermin:nermin-secret"
-    value.converter.basic.auth.credentials.source: USER_INFO
+    value.converter.schema.registry.basic.auth.user.info: |
+      nermin:nermin-secret
 
   connectRest:
     authentication:

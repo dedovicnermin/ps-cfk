@@ -1,0 +1,8 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaExporter
+metadata:
+  name: se001
+spec:
+  sourceCluster:
+    schemaRegistryRest:
+      endpoint: https://sr.dev.svc.cluster.local:8081

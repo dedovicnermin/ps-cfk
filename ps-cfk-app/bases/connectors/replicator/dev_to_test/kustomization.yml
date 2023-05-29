@@ -2,19 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../../../connectors_generic/source/community/with_sr
-
+  - ../../../connectors_generic/replicator
 
 patches:
   - target:
       kind: Connector
-      labelSelector: conntype=source
-    path: protobuf.stock_trades.yml
+      group: platform.confluent.io
+    path: rep001.yml
   - target:
       kind: Connector
-      name: basesr
+      name: basereplicator
     patch: |-
       - op: replace
         path: /metadata/name
-        value: default_avro.stocktrades
-        
+        value: rep001
