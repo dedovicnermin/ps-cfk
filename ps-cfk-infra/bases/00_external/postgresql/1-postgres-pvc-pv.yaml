@@ -1,0 +1,31 @@
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  namespace: postgresql
+  name: postgres-pv-volume  # Sets PV's name
+  labels:
+    app: postgres
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi # Sets PV Volume
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/lib/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: postgresql
+  name: postgres-pv-claim  # Sets name of PVC
+  labels:
+    app: postgres
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany  # Sets read and write access
+  resources:
+    requests:
+      storage: 5Gi  # Sets volume size
