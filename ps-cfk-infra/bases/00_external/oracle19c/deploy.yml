@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle19
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle19
+  template:
+    metadata:
+      labels:
+        app: oracle19
+        selector: oracle19
+    spec:
+      securityContext:
+        fsGroup: 54321
+      tolerations:
+        - key: app
+          operator: Equal
+          value: oracle
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - oracle
+      initContainers:
+        - name: prepareora
+          image: docker.io/alpine
+          securityContext:
+            runAsGroup: 54321
+          command: ["/bin/sh", "-c", "--"]
+          args: ["mkdir -p /opt/oracle/scripts/setup;
+        mkdir -p /opt/oracle/scripts/startup;
+        cp /mnt/setup/* /opt/oracle/scripts/setup;
+        chmod +x /opt/oracle/scripts/setup/*;
+        cp /mnt/startup/* /opt/oracle/scripts/startup;
+        chmod +x /opt/oracle/scripts/startup/*;"]
+          volumeMounts:
+            - mountPath: /mnt/setup
+              name: oracle-setup-scripts
+            - mountPath: /mnt/startup
+              name: oracle-startup-scripts
+            - mountPath: /opt/oracle/scripts/setup
+              name: ora-setup
+            - mountPath: /opt/oracle/scripts/startup
+              name: ora-startup
+
+      containers:
+        - name: oracle19
+          image: dedovicnermin/oracle19cdb:1.0
+          envFrom:
+            - configMapRef:
+                name: oracle-cm
+          env:
+            - name: ORACLE_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-secret
+                  key: oracleRootPassword
+          resources:
+            limits:
+              cpu: "3.0"
+              memory: "12Gi"
+            requests:
+              cpu: "1.0"
+              memory: "8Gi"
+
+          ports:
+            - name: main-port
+              containerPort: 1521
+            - name: em-port
+              containerPort: 5500
+          volumeMounts:
+            - name: dshm
+              mountPath: "/dev/shm"
+            - name: ora-data
+              mountPath: /opt/oracle/oradata
+            - name: ora-setup
+              mountPath: "/opt/oracle/scripts/setup"
+            - name: ora-startup
+              mountPath: "/opt/oracle/scripts/startup"
+
+
+
+
+      volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+        - name: ora-data
+          persistentVolumeClaim:
+            claimName: ora-data
+        - name: ora-startup
+          persistentVolumeClaim:
+            claimName: ora-startup
+        - name: ora-setup
+          persistentVolumeClaim:
+            claimName: ora-setup
+
+
+        - name: oracle-setup-scripts
+          secret:
+            secretName: oracle-setup-scripts
+        - name: oracle-startup-scripts
+          secret:
+            secretName: oracle-startup-scripts

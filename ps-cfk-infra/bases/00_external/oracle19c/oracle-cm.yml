@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oracle-cm
+data:
+  ORACLE_SID: "ORCLCDB"
+  ORACLE_PDB: "ORCLPDB1"
+  ORACLE_EDITION: "enterprise"

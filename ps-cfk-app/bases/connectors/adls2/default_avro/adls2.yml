@@ -1,0 +1,36 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adls-default-avro004
+
+spec:
+  class: "io.confluent.connect.azure.datalake.gen2.AzureDataLakeGen2SinkConnector"
+  taskMax: 1
+  name: adls-default-avro
+  configs:
+    topics: |
+      avro.shoe.customers,avro.shoe.orders
+    key.converter: org.apache.kafka.connect.converters.ByteArrayConverter
+    key.converter.schemas.enable: "false"
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schemas.enable: "false"
+    value.converter.basic.auth.credentials.source: USER_INFO
+    schema.compatibility: "BACKWARD"
+
+    azure.datalake.gen2.account.name: ndedovicdl
+    azure.datalake.gen2.client.id: 2027c98d-c439-4b0f-af88-2df3408dbc37
+    azure.datalake.gen2.token.endpoint: "https://login.microsoftonline.com/0893715b-959b-4906-a185-2789e1ead045/oauth2/token"
+    azure.datalake.gen2.client.key: "eS08Q~o86CjOrhyMpk.AOBu0w0a_e9JmXuQFFcSO"
+    behavior.on.null.values: fail
+#    partitioner.class: DefaultPartitioner
+    topics.dir: "dev/defaultpartitioner/avro"
+    flush.size: "10"
+    rotate.interval.ms: "240000"
+#    format.class: "io.confluent.connect.azure.storage.format.json.JsonFormat"
+    format.class: "io.confluent.connect.azure.storage.format.avro.AvroFormat"
+    consumer.override.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username="nermin" password="nermin-secret" metadataServerUrls="https://kafka:8090";
+    errors.deadletterqueue.topic.name: adls2.default.avro.dlq
+
+    //    "enhanced.avro.schema.support: "false"
+#avro.campaign.finance,avro.clickstream.codes,avro.clickstream.events,avro.clickstream.users,avro.creditcards,avro.field.mngnt.descriptions,avro.field.mngnt.locations,avro.field.mngnt.sensors,avro.products,avro.shoe.clicks,

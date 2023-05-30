@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kpod
+spec:
+  containers:
+    - name: kpod
+      image: dedovicnermin/kpod:0.0.3
+      resources:
+        requests:
+          cpu: 500m
+          memory: 216Mi
+      env:
+        - name: MTLS_EP
+          value: kafka:9071
+        - name: SASL_EP
+          value: kafka:9092
+        - name: EP_TOKEN
+          value: kafka:9073
+      volumeMounts:
+        - mountPath: /mnt/nermin
+          name: tls-nermin
+        - mountPath: /mnt/ab
+          name: tls-amerisourcebergen
+        - mountPath: /mnt/config
+          name: properties
+  volumes:
+    - name: properties
+      configMap:
+        name: kpod-cm
+    - name: tls-nermin
+      secret:
+        secretName: tls-nermin
+    - name: tls-amerisourcebergen
+      secret:
+        secretName: tls-amerisourcebergen

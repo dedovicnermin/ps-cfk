@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: oracle
+
+resources:
+#  - namespace.yml
+  - ora-startup-pvc.yml
+  - ora-setup-pvc.yml
+  - ora-data-pvc.yml
+  - oracle-cm.yml
+  - db_admin_pass_secret.yml
+  - service.yml
+  - ing.yml
+  - ora-setup-scripts-pdb-table/oracle-setup-scripts.yml
+  - ora-startup-scripts-pdb-table/oracle-startup-scripts.yml
+  - deploy.yml

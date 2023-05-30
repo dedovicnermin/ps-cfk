@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-oracle
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - oracle.confluentps.io
+  rules:
+    - host: oracle.confluentps.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: oracle-svc
+                port:
+
+                  number: 1521
+            pathType: ImplementationSpecific

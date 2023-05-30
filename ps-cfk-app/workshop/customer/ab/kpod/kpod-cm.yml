@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kpod-cm
+data:
+  nermin.properties: |
+    security.protocol=SSL
+    ssl.keystore.location=/mnt/nermin/keystore.jks
+    ssl.keystore.password=mystorepassword
+    ssl.key.password=mystorepassword
+    ssl.truststore.location=/mnt/nermin/truststore.jks
+    ssl.truststore.password=mystorepassword
+  ldap.properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="nermin" password="nermin-secret";
+    ssl.truststore.location=/mnt/nermin/truststore.jks
+    ssl.truststore.password=mystorepassword
+  ab-mtls.properties: |
+    security.protocol=SSL
+    ssl.keystore.location=/mnt/ab/keystore.jks
+    ssl.keystore.password=mystorepassword
+    ssl.key.password=mystorepassword
+    ssl.truststore.location=/mnt/ab/truststore.jks
+    ssl.truststore.password=mystorepassword
+  ab-sasl.properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=PLAIN
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="dev1" password="dev1-secret";
+    ssl.truststore.location=/mnt/ab/truststore.jks
+    ssl.truststore.password=mystorepassword
