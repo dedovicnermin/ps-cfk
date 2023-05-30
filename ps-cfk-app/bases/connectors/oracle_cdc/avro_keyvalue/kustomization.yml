@@ -2,17 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../connectors_generic/source/premium/with_sr
+  - ../../../connectors_generic/source/premium/with_sr_keyvalue
 
 patches:
   - target:
       kind: Connector
       group: platform.confluent.io
-    path: rep001.yml
+    path: oracdc001.yml
   - target:
       kind: Connector
-      name: basereplicator
+      name: source
     patch: |-
       - op: replace
         path: /metadata/name
-        value: rep001
+        value: oracdc-akv #avro keyvalue

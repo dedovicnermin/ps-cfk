@@ -1,0 +1,21 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: oracdc-akv
+spec:
+  taskMax: 2
+  configs:
+    oracle.dictionary.mode: auto
+    numeric.mapping: best_fit # best_fit_or_decimal,
+    start.from: snapshot
+    table.topic.name.template: |
+      AKV.${databaseName}.${schemaName}.${tableName}
+    redo.log.row.fetch.size: "5"
+    snapshot.row.fetch.size: "2000"
+    producer.override.batch.size: "16384"
+    redo.log.poll.interval.ms: "1000"
+    poll.linger.ms: "4000"
+    error.log.topic.name: |
+      AKV.${connectorName}-${databaseName}-errorlog-topic
+
+

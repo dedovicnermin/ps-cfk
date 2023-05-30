@@ -3,31 +3,47 @@ kind: Connector
 metadata:
   name: oracdc001
 spec:
-  class: io.confluent.connect.oracle.cdc.OracleCdcSourceConnector
+#  class: io.confluent.connect.oracle.cdc.OracleCdcSourceConnector
+#  class: OracleCdcSourceConnector
+  class: OracleCdcSource
   configs:
-    oracle.server: oracle-svc.oracle
-    oracle.port: 1521
+    key.converter: io.confluent.connect.avro.AvroConverter
+    value.converter: io.confluent.connect.avro.AvroConverter
+    oracle.server: oracle-svc.oracle.svc.cluster.local
+    oracle.port: "1521"
     oracle.sid: ORCLCDB
     oracle.pdb.name: ORCLPDB1
     oracle.username: C##MYUSER
     oracle.password: mypassword
-    start.from: snapshot
-#    redo.log.topic.name: ${connectorName}-redo-log
+    heartbeat.interval.ms: "3000"
     redo.log.consumer.bootstrap.servers: kafka:9073
+    redo.log.consumer.security.protocol: SASL_SSL
+    redo.log.consumer.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
+    redo.log.consumer.ssl.truststore.password: |
+      ${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}
+    redo.log.consumer.sasl.mechanism: OAUTHBEARER
+    redo.log.consumer.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    redo.log.consumer.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
+    redo.log.topic.name: ${connectorName}-redo-log
+
     table.inclusion.regex: |
-      ORCLPDB1[.].*[.](CUSTOMERS | REGIONS | COUNTRIES)
-#    table.topic.name.template: ${databaseName}.${schemaName}.${tableName}
-    numeric.mapping: best_fit
+      ORCLPDB1[.].*[.](CUSTOMERS|REGIONS|COUNTRIES)
 
+    connection.pool.max.size: "20"
 
-    connection.pool.max.size: 20
-    redo.log.row.fetch.size: 5000
-    oracle.dictionary.mode: auto
-#    topic.creation.redo.include: redo-log-topic-001
-#    topic.creation.redo.replication.factor: 1
-#    topic.creation.redo.partitions: 1
-#    topic.creation.redo.cleanup.policy": delete
-#    topic.creation.redo.retention.ms": 1209600000
-    topic.creation.default.replication.factor: 3
-    topic.creation.default.partitions: 1
+    topic.creation.redo.include: .*-redo-log
+    topic.creation.redo.replication.factor: "1"
+    topic.creation.redo.partitions: "1"
+    topic.creation.redo.cleanup.policy": delete
+    topic.creation.redo.retention.ms": "1209600000"
+    topic.creation.default.replication.factor: "2"
+    topic.creation.default.partitions: "1"
     topic.creation.default.cleanup.policy: delete
+    behavior.on.unparsable.statement: log
+#    snapshot.threads.per.task: 4
+    errors.log.enable: "true"
+    errors.log.include.messages: "true"
+    query.timeout.ms: "300000"
+    max.retry.time.ms: "86400000"
+
