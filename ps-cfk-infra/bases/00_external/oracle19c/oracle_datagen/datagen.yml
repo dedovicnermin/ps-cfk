@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datagen
+  namespace: oracle
+  labels:
+    app: oracle19
+spec:
+  containers:
+    - name: sql-datagen
+      image: dedovicnermin/pscfk-oracledatagen:0.1
+      resources:
+        limits:
+          cpu: 200m
+          memory: 216Mi
+
+  tolerations:
+    - key: app
+      operator: Equal
+      value: oracle
+      effect: NoSchedule
+
+#k exec datagen -n oracle -- java -jar sqldatagen.jar --host oracle-svc --username C##MYUSER --password mypassword --sidOrServerName service_name --sidOrServerNameVal ORCLPDB1 --maxPoolSize 10 --durationTimeMin 5
