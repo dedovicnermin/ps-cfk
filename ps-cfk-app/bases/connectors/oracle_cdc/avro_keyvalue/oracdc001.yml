@@ -3,9 +3,11 @@ kind: Connector
 metadata:
   name: oracdc001
 spec:
-#  class: io.confluent.connect.oracle.cdc.OracleCdcSourceConnector
-#  class: OracleCdcSourceConnector
+#  class: io.confluent.connect.oracle.cdc.OracleCdcSourceConnector - class path
+#  class: OracleCdcSourceConnector - alias
   class: OracleCdcSource
+  restartPolicy:
+    type: OnFailure
   configs:
     key.converter: io.confluent.connect.avro.AvroConverter
     value.converter: io.confluent.connect.avro.AvroConverter
@@ -15,7 +17,10 @@ spec:
     oracle.pdb.name: ORCLPDB1
     oracle.username: C##MYUSER
     oracle.password: mypassword
+    oracle.date.mapping: timestamp
+    oracle.validation.result.fetch.size: "5000"
     heartbeat.interval.ms: "3000"
+    heartbeat.topic.name: ${connectorName}-${databaseName}-heartbeat-topic
     redo.log.consumer.bootstrap.servers: kafka:9073
     redo.log.consumer.security.protocol: SASL_SSL
     redo.log.consumer.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
@@ -26,12 +31,17 @@ spec:
     redo.log.consumer.sasl.jaas.config: |
       org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
     redo.log.topic.name: ${connectorName}-redo-log
-
     table.inclusion.regex: |
       ORCLPDB1[.].*[.](CUSTOMERS|REGIONS|COUNTRIES)
 
+    connection.pool.connection.wait.timeout.ms: "120000"
+    connection.pool.initial.size: "0"
+    connection.pool.login.timeout.ms: "30000"
     connection.pool.max.size: "20"
-
+    connection.pool.min.size: "0"
+    db.timezone: UTC
+    emit.tombstone.on.delete: "true"
+    enable.metrics.collection: "true"
     topic.creation.redo.include: .*-redo-log
     topic.creation.redo.replication.factor: "1"
     topic.creation.redo.partitions: "1"
@@ -41,9 +51,26 @@ spec:
     topic.creation.default.partitions: "1"
     topic.creation.default.cleanup.policy: delete
     behavior.on.unparsable.statement: log
+    behavior.on.dictionary.mismatch: log
 #    snapshot.threads.per.task: 4
     errors.log.enable: "true"
     errors.log.include.messages: "true"
+    errors.retry.delay.max.ms: "60000"
+    errors.retry.timeout: "60000"
+    errors.tolerance: all
+    exactly.once.support: requested
     query.timeout.ms: "300000"
     max.retry.time.ms: "86400000"
+#    key.template: ${primaryKeyStructOrValue}
+#    log.sensitive.data: "true"
+    max.batch.size: "1000"
+    max.batch.timeout.ms: "5000"
+    max.buffer.size: "0"
+    numeric.default.scale: "127"
+
+
+    transaction.boundary.interval.ms: "10000"
+    transaction.boundary: poll
+    use.transaction.begin.for.mining.session: "true"
+    record.buffer.mode: connector
 

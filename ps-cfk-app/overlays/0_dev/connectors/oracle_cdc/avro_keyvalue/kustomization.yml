@@ -17,4 +17,4 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: oracdc-akv002
+        value: oracdc-akv001

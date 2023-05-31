@@ -8,6 +8,7 @@ spec:
   configOverrides:
     server:
       - plugin.path=/usr/share/java,/usr/share/confluent-hub-components,/mnt/plugins,/usr/share/filestream-connectors
+      - topic.creation.enable=true
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
       - producer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
@@ -32,6 +33,7 @@ spec:
       - consumer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - consumer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
       - consumer.confluent.monitoring.interceptor.client.id=connect.monitoring.consumer.interceptor
+
 
 #  build:
 #    type: onDemand
