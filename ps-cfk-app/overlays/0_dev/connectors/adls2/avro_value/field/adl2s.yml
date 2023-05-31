@@ -1,0 +1,18 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s-field
+
+spec:
+  configs:
+    enhanced.avro.schema.support: "true"
+    errors.deadletterqueue.topic.name: adls2.field.avro.dlq
+    flush.size: "50"
+    format.class: "io.confluent.connect.azure.storage.format.avro.AvroFormat"
+    max.retries: "20"
+    partitioner.class: io.confluent.connect.storage.partitioner.FieldPartitioner
+    partition.field.name: "country"
+    rotate.interval.ms: "240000"
+    schema.compatibility: "BACKWARD"
+    topics.dir: "dev/field/avro"
+    topics: avro.shoe.customers

@@ -1,0 +1,17 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s-daily
+spec:
+  taskMax: 1
+  configs:
+    topics: avro.shoe.customers,avro.shoe.orders
+    schema.compatibility: "BACKWARD"
+    enhanced.avro.schema.support: "true"
+    topics.dir: "dev/dailypartitioner/avro"
+    partitioner.class: io.confluent.connect.storage.partitioner.DailyPartitioner
+    rotate.interval.ms: "240000"
+    locale: "en_US"
+    timezone: "America/New_York"
+    errors.deadletterqueue.topic.name: adls2.daily.avro.dlq
+    flush.size: "50"

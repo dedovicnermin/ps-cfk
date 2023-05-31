@@ -15,10 +15,12 @@ spec:
     confluent.topic.sasl.jaas.config: |
       org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
     reporter.bootstrap.servers: kafka:9073
-    reporter.result.topic.name: reporter.${connector}.success
+    reporter.result.topic.name: |
+      reporter.${connector}.success
     reporter.result.topic.replication.factor: "2"
     reporter.error.topic.replication.factor: "2"
-    reporter.error.topic.name: reporter.${connector}.error
+    reporter.error.topic.name: |
+      reporter.${connector}.error
     reporter.admin.bootstrap.servers: kafka:9073
     reporter.admin.security.protocol: SASL_SSL
     reporter.admin.sasl.mechanism: OAUTHBEARER
@@ -47,7 +49,7 @@ spec:
 
     value.converter.schema.registry.url: "https://sr:8081"
     value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12
-    value.converter.schema.registry.ssl.truststore.password: "${file:/mnt/sslcerts/tls-connect/jksPassword.txt:jksPassword}"
+    value.converter.schema.registry.ssl.truststore.password: ${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
     value.converter.schema.registry.ssl.truststore.type: "PKCS12"
     value.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
     value.converter.schema.registry.basic.auth.user.info: "nermin:nermin-secret"

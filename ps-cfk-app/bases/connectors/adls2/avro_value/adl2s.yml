@@ -1,0 +1,22 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s
+spec:
+  class: io.confluent.connect.azure.datalake.gen2.AzureDataLakeGen2SinkConnector
+  taskMax: 1
+  configs:
+    azure.datalake.gen2.account.name: ndedovicdl
+    azure.datalake.gen2.client.id: ""
+    azure.datalake.gen2.client.key: ""
+    azure.datalake.gen2.token.endpoint: "https://login.microsoftonline.com/tenantid/oauth2/token"
+    behavior.on.null.values: fail
+    consumer.override.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username="nermin" password="nermin-secret" metadataServerUrls="https://kafka:8090";
+    format.class: "io.confluent.connect.azure.storage.format.avro.AvroFormat"
+    key.converter.schemas.enable: "false"
+    key.converter: org.apache.kafka.connect.converters.ByteArrayConverter
+    max.retries: "20"
+    schema.compatibility: "NONE"
+    value.converter.schemas.enable: "false"
+    value.converter: io.confluent.connect.avro.AvroConverter

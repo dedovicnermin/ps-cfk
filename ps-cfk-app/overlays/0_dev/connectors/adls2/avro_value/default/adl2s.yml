@@ -1,0 +1,14 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s-default
+spec:
+  taskMax: 1
+  configs:
+    topics: |
+      avro.shoe.customers,avro.shoe.orders
+    schema.compatibility: "BACKWARD"
+    topics.dir: "dev/defaultpartitioner/avro"
+    flush.size: "10"
+    rotate.interval.ms: "240000" # ignored
+    errors.deadletterqueue.topic.name: adls2.default.avro.dlq

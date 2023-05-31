@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../../../bases/connectors/adls2/avro_value
+
+patches:
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Connector
+      labelSelector: conntype=sink
+    path: adl2s.yml
+  - target:
+      kind: Connector
+      name: base
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: adl2s-default001

@@ -1,0 +1,19 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s-hourly-rt
+spec:
+  taskMax: 1
+  configs:
+    enhanced.avro.schema.support: "true"
+    errors.deadletterqueue.topic.name: adls2.hourly.avro.dlq
+    flush.size: "50"
+    partitioner.class: io.confluent.connect.storage.partitioner.HourlyPartitioner
+    rotate.interval.ms: "240000"
+    locale: "en_US"
+    timezone: "America/New_York"
+    timestamp.extractor: Record
+    schema.compatibility: "NONE"
+    topics.dir: "dev/hourly/avro/init"
+    topics: avro.shoe.customers,avro.shoe.orders
+

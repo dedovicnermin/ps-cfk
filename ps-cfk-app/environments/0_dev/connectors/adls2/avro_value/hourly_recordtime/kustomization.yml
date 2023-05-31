@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+
+resources:
+
+  - ../../../../../../overlays/0_dev/connectors/adls2/avro_value/hourly_recordtime

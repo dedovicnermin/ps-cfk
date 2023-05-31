@@ -1,0 +1,21 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: adl2s-tbc
+spec:
+  taskMax: 1
+  configs:
+    enhanced.avro.schema.support: "true"
+    errors.deadletterqueue.topic.name: adls2.timebased.avro.dlq
+    flush.size: "50"
+    partitioner.class: io.confluent.connect.storage.partitioner.TimeBasedPartitioner
+    rotate.interval.ms: "300000" # 5 min
+    rotate.schedule.interval.ms: "300000" # 5 min
+    locale: en_US
+    timezone: America/New_York
+    timestamp.extractor: Record
+    schema.compatibility: NONE
+    topics.dir: dev/timebased/avro/init
+    topics: avro.shoe.customers,avro.shoe.orders
+    path.format: YYYYMMdd
+    partition.duration.ms: "86400000" # one day
