@@ -15,6 +15,11 @@ node_count_bk        = 3
 node_machine_type_bk = "e2-standard-4"
 node_disk_size_gb_bk = "25"
 
-node_count_general        = 4
+node_count_general        = 3
 node_machine_type_general = "e2-standard-2"
 node_disk_size_gb_gen     = "25"
+
+
+node_count_ora = 0
+node_machine_type_ora = "e2-standard-4"
+node_disk_size_gb_ora = "25"

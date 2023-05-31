@@ -38,6 +38,16 @@ variable "node_count_general" {
   description = "number of gke nodes for general purpose node group"
 }
 
+variable "node_count_ora" {
+  default     = 0
+  description = "number of gke nodes for oracledb purpose node group"
+}
+
+variable "node_machine_type_ora" {
+  default     = "e2-standard-4"
+  description = "Image type for nodes within the ora (oracle) worker node group"
+}
+
 variable "node_machine_type_general" {
   default     = "e2-standard-2"
   description = "Image type for nodes within the general worker node group"
@@ -62,5 +72,9 @@ variable "node_disk_size_gb_bk" {
 }
 
 variable "node_disk_size_gb_gen" {
+  default = "25"
+}
+
+variable "node_disk_size_gb_ora" {
   default = "25"
 }
