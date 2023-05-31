@@ -16,5 +16,5 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: default_avro.stocktrades
+        value: protobuf.stocktrades
         

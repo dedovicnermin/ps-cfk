@@ -6,12 +6,12 @@ metadata:
 spec:
   class: "io.confluent.kafka.connect.datagen.DatagenConnector"
   taskMax: 1
-  name: default_avro.stock_trades
+  name: protobuf.stock_trades
   configs:
-    kafka.topic: default_avro.stock_trades
+    kafka.topic: protobuf.stock_trades
     quickstart: Stock_Trades
     key.converter: org.apache.kafka.connect.storage.StringConverter
-    value.converter: io.confluent.connect.default_avro.ProtobufConverter
+    value.converter: io.confluent.connect.protobuf.ProtobufConverter
     max.interval: "15000"
     iterations: "10000"
     schema.compatibility: "BACKWARD"

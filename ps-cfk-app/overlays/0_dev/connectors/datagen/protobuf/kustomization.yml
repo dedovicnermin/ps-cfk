@@ -9,7 +9,7 @@ resources:
 
 patches:
   - target:
-      name: default_avro.*
+      name: protobuf.*
       kind: Connector
       group: platform.confluent.io
     patch: |-
