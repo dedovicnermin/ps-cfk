@@ -73,6 +73,8 @@ spec:
       - kafka.rest.admin.ssl.truststore.location=/mnt/sslcerts/truststore.p12
       - kafka.rest.admin.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - auto.create.topics.enable=true
+      - confluent.cluster.link.enable=true
+
 
   dataVolumeCapacity: 150Gi
 

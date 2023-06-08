@@ -9,7 +9,7 @@ spec:
   configOverrides:
     server:
       - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
-      - confluent.controlcenter.mode.enable=management
+#      - confluent.controlcenter.mode.enable=management
   #      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
   #      - confluent.metadata.enable.server.urls.refresh=false
   podTemplate:

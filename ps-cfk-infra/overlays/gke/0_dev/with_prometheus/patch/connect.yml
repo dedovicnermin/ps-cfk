@@ -60,7 +60,10 @@ spec:
   podTemplate:
     resources:
       requests:
-        cpu: 1.0
+        cpu: 100m
+        memory: 1Gi
+      limits:
+        cpu: 2.0
         memory: 2Gi
   authorization:
     type: rbac

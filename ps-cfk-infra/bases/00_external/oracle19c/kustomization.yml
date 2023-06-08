@@ -14,3 +14,4 @@ resources:
   - ora-setup-scripts-pdb-table/oracle-setup-scripts.yml
   - ora-startup-scripts-pdb-table/oracle-startup-scripts.yml
   - deploy.yml
+  - oracle_datagen/datagen.yml

@@ -4,7 +4,17 @@ kind: Kustomization
 
 
 resources:
-  - ../../../bases/cfrbs
+  - ../../../bases/cfrbs/connect
+  - ../../../bases/cfrbs/connector
+  - ../../../bases/cfrbs/groups
+  - ../../../bases/cfrbs/kafka
+  - ../../../bases/cfrbs/krp
+  - ../../../bases/cfrbs/ksql
+  - ../../../bases/cfrbs/sr
+  - ../../../bases/cfrbs/superuser
+
+
+
 
 patches:
   - target:

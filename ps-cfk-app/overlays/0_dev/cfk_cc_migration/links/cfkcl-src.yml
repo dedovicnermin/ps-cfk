@@ -1,0 +1,35 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ClusterLink
+metadata:
+  name: cfkcl-src
+  annotations:
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "7778"
+    prometheus.io/scrape: "true"
+spec:
+  name: cfkcl
+  sourceInitiatedLink:
+    linkMode: Source
+
+  destinationKafkaCluster:
+    clusterID: lkc-j8od1w
+    bootstrapEndpoint: pkc-2njoq.us-west-2.aws.confluent.cloud:9092
+    authentication:
+      type: plain
+      jaasConfigPassThrough:
+        secretRef: ccloud-jaasconfig
+    tls:
+      enabled: true
+      secretRef: ccloud-tls-certs
+
+  sourceKafkaCluster:
+    kafkaRestClassRef:
+      name: default
+      namespace: dev
+    bootstrapEndpoint: kafka:9073
+  configs:
+    local.security.protocol: SASL_SSL
+    local.listener.name: TOKEN
+    local.sasl.mechanism: OAUTHBEARER
+    local.sasl.jaas.config: org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username="nermin" password="nermin-secret" metadataServerUrls="https://kafka:8090";
+    local.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler

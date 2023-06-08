@@ -1,0 +1,17 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaExporter
+metadata:
+  name: se001
+spec:
+
+  sourceCluster:
+    schemaRegistryClusterRef:
+      name: sr
+  destinationCluster:
+    schemaRegistryRest:
+      endpoint: https://psrc-yg906.us-east-2.aws.confluent.cloud
+      authentication:
+        type: basic
+        basic:
+          secretRef: ccloud-sr-creds
+  contextType: NONE
