@@ -10,6 +10,8 @@ ps-cfk-infra/bases/01_operator/charts
 ps-cfk-tf/gke/.terraform
 ps-cfk-tf/gke/.terraform.lock.hcl
 ps-cfk-tf/gke/terraform.tfstate
+ps-cfk-tf/cc
+
 
 ps-cfk-infra/bases/01_operator/license-secret.yml
 ps-cfk-tf/gke/terraform.tfstate.backup

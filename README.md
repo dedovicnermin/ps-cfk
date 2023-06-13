@@ -1,5 +1,10 @@
 # PS-CFK 
 
+##  what it does, and when and how you should use it…
+
+This repository allows PS to configure/build/deploy and deliver environment-specific CFK clusters for customers on GKE/EKS/AKS K8-clusters. Use this repository as a reference for a kustomized-approach to a secure RBAC-enabled CFK environment that customers can depend on. One should use this repository using `kustomize` to build specific external dependencies, environment scoped CFK infra / resources (CRDs).  
+
+
 **BEFORE YOU BEGIN**:
      
 1. [operator_base](ps-cfk-infra/bases/01_operator/kustomization.yml) expects file `license-secret.yml` to exist
