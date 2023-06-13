@@ -16,6 +16,6 @@ spec:
     redo.log.poll.interval.ms: "1000"
     poll.linger.ms: "4000"
     error.log.topic.name: |
-      AKV.${connectorName}-${databaseName}-errorlog-topic
+      AKV.errorlog.topic
 
 

@@ -15,4 +15,4 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: oracdc-akv #avro keyvalue
+        value: oracdc-akv001 #avro keyvalue
