@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+
+resources:
+  - ../../../bases/connectors/replicator/dev_to_test
+  - ccloud_sr_creds.yml
+  - se001.yml
+
+patches:
+  - target:
+      kind: Connector
+      group: platform.confluent.io
+    path: rep001.yml
+  - target:
+      kind: Connector
+      group: platform.confluent.io
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: rep001

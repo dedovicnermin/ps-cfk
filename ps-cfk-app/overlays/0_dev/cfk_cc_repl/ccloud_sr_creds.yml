@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ccloud-sr-creds
+stringData:
+  basic.txt: |
+    username=KUZI3ZDRLIWI6TH3
+    password=7/qC1b+csbUHhF58qCNVKCtXv4npu8UftJin9KVGS4wql47U92nMxF/s3cI9baYo

@@ -1,0 +1,31 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaExporter
+metadata:
+  name: se004
+spec:
+
+  sourceCluster:
+    schemaRegistryClusterRef:
+      name: sr
+  destinationCluster:
+    schemaRegistryRest:
+      endpoint: "https://psrc-em82q.us-east-2.aws.confluent.cloud"
+      authentication:
+        type: basic
+        basic:
+          secretRef: ccloud-sr-creds
+  contextType: NONE
+
+#  {
+#    "name": "se004",
+#    "contextType": "NONE",
+#    "config": {
+#      "schema.registry.url": "https://psrc-em82q.us-east-2.aws.confluent.cloud",
+#      "config.providers.encoder.param.encrypted.secret.": "encryptedPassword:fkbTDpM2o77fK9mdQE/k/g==,keyLength:128,cipherAlgorithm:AES/CBC/PKCS5Padding,initializationVector:Uxl81Du8Hx1YfcpyLtVIhA==,keyFactoryAlgorithm:PBKDF2WithHmacSHA512,passwordLength:15,salt:ELejNEdCHqzkJwfX9RcFcYUnoG+yZGvavyViTRMKoZ+fVY9QtI/oO/RhxhRQRUS5DBi41VJbgP9B2F9ZNT5bzAhhx5H6/Hr3h2/SRgJ0h2LL4dzrHt5D+XmRKXh/rIn7wwJGCi5Evyh0GZ5Q5JBFiEL7q5oacEJN7fxnD3PS0z0FHc2OGkJ8bI3yND2euMBXOOkMO9mZhnCpfoQXamyzOFKxxhN/+tCpxbqyrr1VxN4FPA7iOY6I9vsLTGKCe9FLZ/Eect3bCXl7YUshZBL13dGac7BZVpx0xwa6uP0DO+g3KXJF0G+a0LdjiCfHJv7jWHl04AeE7kAJ0Vxd666dvw==,iterations:4096",
+#      "basic.auth.user.info": "${encoder:basic.auth.user.info}",
+#      "basic.auth.credentials.source": "USER_INFO",
+#      "config.providers.encoder.param.encrypted.old.secret.": "encryptedPassword:3/W2bVz1c6Vz96ls84GytVqUY3vylUg76ZEVcuT91rjRkAasUzRrV1PDhryWa8W9NMj9uf6PcXWckIpylFIho83dIv/YYiOuLghv2Ro+wPk=,keyLength:128,cipherAlgorithm:AES/CBC/PKCS5Padding,initializationVector:VXWLXAKnI+/gvz7d+oLDvw==,keyFactoryAlgorithm:PBKDF2WithHmacSHA512,passwordLength:77,salt:h/MxgMnVm74j0hLt9xo0gPIL4bBgvW8Fip7l3cBo78stg90Xmi5uvIyvSDddYuTV8Ny/mLI8R+RIyKKNm5cbLFZRsdWmH556/uCa1RDUVbZYv5QgtRXMDPTK6Q1oFR4Aw3Xy5MLD7tOe4zDOSybpsUHAxg94RtKX+O8h1mMLUZYh/AOX7IObwCM8PTjXGg3K1tyjr0ziHxSjPBXlQ1wM78w7GBsOBoSu3UUSeqEbwd5HwCvfkPWLgbebutw2oPfJ4BglVUbMMA8JNvnZPrRgUydRDxeCy9qsU1OVQ1HHqFXVj8xNz5MTxW4BI1hm4r/VvTO9XFAVz+tSmHYqK3SrOg==,iterations:4096",
+#      "config.providers.encoder.param.encrypted.old.secret.basic.auth.user.info": "encryptedPassword:t167OkX0crwRmwqQcx97WO4+/hIDei/lOq4HMTSuHVhzwGsR/h0DCIL7Hd5DAleSiF58lb031ea2sT4L4AG3VnNHJU7Nntx5oRoCI4CBadZJqkvvJHfDlA4UXCz7/v6d,keyLength:128,cipherAlgorithm:AES/CBC/PKCS5Padding,initializationVector:TFPhkbWUDrs7jn1EvpbeDw==,keyFactoryAlgorithm:PBKDF2WithHmacSHA512,passwordLength:81,salt:C2FodS61PzPFvirEmIw9Ez1NoXFe+0hmDoHGeLgoNoh87KLHgPirAB6+/R8H/94z2xXwnSzd2acX5W/rI6Nl8NXuOTUwWDyDI1/xWz2FN6ImV5FZ575iLdtFRiTJkqXtuErNrJnzt6vmZI7JHG/vHU/z+hdOxZn8hCr03CUmqAYZ3OAJ9+NgrH3jGRTY3u0mEs9RFELmrE0zxq8R/nPj+3aVMgkT+n72h7TB4jS3WV37iRJsHVMaM00U04fsA/VSjm+3EAOurAj9NcfBT9XXvYh6IKfukfSk9WtyM/oZ0DekJ9kfdQqoZWjC9fBtrDCwe9RRbFE//y1RwSXYtq2bKQ==,iterations:4096",
+#      "config.providers.encoder.param.encrypted.secret.basic.auth.user.info": "encryptedPassword:hfQnwQi8o3oah0h6mmj4OLfKwjkpiaSZ149t2ius7wWbxBvf8ZenToIoQ9isURvqpRV3dqyazo0xJOnrtE/OX315FyOx2zxDGOk0K/U3GMiQBW65P/8Yp0+lBS8YYUDX,keyLength:128,cipherAlgorithm:AES/CBC/PKCS5Padding,initializationVector:rLwD+hUiAdwqTWO4NEJC+w==,keyFactoryAlgorithm:PBKDF2WithHmacSHA512,passwordLength:81,salt:daerpiZEFgrhM9OIxyD9AdH0uWU4e0VVsFqEQuYxjTCRN+0UEvJKGliPiBjVNPtSwbHXgT8x1RkVvZZ0fBorTavu6nD14zGsbp7giQmNmFCXde341Ooragrbhprju9gvzdwlZTPgKtAd44WGln2vhkRq6afI724VBywMWgs61XzZMSpP7rEE+cbWkMnOfuA/J6lCSeOMf7WZUBXdM5WxyfMmr7dbbakurZxwXgytCdYIeyRitl91mcpBbANr+MUsh7+uu/Juq7NXWpTV1v16cFkSHt+r5i+iyfUcfuYL/HORvaAfW6fipOmHQrAEboh0KGvJpUXhstVsguJjE6FQuA==,iterations:4096"
+#    }
+#  }

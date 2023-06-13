@@ -11,11 +11,9 @@ RUN  confluent-hub install --no-prompt mongodb/kafka-connect-mongodb:latest \
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-azure-data-lake-gen2-storage:1.6.15
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-oracle-cdc:2.6.1
 
+ENV CLASSPATH="/usr/share/confluent-hub-components/confluentinc-kafka-connect-replicator/lib/replicator-rest-extension-7.4.0.jar"
 
-
-ENV CONFLUENT_SECURITY_MASTER_KEY=$MASTER_KEY
 ADD nermin.properties /etc/cfk/nermin.properties
-ADD nejra.properties /etc/cfk/nejra.properties
 ADD connect.properties /etc/cfk/connect.properties
 
 

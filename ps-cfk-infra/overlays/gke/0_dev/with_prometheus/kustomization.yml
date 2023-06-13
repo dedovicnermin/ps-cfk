@@ -48,3 +48,9 @@ patches:
       version: v1beta1
       kind: ControlCenter
     path: patch/c3.yml
+
+  - target:
+      version: v1
+      kind: Secret
+      name: connector-secrets
+    path: secrets/connector-secrets.yml

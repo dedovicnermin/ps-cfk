@@ -31,7 +31,7 @@ spec:
         memory: 1Gi
   replicas: 1
   image:
-    application: dedovicnermin/cfk-connect:1.3.1
+    application: dedovicnermin/cfk-connect:1.3.2.2
     init: confluentinc/confluent-init-container:2.6.0
   tls:
     secretRef: tls-connect
@@ -40,6 +40,8 @@ spec:
       - log.retention.hours=4
     jvm:
       - -XX:+UseG1GC
+      - -Djavax.net.ssl.trustStore=/mnt/secrets/pscfk-cc-trust/pscfk-cc-trust.jks
+      - -Djavax.net.ssl.trustStorePassword=mystorepassword
   connectorTLSCerts:
     - secretRef: tls-connect
     - secretRef: tls-nejra
@@ -62,3 +64,5 @@ spec:
     - secretRef: mds-dev2
     - secretRef: mds-dev3
     - secretRef: mds-replicator
+    - secretRef: pscfk-cc-trust
+    - secretRef: connector-secrets

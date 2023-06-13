@@ -1,0 +1,73 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: rep001
+spec:
+  taskMax: 5
+  configs:
+#    topic.whitelist: "AKV.ORCLPDB1.C__MYUSER.CUSTOMERS"
+    topic.regex: "leaderboard.*"
+#    topic.blacklist:
+    topic.poll.interval.ms: "120000"
+    consumer.poll.timeout.interval.ms: "5000"
+    src.consumer.fetch.min.bytes: "1000"
+    src.consumer.fetch.max.wait.ms: "500"
+    src.consumer.max.partition.fetch.bytes: "1048576"
+    src.consumer.max.poll.records: "500"
+
+    src.kafka.retry.backoff.ms: "100"
+    src.kafka.connections.max.idle.ms: "540000"
+    src.kafka.reconnect.backoff.ms: "50"
+    topic.auto.create: "true"
+    topic.preserve.partitions: "true"
+    provenance.header.enable: "true"
+
+
+
+    topic.config.sync: "true"
+    topic.config.sync.interval.ms: "120000"
+    offset.topic.commit: "true"
+    offset.topic.commit.batch.period.ms: "60000"
+    offset.translator.tasks.separate: "false"
+    offset.translator.batch.period.ms: "60000"
+    offset.translator.batch.size: "2147483647"
+    offset.translator.tasks.max: "1"
+    offset.timestamps.commit: "true"
+    class: "io.confluent.connect.replicator.ReplicatorSourceConnector"
+    src.consumer.group.id: replicator.cfk_to_cloud.dev
+    src.kafka.bootstrap.servers: kafka.dev:9073
+    src.kafka.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.dev.svc.cluster.local:8090" username="${file:/mnt/secrets/connector-secrets/srcConfig.txt:username}" password="${file:/mnt/secrets/connector-secrets/srcConfig.txt:password}";
+    src.consumer.interceptor.classes: io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
+    src.consumer.confluent.monitoring.interceptor.bootstrap.servers: kafka:9073
+    src.consumer.confluent.monitoring.interceptor.security.protocol: SASL_SSL
+    src.consumer.confluent.monitoring.interceptor.sasl.mechanism: OAUTHBEARER
+    src.consumer.confluent.monitoring.interceptor.sasl.login.callback.handler.class: io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    src.consumer.confluent.monitoring.interceptor.sasl.jaas.config: |
+      org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka.dev.svc.cluster.local:8090" username="${file:/mnt/secrets/connector-secrets/srcConfig.txt:username}" password="${file:/mnt/secrets/connector-secrets/srcConfig.txt:password}";
+
+    dest.kafka.client.id: replicator_cfk_dest_client
+    dest.kafka.sasl.jaas.config: |
+      org.apache.kafka.common.security.plain.PlainLoginModule required username="${file:/mnt/secrets/connector-secrets/destConfig.txt:username}" password="${file:/mnt/secrets/connector-secrets/destConfig.txt:password}";
+    dest.topic.replication.factor: "3"
+    dest.kafka.request.timeout.ms: "45000"
+    dest.kafka.sasl.mechanism: PLAIN
+    dest.kafka.security.protocol: SASL_SSL
+    dest.kafka.bootstrap.servers: |
+      ${file:/mnt/secrets/connector-secrets/destConfig.txt:bootstrapEndpoint}
+    dest.kafka.ssl.truststore.location: /mnt/secrets/pscfk-cc-trust/pscfk-cc-trust.jks
+    dest.kafka.ssl.truststore.password: mystorepassword
+
+    producer.override.bootstrap.servers: |
+      ${file:/mnt/secrets/connector-secrets/destConfig.txt:bootstrapEndpoint}
+    producer.override.sasl.login.callback.handler.class: |
+      org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler
+    producer.override.sasl.mechanism: PLAIN
+    producer.override.security.protocol: SASL_SSL
+    producer.override.ssl.truststore.location: /mnt/secrets/pscfk-cc-trust/pscfk-cc-trust.jks
+    producer.override.ssl.truststore.password: mystorepassword
+    producer.override.sasl.jaas.config: |
+      org.apache.kafka.common.security.plain.PlainLoginModule required username="${file:/mnt/secrets/connector-secrets/destConfig.txt:username}" password="${file:/mnt/secrets/connector-secrets/destConfig.txt:password}";
+
+    producer.override.compression.type: zstd
+    

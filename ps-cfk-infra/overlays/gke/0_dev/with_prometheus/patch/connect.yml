@@ -8,6 +8,7 @@ spec:
   configOverrides:
     server:
       - plugin.path=/usr/share/java,/usr/share/confluent-hub-components,/mnt/plugins,/usr/share/filestream-connectors
+      - rest.extension.classes=io.confluent.connect.security.ConnectSecurityExtension,io.confluent.connect.replicator.monitoring.ReplicatorMonitoringExtension
       - topic.creation.enable=true
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
