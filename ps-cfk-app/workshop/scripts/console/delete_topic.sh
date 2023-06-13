@@ -8,4 +8,4 @@ topic=$3
 kafka-topics --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 --command-config sasl_ssl.properties --delete --topic "$topic"
 
 
-bootstrap."$env"."$site".confluentps.io:9092
+
