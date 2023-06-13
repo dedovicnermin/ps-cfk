@@ -6,9 +6,10 @@ spec:
   kafkaClusterRef:
     name: kafka
   kafkaRest:
-    endpoint: https://pkc-2njoq.us-west-2.aws.confluent.cloud:443
-    kafkaClusterID: lkc-j8od1w
+    endpoint: https://pkc-k1622.us-west-2.aws.confluent.cloud:443 #changeme
+    kafkaClusterID: lkc-gkq5or                                    #changeme
     authentication:
       type: basic
       basic:
         secretRef: restclass-ccloud
+

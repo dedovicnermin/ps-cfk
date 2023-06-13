@@ -24,4 +24,4 @@ spec:
       name: default
       namespace: dev
     bootstrapEndpoint: kafka:9073
-    clusterID: peY54uQUQM2XEOcczIqhAg
+

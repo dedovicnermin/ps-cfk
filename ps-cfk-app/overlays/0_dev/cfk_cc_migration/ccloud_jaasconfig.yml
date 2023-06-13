@@ -4,4 +4,4 @@ metadata:
   name: ccloud-jaasconfig
 stringData:
   plain-jaas.conf: |
-    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="75KG24K54GDZMP3T" password="n2BrjmRKPc5E7Ir/vxSclARR8vMUp46csovyJlDwmEaa/d9gzagEF/Unk+7jzZXm";
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="" password="";
