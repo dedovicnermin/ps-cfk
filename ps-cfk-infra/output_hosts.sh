@@ -3,7 +3,7 @@
 NAMESPACE=$1
 SITE=$2
 
-declare -A dns
+declare -a dns
 dns[0]="b0.$NAMESPACE.$SITE.confluentps.io"
 dns[1]="b1.$NAMESPACE.$SITE.confluentps.io"
 dns[2]="b2.$NAMESPACE.$SITE.confluentps.io"
