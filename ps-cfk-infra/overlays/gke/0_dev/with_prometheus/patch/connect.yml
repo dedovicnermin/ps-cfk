@@ -5,6 +5,7 @@ metadata:
 spec:
   replicas: 1
   connectorOverridePolicy: All
+
   configOverrides:
     server:
       - plugin.path=/usr/share/java,/usr/share/confluent-hub-components,/mnt/plugins,/usr/share/filestream-connectors

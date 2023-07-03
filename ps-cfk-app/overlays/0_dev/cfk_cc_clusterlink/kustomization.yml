@@ -7,5 +7,3 @@ resources:
   - ccloud_jaasconfig.yml
   - ccloud_sr_creds.yml
   - ccloud_krc.yml
-  - links
-  - exporters

@@ -18,6 +18,9 @@ spec:
         - kafka.connect:type=*-task-metrics,*
         - kafka.connect:type=task-error-metrics,*
         - confluent.replicator:type=confluent-replicator-task-metrics,*
+        - kafka.connect.oracle.cdc:type=source-task-metrics,*
+        - kafka.consumer:type=consumer-fetch-manager-metrics,*
+        - debezium.oracle:type=connector-metrics,*
         - kafka.consumer:*
         - kafka.producer:*
       blacklist:

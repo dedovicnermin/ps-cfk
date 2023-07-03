@@ -74,6 +74,7 @@ spec:
       - kafka.rest.admin.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
       - auto.create.topics.enable=true
       - confluent.cluster.link.enable=true
+      - confluent.balancer.heal.uneven.load.trigger=ANY_UNEVEN_LOAD
 
 
   dataVolumeCapacity: 150Gi

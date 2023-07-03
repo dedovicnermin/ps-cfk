@@ -9,7 +9,7 @@ spec:
       name: sr
   destinationCluster:
     schemaRegistryRest:
-      endpoint: https://psrc-yg906.us-east-2.aws.confluent.cloud # change me
+      endpoint: https://changeme
       authentication:
         type: basic
         basic:

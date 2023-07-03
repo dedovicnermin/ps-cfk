@@ -9,13 +9,13 @@ spec:
   configOverrides:
     server:
       - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
-#      - confluent.controlcenter.mode.enable=management
+      - confluent.controlcenter.mode.enable=all
   #      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
   #      - confluent.metadata.enable.server.urls.refresh=false
   podTemplate:
     resources:
       requests:
-        cpu: 500m
+        cpu: 1.0
         memory: 1Gi
   dependencies:
     kafka:

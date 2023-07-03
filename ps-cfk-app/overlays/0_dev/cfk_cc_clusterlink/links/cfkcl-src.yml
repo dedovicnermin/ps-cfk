@@ -12,8 +12,8 @@ spec:
     linkMode: Source
 
   destinationKafkaCluster:
-    clusterID:  lkc-gkq5or                                              # changeme
-    bootstrapEndpoint: pkc-k1622.us-west-2.aws.confluent.cloud:9092     # changeme
+    clusterID:  lkc-changeme             # changeme
+    bootstrapEndpoint: changeme:9092     # changeme
     authentication:
       type: plain
       jaasConfigPassThrough:

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ccloud-jaasconfig
+stringData:
+  plain-jaas.conf: |-
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="changeme" password="changeme";

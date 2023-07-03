@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+resources:
+  - ../../../../overlays/0_dev/cfk_cc_clusterlink
+
+patches:
+  - target:
+      version: v1
+      kind: Secret
+      name: ccloud-jaasconfig
+    patch: |-
+      - op: replace
+        path: /stringData/plain-jaas.conf
+        value: |
+          sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="NGDARGEXO2Q6FF3I" password="JcvrZa63/uTYhUFouCzeCVp8fOgPlxP5B/9JAcVMeMTLhn+BvuWinWJslJe0jwXB";
+  - target:
+      version: v1
+      kind: Secret
+      name: restclass-ccloud
+    patch: |-
+      - op: replace
+        path: /stringData/basic.txt
+        value: |
+          username=NGDARGEXO2Q6FF3I
+          password=JcvrZa63/uTYhUFouCzeCVp8fOgPlxP5B/9JAcVMeMTLhn+BvuWinWJslJe0jwXB
+
+  - target:
+      version: v1
+      kind: Secret
+      name: ccloud-sr-creds
+    patch: |- 
+      - op: replace
+        path: /stringData/basic.txt
+        value: |
+          username=RHV23E5ZNOM6FUVF
+          password=mvNvmZhLJYufL18I7JPK0TKqKq2yTwL306Uv7IRwxxLOLO/klI5oCovSsPr9ZAow
+  - target:
+      version: v1beta1
+      group: platform.confluent.io
+      kind: KafkaRestClass
+      name: krc-cloud
+    patch: |-
+      - op: replace
+        path: /spec/kafkaRest/endpoint
+        value: https://pkc-qvo1m.us-west-2.aws.confluent.cloud:443
+      - op: replace
+        path: /spec/kafkaRest/kafkaClusterID
+        value: lkc-3nmjyw
+          
+      
+      
+        
+        
