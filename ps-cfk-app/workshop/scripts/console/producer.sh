@@ -7,5 +7,8 @@ topic=$3
 kafka-console-producer \
     --bootstrap-server bootstrap."$env"."$site".confluentps.io:9092 \
     --producer.config sasl_ssl.properties \
-    --topic "$topic"
+    --topic "$topic" \
+    --property "parse.key=true" \
+    --property "key.separator= " \
+    --property "null.marker=NULL"
 

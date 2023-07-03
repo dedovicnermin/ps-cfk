@@ -17,8 +17,10 @@ if [ -z $key_deserializer ]; then
       --from-beginning \
       --consumer.config sasl_ssl.properties \
       --property auto.offset.reset=earliest \
-      --property print.schema.ids=true \
-      --property schema.id.separator=:
+      --property "line.separator=
+
+
+"
 else
 
   kafka-avro-console-consumer \
@@ -33,9 +35,19 @@ else
         --consumer.config sasl_ssl.properties \
         --property auto.offset.reset=earliest \
         --property print.key=true \
-        --property print.schema.ids=true \
-        --property schema.id.separator=: \
-        --property key.deserializer=org.apache.kafka.common.serialization."$key_deserializer"
+        --property "print.timestamp=true" \
+        --property "key.separator= :: " \
+        --property "line.separator=
+
+
+"
+
+
+#        --max-messages "$4"
+
+#        --property print.schema.ids=true \
+#        --property schema.id.separator=: \
+#
 fi
 
 
