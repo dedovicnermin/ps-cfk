@@ -4,5 +4,5 @@ metadata:
   name: ccloud-sr-creds
 stringData:
   basic.txt: |
-    username=
-    password=
+    username=changeme
+    password=changeme

@@ -4,5 +4,5 @@ metadata:
   name: restclass-ccloud
 stringData:
   basic.txt: |
-    username=
-    password=
+    username=changeme
+    password=changeme
