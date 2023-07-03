@@ -9,10 +9,3 @@ patches:
       kind: Connector
       group: platform.confluent.io
     path: oracdc001.yml
-  - target:
-      kind: Connector
-      name: source
-    patch: |-
-      - op: replace
-        path: /metadata/name
-        value: oracdc-akv001 #avro keyvalue

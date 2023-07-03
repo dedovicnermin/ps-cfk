@@ -13,8 +13,10 @@ patches:
     path: oracdc-akv.yml
   - target:
       kind: Connector
-      name: oracdc-akv
+      name: source
+      group: platform.confluent.io
+      version: v1beta1
     patch: |-
       - op: replace
         path: /metadata/name
-        value: oracdc-akv001
+        value: cdc001

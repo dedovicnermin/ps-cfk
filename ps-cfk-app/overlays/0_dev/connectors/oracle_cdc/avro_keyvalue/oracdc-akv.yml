@@ -7,15 +7,29 @@ spec:
   configs:
     oracle.dictionary.mode: auto
     numeric.mapping: best_fit # best_fit_or_decimal,
-    start.from: snapshot
+    start.from: "3016085"
     table.topic.name.template: |
-      AKV.${databaseName}.${schemaName}.${tableName}
-    redo.log.row.fetch.size: "5"
+      CDC.${tableName}
+    redo.log.row.fetch.size: "10000"
     snapshot.row.fetch.size: "2000"
-    producer.override.batch.size: "16384"
-    redo.log.poll.interval.ms: "1000"
-    poll.linger.ms: "4000"
-    error.log.topic.name: |
-      AKV.errorlog.topic
+    producer.override.batch.size: "600000"
+    producer.override.linger.ms: "15"
+    producer.override.compression.type: "lz4"
+    consumer.override.fetch.min.bytes: "1000"
+    consumer.override.fetch.max.wait.ms: "500"
 
+      #    consumer.override.fetch.max.bytes: ""
+    consumer.override.max.partition.fetch.bytes: "2097152"
+    consumer.override.max.poll.records: "10000"
+    
+    redo.log.consumer.fetch.min.bytes: "2000"
+    redo.log.consumer.fetch.max.partition.bytes: "2097152"
+    redo.log.consumer.fetch.max.wait.ms: "250"
+    redo.log.consumer.max.poll.records: "10000"
+
+    redo.log.poll.interval.ms: "800"
+    poll.linger.ms: "2000"
+    max.batch.size: "10000"
+    error.log.topic.name: |
+      CDC.errorlog.topic
 

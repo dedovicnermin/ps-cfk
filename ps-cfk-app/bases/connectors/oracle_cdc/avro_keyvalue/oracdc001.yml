@@ -8,6 +8,7 @@ spec:
   class: OracleCdcSource
   restartPolicy:
     type: OnFailure
+
   configs:
     key.converter: io.confluent.connect.avro.AvroConverter
     value.converter: io.confluent.connect.avro.AvroConverter
@@ -31,6 +32,7 @@ spec:
     redo.log.consumer.sasl.jaas.config: |
       org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required metadataServerUrls="https://kafka:8090" username="${file:/mnt/secrets/mds-connect/bearer.txt:username}" password="${file:/mnt/secrets/mds-connect/bearer.txt:password}";
     redo.log.topic.name: ${connectorName}-redo-log
+    redo.log.corruption.topic: redo-log-corruption-topic
     table.inclusion.regex: |
       ORCLPDB1[.].*[.](CUSTOMERS|REGIONS|COUNTRIES)
 
@@ -50,14 +52,15 @@ spec:
     topic.creation.default.replication.factor: "2"
     topic.creation.default.partitions: "1"
     topic.creation.default.cleanup.policy: delete
-    behavior.on.unparsable.statement: log
+    behavior.on.unparsable.statement: fail
     behavior.on.dictionary.mismatch: log
+    enable.metric.collection: "true"
 #    snapshot.threads.per.task: 4
     errors.log.enable: "true"
     errors.log.include.messages: "true"
     errors.retry.delay.max.ms: "60000"
     errors.retry.timeout: "60000"
-    errors.tolerance: all
+    errors.tolerance: none
     exactly.once.support: requested
     query.timeout.ms: "300000"
     max.retry.time.ms: "86400000"
@@ -67,6 +70,9 @@ spec:
     max.batch.timeout.ms: "5000"
     max.buffer.size: "0"
     numeric.default.scale: "127"
+    connection.pool.inactive.timeout.ms: "60000"
+    connection.pool.check.interval.timeout.ms: "30000"
+    connection.pool.property.cycle.interval.ms: "30000"
 
 
     transaction.boundary.interval.ms: "10000"
