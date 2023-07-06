@@ -6,15 +6,12 @@ TOPIC=$3
 SCHEMA_FORMAT=$4
 COUNT=$5
 TP=$6
-
-
-
-QUICKSTART=$2
+QUICKSTART=$7
 
 
 kfk-producer-datagen perf \
   --prop bootstrap.servers=bootstrap."$env"."$site".confluentps.io:9092 \
-  --config sasl_ssl.properties \
+  --config kfk-client.properties \
   --format="$SCHEMA_FORMAT" \
   --throughput "$TP" \
   --num-records "$COUNT" \
