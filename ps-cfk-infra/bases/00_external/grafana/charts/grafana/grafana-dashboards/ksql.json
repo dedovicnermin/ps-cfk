@@ -1,6 +1,13 @@
 {
   "__inputs": [
-
+    {
+      "description": "",
+      "label": "Prometheus",
+      "name": "DS_PROMETHEUS",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus",
+      "type": "datasource"
+    }
   ],
   "annotations": {
     "list": []
@@ -1243,7 +1250,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_poll_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_poll_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1257,7 +1264,7 @@
             },
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_poll_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_poll_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1357,7 +1364,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_process_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_process_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1371,7 +1378,7 @@
             },
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_process_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_process_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1471,7 +1478,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_commit_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_commit_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1485,7 +1492,7 @@
             },
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_commit_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_commit_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1585,7 +1592,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_punctuate_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_punctuate_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1599,7 +1606,7 @@
             },
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_thread_metrics_punctuate_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_thread_metrics_punctuate_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1741,7 +1748,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1841,7 +1848,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -1941,7 +1948,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2041,7 +2048,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_if_absent_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_if_absent_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2141,7 +2148,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_if_absent_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_if_absent_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2241,7 +2248,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_put_if_absent_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_put_if_absent_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2341,7 +2348,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_fetch_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_fetch_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2441,7 +2448,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_fetch_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_fetch_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2541,7 +2548,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_fetch_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_fetch_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2641,7 +2648,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_delete_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_delete_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2741,7 +2748,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_delete_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_delete_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2841,7 +2848,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_delete_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_delete_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -2941,7 +2948,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_restore_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_restore_rate{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -3041,7 +3048,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_restore_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_restore_latency_avg{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -3141,7 +3148,7 @@
           "targets": [
             {
               "datasource": null,
-              "expr": "kafka_streams_stream_state_metrics_restore_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\"thread_id=~\".+$ksqldb_cluster_id.+\"}",
+              "expr": "kafka_streams_stream_state_metrics_restore_latency_max{namespace=\"$env\",app=\"$ksqldb_cluster\",pod=~\"$ksqldb_server\",thread_id=~\".+\"}",
               "format": "time_series",
               "hide": false,
               "instant": false,

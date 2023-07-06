@@ -176,13 +176,13 @@ server:
   global:
     ## How frequently to scrape targets by default
     ##
-    scrape_interval: 1m
+    scrape_interval: 20s
     ## How long until a scrape request times out
     ##
     scrape_timeout: 10s
     ## How frequently to evaluate rules
     ##
-    evaluation_interval: 1m
+    evaluation_interval: 15m
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
   ##
   remoteWrite: []
@@ -380,7 +380,7 @@ server:
 
     ## Prometheus server data Persistent Volume size
     ##
-    size: 8Gi
+    size: 150Gi
 
     ## Prometheus server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -504,13 +504,10 @@ server:
   ## Prometheus server resource requests and limits
   ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
-  resources: {}
-    # limits:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # requests:
-    #   cpu: 500m
-  #   memory: 512Mi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
 
   # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
   # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -605,7 +602,139 @@ ruleFiles: {}
 serverFiles:
   ## Alerts configuration
   ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
-  alerting_rules.yml: {}
+  alerting_rules.yml:
+    groups:
+      - name: producer-clients
+        rules:
+          - alert: ProducerRecordErrorRate
+            expr: kafka_producer_producer_metrics_record_error_rate{client_id!~"_confluent-controlcenter.+"} > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Producer client ({{ $labels.client_id }}) failing to send messages to brokers in {{ $labels.clusterId }}"
+              description: "Producer is dropping messages. # of retries have been exhausted, resulting in dropped message(s) - {{ .value }}"
+
+      - name: connect
+        rules:
+          - alert: FailedTasks
+            expr: kafka_connect_connect_worker_metrics_connector_failed_task_count > 0
+            for: 3m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Connector tasks in failed state were found"
+              description: "{{ $value }} failed connector tasks found on connector {{ $labels.connector }}"
+
+          - alert: FailedConnector
+            expr: kafka_connect_connector_metrics{status="failed"} > 0
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Connector {{ $labels.connector }} failed."
+              description: "Connector [{{ $labels.connector }}] status reports as 'failed' for > 5m"
+
+          - alert: PausedConnector
+            expr: kafka_connect_connector_metrics{status="paused"} > 0
+            for: 180m
+            labels:
+              severity: info
+            annotations:
+              summary: "Connector remains ({{ $labels.connector }}) paused after few hours"
+              description: "Reminder to either resume or delete connector deployed in connect cluster"
+
+          - alert: UnassignedTasks
+            expr: kafka_connect_connect_worker_metrics_connector_unassigned_task_count > 0
+            for: 30m
+            labels:
+              severity: info
+            annotations:
+              summary: "Connector task has been in 'unassigned' state for 30m+"
+              description: "{{ $value }} unassigned connector tasks found on connector {{ $labels.connector }}"
+
+      - name: kafka
+        rules:
+          - alert: OfflineReplicaCount
+            expr: kafka_server_replicamanager_offlinereplicacount > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'Kafka Offline Partitions'
+              description: 'There are {{ $value }} Offline Partitions on Cluster: {{ $labels.clusterId }}, Server {{ $labels.statefulset_kubernetes_io_pod_name }}'
+          - alert: OfflinePartitionCount
+            expr: kafka_controller_kafkacontroller_offlinepartitionscount > 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Partition(s) without an active leader reported in {{ $labels.clusterId }}"
+              description: "{{ .value }} partitions cannot be read from or written to. Identify topics with offline partitions and restart any problem brokers."
+          - alert: UnderReplicatedPartitions
+            expr: kafka_server_replicamanager_underreplicatedpartitions > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'Kafka Under Replicated Partitions'
+              description: 'There are {{ $value }} Under Replicated Partitions on Cluster: {{ $labels.clusterId }}, Server {{ $labels.statefulset_kubernetes_io_pod_name }}'
+          - alert: UnderMinIsrPartitionCount
+            expr: kafka_server_replicamanager_underminisrpartitioncount > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: 'Kafka Under Min ISR partitions'
+              description: 'There are {{ $value }} partitions under the Min ISR on Cluster: {{ $labels.clusterId }}, Server {{ $labels.statefulset_kubernetes_io_pod_name }}'
+          - alert: ActiveControllerCount
+            expr: kafka_controller_kafkacontroller_activecontrollercount > 1
+            for: 30s
+            labels:
+              severity: warning
+            annotations:
+              summary: 'Kafka Abnormal Controller State'
+              description: 'There are {{ $value }} Active Controllers in the Cluster: {{ $labels.clusterId }}'
+          - alert: NetworkProcessorPoolUsageCritical
+            expr: kafka_network_socketserver_networkprocessoravgidlepercent < 0.10
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Network processor pool is overloaded. Client requests may take longer to complete in {{ $labels.clusterId }}"
+              description: "Network processor threads are responsible for reading/writing data to and from clients on the network. If request queue size is hitting limit frequently, increase # of network threads. "
+
+          - alert: RequestHandlerPoolUsageCritical
+            expr: kafka_server_kafkarequesthandlerpool_requesthandleravgidlepercent_total < 0.10
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Broker request handlers overloaded in {{ $labels.clusterId }}"
+              description: "At greater than 90% (curr : {{ $value }}) usage, request handler is overloaded and serving requests to/from clients may take longer. Increase count of request handlers if resources are available / request queue consistently at limit. Consider increasing count of brokers."
+
+
+      - name: zookeeper
+        rules:
+          - alert: ZookeeperAvgRequestLatency
+            expr: zookeeper_avgrequestlatency > 50
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Zookeeper request latency avg showing signs of performance degradation in {{ $labels.clusterId }}"
+              description: "Zookeeper ({{ $labels.instance }}) instance reporting a high value ({{ $value }}ms) for avg. request latency."
+
+
+
+          - alert: ZookeeperDisconnectsPerSec
+            expr: kafka_server_sessionexpirelistener_zookeeperdisconnectspersec > 0
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Broker/Zookeeper disconnects occurring in {{ $labels.clusterId }}"
+              description: "Broker {{ $labels.host }} reporting communication issues with zookeeper - {{ .value }}"
   # groups:
   #   - name: Instances
   #     rules:
