@@ -7,10 +7,17 @@ ps-cfk-infra/bases/00_external/datadog/charts
 ps-cfk-infra/bases/00_external/elk/charts
 ps-cfk-infra/bases/00_external/openldap/charts
 ps-cfk-infra/bases/01_operator/charts
+ps-cfk-infra/bases/00_external/buildkite
 ps-cfk-tf/gke/.terraform
 ps-cfk-tf/gke/.terraform.lock.hcl
 ps-cfk-tf/gke/terraform.tfstate
-ps-cfk-tf/cc
+ps-cfk-tf/cc/environments/*/terraform.tfvars
+ps-cfk-tf/cc/environments/*/*.tfstate
+ps-cfk-tf/cc/environments/*/*.tfstate.*
+ps-cfk-tf/cc/environments/*/.terraform
+ps-cfk-tf/cc/environments/*/.terraform.lock.hcl
+
+
 
 
 ps-cfk-infra/bases/01_operator/license-secret.yml
