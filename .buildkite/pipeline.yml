@@ -1,0 +1,8 @@
+# Default pipeline from cli
+steps:
+- label: ":pipeline:"
+  command: buildkite-agent pipeline upload
+
+#- label: ":one-does-not-simply: Build :wrench:"
+#  commands:
+#    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus
