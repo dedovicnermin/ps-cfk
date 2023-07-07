@@ -6,6 +6,6 @@ steps:
     - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus
   plugins:
     - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.3
+        image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
