@@ -1,4 +1,4 @@
-# PS-CFK 
+# PS-CFK [![Build status](https://badge.buildkite.com/4c4c630f4155155b3572bfc322659731a1548b8758fb56f770.svg)](https://buildkite.com/nerm/ps-cfk)
 
 ##  what it does, and when and how you should use it…
 

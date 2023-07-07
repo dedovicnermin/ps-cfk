@@ -10,7 +10,7 @@ steps:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
-- label: ":one-does-not-simply::k8s: (GKE/DEV/PROMETHEUS) Build CFK cluster  :kafka::superfly:"
+- label: ":kafka::k8s: (GKE/DEV/PROMETHEUS) Build CFK cluster  :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
   plugins:
@@ -18,15 +18,15 @@ steps:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
-- label: ":one-does-not-simply::k8s::oracle: Build Oracle19 base"
+- label: ":kafka::k8s::oracle: Build Oracle19 base"
   commands:
-    - kustomize build ps-cfk-infra/bases/00_external/oracle19 > /dev/null
+    - kustomize build ps-cfk-infra/bases/00_external/oracle19c > /dev/null
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
-- label: ":one-does-not-simply::k8s: (DEV) Build cfrbs :kafka::superfly:"
+- label: ":kafka::k8s: (DEV) Build cfrbs :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
   plugins:
@@ -35,7 +35,7 @@ steps:
 
 
 
-- label: ":one-does-not-simply::k8s: (DEV) Build datagen_connectors :kafka::superfly:"
+- label: ":kafka::k8s: (DEV) Build datagen_connectors :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-app/environments/0_dev/datagen_connectors > /dev/null
   plugins:
@@ -43,7 +43,7 @@ steps:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
-- label: ":one-does-not-simply::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
+- label: ":kafka::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_0 > /dev/null
     - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_1 > /dev/null
@@ -53,7 +53,7 @@ steps:
 
 
 
-- label: ":one-does-not-simply::k8s: (DEV) Build ADLS2 Sink Connectors :kafka::superfly:"
+- label: ":kafka::k8s: (DEV) Build ADLS2 Sink Connectors :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/daily > /dev/null
     - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/default > /dev/null
@@ -69,7 +69,7 @@ steps:
 
 
 
-- label: ":one-does-not-simply::k8s: (DEV) Build Confluent Oracle CDC source Connector :kafka::superfly:"
+- label: ":kafka::k8s: (DEV) Build Confluent Oracle CDC source Connector :kafka::superfly:"
   commands:
     - kustomize build ps-cfk-app/environments/0_dev/connectors/oracle_cdc/avro_keyvalue > /dev/null
   plugins:
