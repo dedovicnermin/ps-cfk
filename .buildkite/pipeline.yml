@@ -1,8 +1,78 @@
 # Default pipeline from cli
 steps:
-- label: ":pipeline:"
-  command: buildkite-agent pipeline upload
+- label: ":one-does-not-simply::k8s: (DEV/GKE/PROMETHEUS) Build base infrastructure   :helm::house::prometheus::grafana::wrench:"
+  commands:
+    - echo "yourock" > gib.txt
+    - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+    - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
 
-#- label: ":one-does-not-simply: Build :wrench:"
-#  commands:
-#    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus
+
+- label: ":kafka::k8s: (GKE/DEV/PROMETHEUS) Build CFK cluster  :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+- label: ":kafka::k8s::oracle: Build Oracle19 base"
+  commands:
+    - kustomize build ps-cfk-infra/bases/00_external/oracle19c > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+- label: ":kafka::k8s: (DEV) Build cfrbs :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+
+- label: ":kafka::k8s: (DEV) Build datagen_connectors :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-app/environments/0_dev/datagen_connectors > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+- label: ":kafka::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_0 > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_1 > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+
+- label: ":kafka::k8s: (DEV) Build ADLS2 Sink Connectors :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/daily > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/default > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/field > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly_recordtime > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+
+
+- label: ":kafka::k8s: (DEV) Build Confluent Oracle CDC source Connector :kafka::superfly:"
+  commands:
+    - kustomize build ps-cfk-app/environments/0_dev/connectors/oracle_cdc/avro_keyvalue > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
+
