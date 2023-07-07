@@ -1,13 +1,12 @@
 # Default pipeline from cli
 steps:
-- label: ":pipeline:"
-  command: buildkite-agent pipeline upload
-
 - label: ":one-does-not-simply: Build :wrench:"
   commands:
     - ls -ltr; pwd; kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus;
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.3
-
+#  env:
+#    BUILDKITE_PIPELINE_NAME: ps-cfk
+#    BUILDKITE_STEP_KEY: "step_zerio"
 
