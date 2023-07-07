@@ -1,11 +1,18 @@
 # Default pipeline from cli
 steps:
-- label: ":one-does-not-simply: Build :wrench:"
+- label: ":one-does-not-simply: (DEV/GKE) Build base infrastructure   :house::wrench:"
   commands:
-    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus;
-    - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus
+    - echo "gibberish" > gib.txt
+    - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+    - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
 
+- label: ":one-does-not-simply: (DEV/GKE) Build CFK cluster :prometheus::kafka:"
+  commands:
+    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
