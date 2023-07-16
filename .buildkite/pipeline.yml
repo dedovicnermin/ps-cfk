@@ -76,3 +76,10 @@ steps:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.4
 
+- label: ":house::k8s: (KIND/DEV) Local CFK dev environment build tests :hammer::superfly:"
+  commands:
+    - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus/local > /dev/null
+    - kustomize build ps-cfk-infra/environments/local/0_dev/with_prometheus > /dev/null
+  plugins:
+    - docker#v5.8.0:
+        image: dedovicnermin/pscfk-buildkite:0.0.4
