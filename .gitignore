@@ -1,12 +1,26 @@
 .idea
 *.iml
 **/.idea
+ps-cfk-infra/**/.DS_Store
+ps-cfk-app/**/.DS_Store
+ps-cfk-tf/**/.DS_Store
+ps-cfk-tf/kind/kind-config.yml.bk
+ps-cfk-tf/kind/taint-multi.sh
+
 ps-cfk-infra/bases/00_external/prometheus/charts
+ps-cfk-infra/bases/00_external/prometheus/local/charts
+ps-cfk-infra/bases/00_external/prometheus/alerts
 ps-cfk-infra/bases/00_external/ingress-nginx/charts
 ps-cfk-infra/bases/00_external/datadog/charts
 ps-cfk-infra/bases/00_external/elk/charts
 ps-cfk-infra/bases/00_external/openldap/charts
 ps-cfk-infra/bases/01_operator/charts
+ps-cfk-infra/bases/01_operator/local/charts
+ps-cfk-infra/bases/01_operator/local/license-secret.yml
+ps-cfk-infra/bases/05_connect/image/debezium
+ps-cfk-infra/bases/05_connect/image/debezium/**
+
+
 ps-cfk-infra/bases/00_external/buildkite
 ps-cfk-tf/gke/.terraform
 ps-cfk-tf/gke/.terraform.lock.hcl
@@ -17,6 +31,12 @@ ps-cfk-tf/cc/environments/*/*.tfstate.*
 ps-cfk-tf/cc/environments/*/.terraform
 ps-cfk-tf/cc/environments/*/.terraform.lock.hcl
 
+ps-cfk-app/workshop/scripts-internal
+ps-cfk-app/workshop/Dockerfile
+ps-cfk-app/workshop/exporter
+ps-cfk-app/bases/connectors/debezium_oracle
+ps-cfk-app/environments/0_dev/connectors/debezium_oracle
+ps-cfk-app/overlays/0_dev/connectors/debezium_oracle
 
 
 
