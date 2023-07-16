@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: dev
 
 resources:
-  - ../../../../bases/topics/datagen/protobuf
-  - ../../../../overlays/0_dev/connectors/datagen/protobuf
+
+  - ../../../../overlays/0_dev/connectors/datagen/protobuf/stock_trades
