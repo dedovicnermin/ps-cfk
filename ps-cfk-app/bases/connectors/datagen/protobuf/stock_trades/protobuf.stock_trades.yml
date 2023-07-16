@@ -1,8 +1,7 @@
 apiVersion: platform.confluent.io/v1beta1
-kind: Connector
+kind: KafkaTopic
 metadata:
   name: protobuf.stocktrades
-
 spec:
   class: "io.confluent.kafka.connect.datagen.DatagenConnector"
   taskMax: 1

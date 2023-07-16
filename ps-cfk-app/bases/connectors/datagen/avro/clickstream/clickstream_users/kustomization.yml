@@ -1,20 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+commonLabels:
+  schema: avro
+  plugin: datagen
+
 resources:
-  - ../../../../connectors_generic/source/community/with_sr
+  - avro.clickstream.users.yml
+  - ../../../../../connectors_generic/source/community/with_sr
 
 
 patches:
   - target:
       kind: Connector
       labelSelector: conntype=source
-    path: avro-fls.yml
+    path: avro-clickstream-users.yml
   - target:
       kind: Connector
       name: basesr
     patch: |-
       - op: replace
         path: /metadata/name
-        value: avro.field.mngnt.sensor
+        value: avro.clickstream.users
         

@@ -1,20 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+commonLabels:
+  schema: avro
+  plugin: datagen
+
 resources:
-  - ../../../../connectors_generic/source/community/with_sr
+  - avro.field.mngnt.sensors.yml
+  - ../../../../../connectors_generic/source/community/with_sr
 
 
 patches:
   - target:
       kind: Connector
       labelSelector: conntype=source
-    path: avro-shoe-customer.yml
+    path: avro-fls.yml
   - target:
       kind: Connector
       name: basesr
     patch: |-
       - op: replace
         path: /metadata/name
-        value: avro.shoe.customer
+        value: avro.field.mngnt.sensor
         

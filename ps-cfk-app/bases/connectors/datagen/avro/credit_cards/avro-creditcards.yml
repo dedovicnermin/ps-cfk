@@ -13,5 +13,6 @@ spec:
     max.interval: "60000"
     iterations: "10000"
     schema.compatibility: "BACKWARD"
+    producer.override.client.id: "avro.creditcards"
 
 
