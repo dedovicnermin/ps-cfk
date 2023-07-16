@@ -1,78 +1,131 @@
 # Default pipeline from cli
 steps:
-- label: ":one-does-not-simply::k8s: (DEV/GKE/PROMETHEUS) Build base infrastructure   :helm::house::prometheus::grafana::wrench:"
-  commands:
-    - echo "yourock" > gib.txt
-    - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
-    - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
-
-
-- label: ":kafka::k8s: (GKE/DEV/PROMETHEUS) Build CFK cluster  :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
-
-
-- label: ":kafka::k8s::oracle: Build Oracle19 base"
-  commands:
-    - kustomize build ps-cfk-infra/bases/00_external/oracle19c > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
-
-
-- label: ":kafka::k8s: (DEV) Build cfrbs :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
-
-
-
-- label: ":kafka::k8s: (DEV) Build datagen_connectors :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-app/environments/0_dev/datagen_connectors > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
-
-
-- label: ":kafka::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_0 > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_1 > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
+  - group: ":gcloud::building_construction: (GKE) INFRA :hammer:"
+    key: "gke"
+    steps:
+      - label: "Prometheus/Grafana/CFK :kafka::prometheus::grafana::k8s: "
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/1_test/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/2_qa/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/3_prod/with_prometheus > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+      - label: "Datadog/CFK :kafka::datadog::k8s:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/0_dev/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/1_test/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/2_qa/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/3_prod/with_datadog > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+      - label: "No monitoring service/CFK - incomplete :one-does-not-simply::kafka:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/without_observability > /dev/null
+          #          - kustomize build ps-cfk-infra/environments/gke/0_dev/without_observability > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
 
 
 
-- label: ":kafka::k8s: (DEV) Build ADLS2 Sink Connectors :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/daily > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/default > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/field > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly_recordtime > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
+
+  - group: ":house_with_garden: (LOCAL) INFRA :hammer:"
+    key: "local"
+    steps:
+      - label: "Prometheus/Grafana/CFK :prometheus::grafana::kafka::roller_coaster:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/local/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus/local > /dev/null
+          - kustomize build ps-cfk-infra/environments/local/0_dev/with_prometheus > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
 
 
 
-- label: ":kafka::k8s: (DEV) Build Confluent Oracle CDC source Connector :kafka::superfly:"
-  commands:
-    - kustomize build ps-cfk-app/environments/0_dev/connectors/oracle_cdc/avro_keyvalue > /dev/null
-  plugins:
-    - docker#v5.8.0:
-        image: dedovicnermin/pscfk-buildkite:0.0.4
+  - group: ":database: (ORACLE)"
+    key: "oracle"
+    steps:
+      - label: ":k8s::database: Build Oracle19 base"
+        commands:
+          - kustomize build ps-cfk-infra/bases/00_external/oracle19c > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+      - label: ":kafka::k8s: (DEV) Build Confluent Oracle CDC source Connector :kafka::superfly:"
+        commands:
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/oracle_cdc/avro_keyvalue > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+  - group: ":rocket: APP :hammer:"
+    key: "dev_app"
+    steps:
+      - label: ":kafka::k8s: (DEV/TEST/QA/PROD) CFRBs :kafka::superfly:"
+        commands:
+          - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/1_test/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/2_qa/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/3_prod/cfrbs > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+
+      - label: ":kafka::k8s: (DEV) Build datagen_connectors :kafka::superfly:"
+        commands:
+          - kustomize build ps-cfk-app/environments/0_dev/datagen_connectors > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+      - label: ":kafka::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
+        commands:
+          - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_0 > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/cfk_cc_clusterlink/step_1 > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+
+      - label: ":kafka::k8s: (DEV) Build ADLS2 Sink Connectors :kafka::superfly:"
+        commands:
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/daily > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/default > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/field > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/hourly_recordtime > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
+          - kustomize build ps-cfk-app/environments/0_dev/connectors/adls2/avro_value/timebased_compact > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
 

@@ -4,5 +4,10 @@ kind: Kustomization
 namespace: dev
 
 resources:
-  - ../../../../bases/topics/datagen/avro
-  - ../../../../overlays/0_dev/connectors/datagen/avro
+  - ../../../../overlays/0_dev/connectors/datagen/avro/campaign_finance
+  - ../../../../overlays/0_dev/connectors/datagen/avro/clickstream
+  - ../../../../overlays/0_dev/connectors/datagen/avro/credit_cards
+  - ../../../../overlays/0_dev/connectors/datagen/avro/fleet_mngnt
+  - ../../../../overlays/0_dev/connectors/datagen/avro/product
+  - ../../../../overlays/0_dev/connectors/datagen/avro/shoe
+

@@ -1,0 +1,96 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+spec:
+  replicas: 1
+  connectorOverridePolicy: All
+
+  configOverrides:
+    server:
+      - plugin.path=/usr/share/java,/usr/share/confluent-hub-components,/mnt/plugins,/usr/share/filestream-connectors
+      - rest.extension.classes=io.confluent.connect.security.ConnectSecurityExtension,io.confluent.connect.replicator.monitoring.ReplicatorMonitoringExtension
+      - topic.creation.enable=true
+      - confluent.metadata.enable.server.urls.refresh=false
+      - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
+      - producer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
+      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9071
+      - producer.confluent.monitoring.interceptor.security.protocol=SSL
+      - producer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
+      - producer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - producer.confluent.monitoring.interceptor.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - producer.confluent.monitoring.interceptor.ssl.keystore.type=PKCS12
+      - producer.confluent.monitoring.interceptor.ssl.truststore.location=/mnt/sslcerts/truststore.p12
+      - producer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - producer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
+      - producer.confluent.monitoring.interceptor.client.id=connect.monitoring.producer.interceptor
+      - consumer.interceptor.classes=io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
+      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka.dev.svc.cluster.local:9071
+      - consumer.confluent.monitoring.interceptor.security.protocol=SSL
+      - consumer.confluent.monitoring.interceptor.ssl.keystore.location=/mnt/sslcerts/keystore.p12
+      - consumer.confluent.monitoring.interceptor.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - consumer.confluent.monitoring.interceptor.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - consumer.confluent.monitoring.interceptor.ssl.keystore.type=PKCS12
+      - consumer.confluent.monitoring.interceptor.ssl.truststore.location=/mnt/sslcerts/truststore.p12
+      - consumer.confluent.monitoring.interceptor.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - consumer.confluent.monitoring.interceptor.ssl.truststore.type=PKCS12
+      - consumer.confluent.monitoring.interceptor.client.id=connect.monitoring.consumer.interceptor
+      - config.storage.replication.factor=1
+      - offset.storage.replication.factor=1
+      - status.storage.replication.factor=1
+
+
+#  build:
+#    type: onDemand
+#    onDemand:
+#      storageLimit: 256Mi
+##      plugins:
+##        locationType: confluentHub
+##        confluentHub:
+##          - name: kafka-connect-datagen
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-jdbc
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-http
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-salesforce
+##            owner: confluentinc
+##            version: latest
+##          - name: kafka-connect-replicator
+##            owner: confluentinc
+##            version: latest
+  podTemplate:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 516Mi
+
+  authorization:
+    type: rbac
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
+      authentication:
+        type: oauthbearer
+        oauthbearer:
+          secretRef: mds-connect
+      tls:
+        enabled: true
+
+    mds:
+      endpoint: https://kafka.dev.svc.cluster.local:8090
+      tokenKeyPair:
+        secretRef: mds-token
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-connect
+      tls:
+        enabled: true
+    schemaRegistry:
+      url: https://sr.dev.svc.cluster.local:8081
+      tls:
+        enabled: true

@@ -1,0 +1,57 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../bases/10_observability/with_prometheus/02_zookeeper
+  - ../../../../bases/10_observability/with_prometheus/03_kafka
+  - ../../../../bases/10_observability/with_prometheus/04_sr
+  - ../../../../bases/10_observability/with_prometheus/05_connect
+  - ../../../../bases/10_observability/with_prometheus/07_ksql
+  - ../../../../bases/10_observability/with_prometheus/08_c3
+  - svc/bootstrap.yml
+  - svc/mds.yml
+
+
+
+patches:
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Zookeeper
+    path: patch/zookeeper.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Kafka
+    path: patch/kafka.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: SchemaRegistry
+    path: patch/schemaregistry.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Connect
+    path: patch/connect.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: KsqlDB
+    path: patch/ksql.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: ControlCenter
+    path: patch/c3.yml
+
+  - target:
+      version: v1
+      kind: Secret
+      name: connector-secrets
+    path: secrets/connector-secrets.yml

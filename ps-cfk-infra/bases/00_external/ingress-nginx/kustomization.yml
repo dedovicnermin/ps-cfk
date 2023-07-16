@@ -14,5 +14,9 @@ helmCharts:
       controller:
         extraArgs:
           enable-ssl-passthrough: true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 90Mi
 
     includeCRDs: true
