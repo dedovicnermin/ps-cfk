@@ -5,10 +5,7 @@ resource "google_container_cluster" "gke_cluster" {
   location                  = var.region
   default_max_pods_per_node = "110"
   logging_config {
-    enable_components = [
-      "SYSTEM_COMPONENTS",
-      "WORKLOADS"
-    ]
+    enable_components = []
   }
   monitoring_config {
     enable_components = ["SYSTEM_COMPONENTS"]

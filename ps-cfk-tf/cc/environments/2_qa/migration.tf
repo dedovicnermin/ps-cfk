@@ -39,7 +39,7 @@ resource "confluent_cluster_link" "cfkcl" {
                     EOF
   }
   source_kafka_cluster {
-    id = "CHANGEME"
+    id = "-DwQmCl5Ry28v3XVsg4cUw"
     bootstrap_endpoint = "mock:9092"
   }
 
