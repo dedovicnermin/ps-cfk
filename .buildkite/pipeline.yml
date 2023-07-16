@@ -17,6 +17,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 - label: ":kafka::k8s::oracle: Build Oracle19 base"
@@ -25,6 +26,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 - label: ":kafka::k8s: (DEV) Build cfrbs :kafka::superfly:"
@@ -33,6 +35,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 
@@ -42,6 +45,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 - label: ":kafka::k8s: (DEV) Build CP->CC w/ ClusterLink + Schema Exporter :kafka::superfly:"
@@ -51,6 +55,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 
@@ -67,6 +72,7 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 
 
@@ -76,11 +82,15 @@ steps:
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
 
 - label: ":house::k8s: (KIND/DEV) Local CFK dev environment build tests :hammer::superfly:"
   commands:
+    - echo "yourock" > gib.txt
+    - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/local/license-secret.yml
     - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus/local > /dev/null
     - kustomize build ps-cfk-infra/environments/local/0_dev/with_prometheus > /dev/null
   plugins:
     - docker#v5.8.0:
         image: dedovicnermin/pscfk-buildkite:0.0.6
+        propagate-uid-gid: true
