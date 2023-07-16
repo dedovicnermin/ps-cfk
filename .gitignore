@@ -653,3 +653,4 @@ ps-cfk-tf/gke/terraform.tfstate.backup
 /out/production/ps-cfk/ps-cfk-tf/gke/vpc.tf
 /out/production/ps-cfk/.gitignore
 /out/production/ps-cfk/README.md
+ps-cfk-app/test.sh

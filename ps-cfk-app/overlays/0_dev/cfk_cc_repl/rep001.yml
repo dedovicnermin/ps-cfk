@@ -5,8 +5,8 @@ metadata:
 spec:
   taskMax: 5
   configs:
-#    topic.whitelist: "AKV.ORCLPDB1.C__MYUSER.CUSTOMERS"
-    topic.regex: "leaderboard.*"
+    topic.whitelist: "leaderboard.players, leaderboard.products, leaderboard.scorecards, leaderboard.scores"
+    topic.regex: "avro.*"
 #    topic.blacklist:
     topic.poll.interval.ms: "120000"
     consumer.poll.timeout.interval.ms: "5000"
@@ -57,6 +57,8 @@ spec:
       ${file:/mnt/secrets/connector-secrets/destConfig.txt:bootstrapEndpoint}
     dest.kafka.ssl.truststore.location: /mnt/secrets/pscfk-cc-trust/pscfk-cc-trust.jks
     dest.kafka.ssl.truststore.password: mystorepassword
+    dest.kafka.sasl.login.callback.handler.class: |
+      org.apache.kafka.common.security.authenticator.AbstractLogin$DefaultLoginCallbackHandler
 
     producer.override.bootstrap.servers: |
       ${file:/mnt/secrets/connector-secrets/destConfig.txt:bootstrapEndpoint}
