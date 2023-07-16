@@ -25,8 +25,6 @@ spec:
         - kafka.producer:*
       blacklist:
         - kafka.admin.client:*
-        - kafka.consumer:type=*,id=*
-        - kafka.producer:type=*,id=*
         - kafka.producer:client-id=confluent.monitoring*,*
         - kafka.*:type=kafka-metrics-count,*
       rules:
