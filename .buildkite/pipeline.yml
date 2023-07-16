@@ -16,7 +16,7 @@ steps:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
-      - label: "Datadog/CFK :kafka::datadog:"
+      - label: "Datadog/CFK :kafka::datadog::k8s:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
@@ -29,7 +29,7 @@ steps:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
-      - label: "No monitoring service - incomplete :hotface::one-does-not-simply:"
+      - label: "No monitoring service/CFK - incomplete :one-does-not-simply::kafka:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
@@ -46,7 +46,7 @@ steps:
   - group: ":house_with_garden: (LOCAL) INFRA :hammer:"
     key: "local"
     steps:
-      - label: "Prometheus/Grafana/CFK :prometheus::grafana:"
+      - label: "Prometheus/Grafana/CFK :prometheus::grafana::kafka::roller_coaster:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/local/license-secret.yml
@@ -80,7 +80,7 @@ steps:
   - group: ":rocket: APP :hammer:"
     key: "dev_app"
     steps:
-      - label: ":kafka::k8s: CFRBs :kafka::superfly:"
+      - label: ":kafka::k8s: (DEV/TEST/QA/PROD) CFRBs :kafka::superfly:"
         commands:
           - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
           - kustomize build ps-cfk-app/environments/1_test/cfrbs > /dev/null
