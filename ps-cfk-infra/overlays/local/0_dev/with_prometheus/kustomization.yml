@@ -6,10 +6,11 @@ resources:
   - ../../../../bases/10_observability/with_prometheus/03_kafka
   - ../../../../bases/10_observability/with_prometheus/04_sr
   - ../../../../bases/10_observability/with_prometheus/05_connect
-  - ../../../../bases/10_observability/with_prometheus/06_krp
   - ../../../../bases/10_observability/with_prometheus/07_ksql
   - ../../../../bases/10_observability/with_prometheus/08_c3
-  - ingress.yml
+  - svc/bootstrap.yml
+  - svc/mds.yml
+
 
 
 patches:
@@ -42,12 +43,6 @@ patches:
       version: v1beta1
       kind: KsqlDB
     path: patch/ksql.yml
-
-  - target:
-      group: platform.confluent.io
-      version: v1beta1
-      kind: KafkaRestProxy
-    path: patch/krp.yml
 
   - target:
       group: platform.confluent.io
