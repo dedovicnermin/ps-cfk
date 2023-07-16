@@ -2,7 +2,7 @@
 steps:
 - label: ":one-does-not-simply::k8s: (DEV/GKE/PROMETHEUS) Build base infrastructure   :helm::house::prometheus::grafana::wrench:"
   commands:
-    - echo "yourock" > gib.txt
+    - sudo echo "yourock" > gib.txt
     - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
     - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
   plugins:
