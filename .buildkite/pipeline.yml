@@ -1,9 +1,8 @@
 # Default pipeline from cli
 steps:
-  - group: ":lock_with_ink_pen: (GKE/DEV/PROMETHEUS) INFRA :house::hammer:"
-    key: "gke_dev"
+  - group: ":goberserk: (GKE/DEV/PROMETHEUS) INFRA :house::hammer:"
+    key: "gke_dev_prom"
     steps:
-
       - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::prometheus::grafana::wrench:"
         commands:
           - echo "yourock" > gib.txt
@@ -15,10 +14,42 @@ steps:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
 
+  - group: "::datadog: (GKE/DEV/DD) INFRA :house::hammer:"
+    key: "gke_dev_dd"
+    steps:
+
+      - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::datadog::wrench:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/0_dev/with_datadog > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+  - group: ":lock_with_ink_pen: (GKE/DEV/NA - incomplete) INFRA :hot_face:"
+    key: "gke_dev_na"
+    steps:
+
+      - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::prometheus::grafana::wrench:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/without_observability > /dev/null
+#          - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+
   - group: ":lock_with_ink_pen: (ORACLE)"
     key: "oracle"
     steps:
-      - label: ":kafka::k8s::oracle: Build Oracle19 base"
+      - label: ":k8s::database: Build Oracle19 base"
         commands:
           - kustomize build ps-cfk-infra/bases/00_external/oracle19c > /dev/null
         plugins:
