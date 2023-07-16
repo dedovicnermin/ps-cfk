@@ -4,6 +4,7 @@
 ps-cfk-infra/**/.DS_Store
 ps-cfk-app/**/.DS_Store
 ps-cfk-tf/**/.DS_Store
+.buildkite/Dockerfile
 ps-cfk-tf/kind/kind-config.yml.bk
 ps-cfk-tf/kind/taint-multi.sh
 
