@@ -1,44 +1,40 @@
 # Default pipeline from cli
 steps:
-  - group: ":goberserk: (GKE/DEV/PROMETHEUS) INFRA :house::hammer:"
-    key: "gke_dev_prom"
+  - group: ":gcloud::building_construction: (GKE) INFRA :hammer:"
+    key: "gke"
     steps:
-      - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::prometheus::grafana::wrench:"
+      - label: "Prometheus/Grafana/CFK :kafka::prometheus::grafana::k8s: "
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
           - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus > /dev/null
           - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/1_test/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/2_qa/with_prometheus > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/3_prod/with_prometheus > /dev/null
         plugins:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
-
-  - group: "::datadog: (GKE/DEV/DD) INFRA :house::hammer:"
-    key: "gke_dev_dd"
-    steps:
-
-      - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::datadog::wrench:"
+      - label: "Datadog/CFK :kafka::datadog:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
           - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/datadog > /dev/null
           - kustomize build ps-cfk-infra/environments/gke/0_dev/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/1_test/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/2_qa/with_datadog > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/3_prod/with_datadog > /dev/null
         plugins:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
-
-  - group: ":lock_with_ink_pen: (GKE/DEV/NA - incomplete) INFRA :hot_face:"
-    key: "gke_dev_na"
-    steps:
-
-      - label: ":one-does-not-simply::k8s:  Build infrastructure   :helm::house::prometheus::grafana::wrench:"
+      - label: "No monitoring service - incomplete :hotface::one-does-not-simply:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
           - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/without_observability > /dev/null
-#          - kustomize build ps-cfk-infra/environments/gke/0_dev/with_prometheus > /dev/null
+          #          - kustomize build ps-cfk-infra/environments/gke/0_dev/without_observability > /dev/null
         plugins:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
@@ -46,7 +42,24 @@ steps:
 
 
 
-  - group: ":lock_with_ink_pen: (ORACLE)"
+
+  - group: ":house_with_garden: (LOCAL) INFRA :hammer:"
+    key: "local"
+    steps:
+      - label: "Prometheus/Grafana/CFK :prometheus::grafana:"
+        commands:
+          - echo "yourock" > gib.txt
+          - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/local/license-secret.yml
+          - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus/local > /dev/null
+          - kustomize build ps-cfk-infra/environments/local/0_dev/with_prometheus > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+
+  - group: ":database: (ORACLE)"
     key: "oracle"
     steps:
       - label: ":k8s::database: Build Oracle19 base"
@@ -64,12 +77,15 @@ steps:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
 
-  - group: ":lock_with_ink_pen: (DEV) APP :hammer:"
+  - group: ":rocket: APP :hammer:"
     key: "dev_app"
     steps:
-      - label: ":kafka::k8s: (DEV) Build cfrbs :kafka::superfly:"
+      - label: ":kafka::k8s: CFRBs :kafka::superfly:"
         commands:
           - kustomize build ps-cfk-app/environments/0_dev/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/1_test/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/2_qa/cfrbs > /dev/null
+          - kustomize build ps-cfk-app/environments/3_prod/cfrbs > /dev/null
         plugins:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
@@ -112,18 +128,4 @@ steps:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
 
-
-  - group: ":lock_with_ink_pen: (LOCAL/DEV/PROMETHEUS) INFRA"
-    key: "local_dev_infra"
-    steps:
-      - label: ":house::k8s: (KIND/DEV) Local CFK dev environment build tests :hammer::superfly:"
-        commands:
-        - echo "yourock" > gib.txt
-        - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/local/license-secret.yml
-        - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/with_observability/prometheus/local > /dev/null
-        - kustomize build ps-cfk-infra/environments/local/0_dev/with_prometheus > /dev/null
-        plugins:
-        - docker#v5.8.0:
-            image: dedovicnermin/pscfk-buildkite:0.0.6
-            propagate-uid-gid: true
 
