@@ -29,31 +29,6 @@ spec:
         memory: 8Gi
 
 
-#  dependencies:
-#    zookeeper:
-#      endpoint: zookeeper.dev.svc.cluster.local:2182
-#      authentication:
-#        type: mtls
-#      tls:
-#        enabled: true
-#    schemaRegistry:
-#      url: https://sr.dev.svc.cluster.local:8081
-#      tls:
-#        enabled: true
-#      authentication:
-#        type: basic
-#        basic:
-#          secretRef: mds-kafka
-#    kafkaRest:
-#      authentication:
-#        type: bearer
-#        bearer:
-#          secretRef: mds-kafka
-#      tls:
-#        enabled: true
-#      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
-
-
   metricReporter:
     enabled: true
     authentication:
