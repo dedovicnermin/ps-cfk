@@ -6,7 +6,7 @@ resources:
   - ../../../../bases/10_observability/with_prometheus/03_kafka
   - ../../../../bases/10_observability/with_prometheus/04_sr
   - ../../../../bases/10_observability/with_prometheus/05_connect
-  - ../../../../bases/10_observability/with_prometheus/07_ksql
+#  - ../../../../bases/10_observability/with_prometheus/07_ksql
   - ../../../../bases/10_observability/with_prometheus/08_c3
   - svc/bootstrap.yml
   - svc/mds.yml
@@ -55,3 +55,15 @@ patches:
       kind: Secret
       name: connector-secrets
     path: secrets/connector-secrets.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Kafka
+    patch: |-
+      - op: remove
+        path: /spec/services/mds/externalAccess
+      - op: remove
+        path: /spec/listeners/external/externalAccess
+        
+        

@@ -15,6 +15,10 @@ spec:
     secretRef: password-encoder-secret
   tls:
     secretRef: tls-kafka
+  authorization:
+    type: rbac
+    superUsers:
+      - User:kafka
   listeners:
     internal:
       authentication:
@@ -23,6 +27,25 @@ spec:
           - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
       tls:
         enabled: true
+    external:
+      authentication:
+        type: ldap
+      tls:
+        enabled: true
+      externalAccess:
+        type: loadBalancer
+        loadBalancer:
+          domain: unknown.until.built
+          brokerPrefix: b
+          bootstrapPrefix: bootstrap
+    custom:
+      - name: intldap
+        port: 9094
+        authentication:
+          type: ldap
+        tls:
+          enabled: true
+
   podTemplate:
     tolerations:
       - key: app
@@ -54,6 +77,59 @@ spec:
         cpu: 500m
         memory: 1Gi
 
+  services:
+    mds:
+      externalAccess:
+        type: nodePort
+        nodePort:
+          externalTrafficPolicy: Cluster
+          host: unknown
+          nodePortOffset: 30002
+      authentication:
+        type: bearer
+      tls:
+        enabled: true
+      provider:
+        ldap:
+          address: ldap://ldap.cfk-operator.svc.cluster.local:389
+          authentication:
+            type: simple
+            simple:
+              secretRef: ldaps-user
+          configurations:
+            groupNameAttribute: cn
+            groupObjectClass: posixGroup
+            groupMemberAttribute: memberUid
+            groupMemberAttributePattern: cn=(.*),ou=users,dc=confluentps,dc=io
+            groupSearchBase: ou=groups,dc=confluentps,dc=io
+            userNameAttribute: cn
+            userObjectClass: inetOrgPerson
+            userSearchBase: ou=users,dc=confluentps,dc=io
+        type: ldap
+      tokenKeyPair:
+        secretRef: mds-token
 
-
+  dependencies:
+    zookeeper:
+      endpoint: zookeeper:2182
+      authentication:
+        type: mtls
+      tls:
+        enabled: true
+    schemaRegistry:
+      url: https://sr:8081
+      tls:
+        enabled: true
+      authentication:
+        type: basic
+        basic:
+          secretRef: mds-kafka
+    kafkaRest:
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-kafka
+      tls:
+        enabled: true
+      bootstrapEndpoint: kafka:9073
 ---
