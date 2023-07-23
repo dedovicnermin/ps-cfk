@@ -36,8 +36,7 @@ spec:
             broker: $4:$5
             clientId: $3
           name: kafka_server_$1_$2
-          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+),
-            brokerPort=(.+)><>Value
+          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+),brokerPort=(.+)><>Value
           type: GAUGE
           valueFactor: "1"
         - labels:

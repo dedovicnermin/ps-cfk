@@ -7,6 +7,17 @@ metadata:
     prometheus.io/port: "7778"
     prometheus.io/scrape: "true"
 spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - general
+  securityContext:
+    fsGroup: 54321
   containers:
     - name: kpod
       image: dedovicnermin/pscfk-kpod:1.0.0
@@ -15,3 +26,132 @@ spec:
           cpu: 500m
           memory: 516Mi
 
+      volumeMounts:
+        - mountPath: /home/pscfk/tls/dev1
+          name: tls-dev1
+        - mountPath: /home/pscfk/tls/dev2
+          name: tls-dev2
+        - mountPath: /home/pscfk/tls/dev3
+          name: tls-dev3
+        - mountPath: /home/pscfk/workshop/dev1
+          name: cfg-dev1
+        - mountPath: /home/pscfk/workshop/dev2
+          name: cfg-dev2
+        - mountPath: /home/pscfk/workshop/dev3
+          name: cfg-dev3
+        - mountPath: /home/pscfk/workshop/repl
+          name: cfg-replclient
+
+
+  volumes:
+    - name: tls-dev1
+      secret:
+        secretName: tls-dev1
+    - name: tls-dev2
+      secret:
+        secretName: tls-dev2
+    - name: tls-dev3
+      secret:
+        secretName: tls-dev3
+    - name: cfg-dev1
+      configMap:
+        name: cfg-dev1
+    - name: cfg-dev2
+      configMap:
+        name: cfg-dev2
+    - name: cfg-dev3
+      configMap:
+        name: cfg-dev3
+    - name: cfg-replclient
+      configMap:
+        name: cfg-replclient
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfg-dev1
+  namespace: dev
+data:
+  mtls.properties: |
+    security.protocol=SSL
+    ssl.keystore.location=/home/pscfk/tls/dev1/keystore.jks
+    ssl.keystore.password=mystorepassword
+    ssl.key.password=mystorepassword
+    ssl.truststore.location=/home/pscfk/tls/dev1/truststore.jks
+    ssl.truststore.password=mystorepassword
+    client.id=dev1.kpod
+  oauth.properties: |  
+    security.protocol=SASL_SSL
+    sasl.mechanism=OAUTHBEARER
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username="dev1" password="dev1-secret" metadataServerUrls="https://kafka.dev.svc.cluster.local:8090";
+    sasl.login.callback.handler.class=io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    ssl.truststore.location=/home/pscfk/tls/dev1/truststore.jks
+    ssl.truststore.password=mystorepassword
+    client.id=dev1.kpod
+  src.dev1: |
+    export CONFLUENT_PLATFORM_MDS_URL=https://kafka-0.kafka.dev.svc.cluster.local:8090
+    export CONFLUENT_PLATFORM_CA_CERT_PATH=/home/pscfk/workshop/nermin/pem/cacert.pem
+    export CONFLUENT_PLATFORM_USERNAME=dev1
+    export CONFLUENT_PLATFORM_PASSWORD=dev1-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfg-dev2
+  namespace: dev
+data:
+  mtls.properties: |
+    security.protocol=SSL
+    ssl.keystore.location=/home/pscfk/tls/dev2/keystore.jks
+    ssl.keystore.password=mystorepassword
+    ssl.key.password=mystorepassword
+    ssl.truststore.location=/home/pscfk/tls/dev2/truststore.jks
+    ssl.truststore.password=mystorepassword
+    client.id=dev2.kpod
+  src.dev2: |
+    export CONFLUENT_PLATFORM_MDS_URL=https://kafka-0.kafka.dev.svc.cluster.local:8090
+    export CONFLUENT_PLATFORM_CA_CERT_PATH=/home/pscfk/workshop/nermin/pem/cacert.pem
+    export CONFLUENT_PLATFORM_USERNAME=dev2
+    export CONFLUENT_PLATFORM_PASSWORD=dev2-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfg-dev3
+  namespace: dev
+data:
+  mtls.properties: |
+    security.protocol=SSL
+    ssl.keystore.location=/home/pscfk/tls/dev3/keystore.jks
+    ssl.keystore.password=mystorepassword
+    ssl.key.password=mystorepassword
+    ssl.truststore.location=/home/pscfk/tls/dev3/truststore.jks
+    ssl.truststore.password=mystorepassword
+    client.id=dev3.kpod
+  src.dev3: |
+    export CONFLUENT_PLATFORM_MDS_URL=https://kafka-0.kafka.dev.svc.cluster.local:8090
+    export CONFLUENT_PLATFORM_CA_CERT_PATH=/home/pscfk/workshop/nermin/pem/cacert.pem
+    export CONFLUENT_PLATFORM_USERNAME=dev3
+    export CONFLUENT_PLATFORM_PASSWORD=dev3-secret
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfg-replclient
+  namespace: dev
+data:
+  oauth.properties: |
+    security.protocol=SASL_SSL
+    sasl.mechanism=OAUTHBEARER
+    sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required username="replicator" password="replicator-secret" metadataServerUrls="https://kafka.dev.svc.cluster.local:8090";
+    sasl.login.callback.handler.class=io.confluent.kafka.clients.plugins.auth.token.TokenUserLoginCallbackHandler
+    ssl.truststore.location=/home/pscfk/tls/dev1/truststore.jks
+    ssl.truststore.password=mystorepassword
+    client.id=replicator.kpod
+  src.repl: |
+    export CONFLUENT_PLATFORM_MDS_URL=https://kafka-0.kafka.dev.svc.cluster.local:8090
+    export CONFLUENT_PLATFORM_CA_CERT_PATH=/home/pscfk/workshop/nermin/pem/cacert.pem
+    export CONFLUENT_PLATFORM_USERNAME=replicator
+    export CONFLUENT_PLATFORM_PASSWORD=replicator-secret
+---

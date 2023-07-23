@@ -3,6 +3,8 @@ kind: Connect
 metadata:
   name: connect
 spec:
+  authorization:
+    type: rbac
   connectorOverridePolicy: All
   license:
     globalLicense: true
@@ -66,3 +68,28 @@ spec:
     - secretRef: mds-replicator
     - secretRef: pscfk-cc-trust
     - secretRef: connector-secrets
+
+  dependencies:
+    kafka:
+      bootstrapEndpoint: kafka:9073
+      authentication:
+        type: oauthbearer
+        oauthbearer:
+          secretRef: mds-connect
+      tls:
+        enabled: true
+
+    mds:
+      endpoint: https://kafka:8090
+      tokenKeyPair:
+        secretRef: mds-token
+      authentication:
+        type: bearer
+        bearer:
+          secretRef: mds-connect
+      tls:
+        enabled: true
+    schemaRegistry:
+      url: https://sr:8081
+      tls:
+        enabled: true

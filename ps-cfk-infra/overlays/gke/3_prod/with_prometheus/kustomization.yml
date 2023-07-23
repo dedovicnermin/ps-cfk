@@ -54,3 +54,15 @@ patches:
       version: v1beta1
       kind: ControlCenter
     path: patch/c3.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Kafka
+    patch: |-
+      - op: replace
+        path: /spec/services/mds/externalAccess/nodePort/host
+        value: mds.prod.gke.confluentps.io
+      - op: replace
+        path: /spec/listeners/external/externalAccess/loadBalancer/domain
+        value: prod.gke.confluentps.io    

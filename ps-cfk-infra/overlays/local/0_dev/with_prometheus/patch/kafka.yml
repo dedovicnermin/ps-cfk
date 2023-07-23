@@ -4,65 +4,9 @@ metadata:
   name: kafka
 spec:
   replicas: 1
-  tls:
-    secretRef: tls-kafka
+
   telemetry:
     global: false
-
-  listeners:
-    external:
-      authentication:
-        type: ldap
-      tls:
-        enabled: true
-      externalAccess:
-        type: staticForHostBasedRouting
-        staticForHostBasedRouting:
-          domain: dev.gke.confluentps.io
-          brokerPrefix: b
-          port: 443
-
-
-  authorization:
-    type: rbac
-    superUsers:
-      - User:kafka
-
-
-
-
-  services:
-    mds:
-      externalAccess:
-        type: nodePort
-        nodePort:
-          externalTrafficPolicy: Cluster
-          host: mds.dev.gke.confluentps.io
-          nodePortOffset: 30002
-      authentication:
-        type: bearer
-
-      tls:
-        enabled: true
-      provider:
-        ldap:
-          address: ldap://ldap.cfk-operator.svc.cluster.local:389
-          authentication:
-            type: simple
-            simple:
-              secretRef: ldaps-user
-          configurations:
-            groupNameAttribute: cn
-            groupObjectClass: posixGroup
-            groupMemberAttribute: memberUid
-            groupMemberAttributePattern: cn=(.*),ou=users,dc=confluentps,dc=io
-            groupSearchBase: ou=groups,dc=confluentps,dc=io
-            userNameAttribute: cn
-            userObjectClass: inetOrgPerson
-            userSearchBase: ou=users,dc=confluentps,dc=io
-        type: ldap
-      tokenKeyPair:
-        secretRef: mds-token
 
   configOverrides:
     server:
@@ -101,30 +45,6 @@ spec:
         cpu: 1.0
         memory: 2Gi
 
-
-  dependencies:
-    zookeeper:
-      endpoint: zookeeper.dev.svc.cluster.local:2182
-      authentication:
-        type: mtls
-      tls:
-        enabled: true
-    schemaRegistry:
-      url: https://sr.dev.svc.cluster.local:8081
-      tls:
-        enabled: true
-      authentication:
-        type: basic
-        basic:
-          secretRef: mds-kafka
-    kafkaRest:
-      authentication:
-        type: bearer
-        bearer:
-          secretRef: mds-kafka
-      tls:
-        enabled: true
-      bootstrapEndpoint: kafka.dev.svc.cluster.local:9073
 
 
   metricReporter:
