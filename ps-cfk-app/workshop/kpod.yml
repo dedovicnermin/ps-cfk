@@ -25,6 +25,7 @@ spec:
         requests:
           cpu: 500m
           memory: 516Mi
+
       volumeMounts:
         - mountPath: /home/pscfk/tls/dev1
           name: tls-dev1

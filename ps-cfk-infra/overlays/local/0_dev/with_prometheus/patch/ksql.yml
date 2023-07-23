@@ -5,7 +5,6 @@ metadata:
 spec:
   internalTopicReplicationFactor: 1
 
-
   podTemplate:
     resources:
       requests:

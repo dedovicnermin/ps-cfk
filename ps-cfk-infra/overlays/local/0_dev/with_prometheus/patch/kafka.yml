@@ -8,8 +8,6 @@ spec:
   telemetry:
     global: false
 
-
-
   configOverrides:
     server:
       - kafka.rest.client.client.id=dev.confluentps.kafkarestclient
