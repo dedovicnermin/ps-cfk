@@ -1,0 +1,76 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../bases/02_zookeeper
+  - ../../../../bases/03_kafka
+  - ../../../../bases/04_sr
+  - ../../../../bases/05_connect
+  - ../../../../bases/06_krp
+
+#  - ../../../../bases/07_ksql
+
+  - ../../../../bases/08_c3
+  - svc/bootstrap.yml
+  - svc/mds.yml
+
+
+
+patches:
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Zookeeper
+    path: patch/zookeeper.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Kafka
+    path: patch/kafka.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: SchemaRegistry
+    path: patch/schemaregistry.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Connect
+    path: patch/connect.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: KsqlDB
+    path: patch/ksql.yml
+
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: ControlCenter
+    path: patch/c3.yml
+
+  - target:
+      version: v1
+      kind: Secret
+      name: connector-secrets
+    path: secrets/connector-secrets.yml
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Kafka
+    patch: |-
+      - op: remove
+        path: /spec/services/mds/externalAccess
+      - op: remove
+        path: /spec/listeners/external/externalAccess
+        
+       
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: KafkaRestProxy
+    path: patch/krp.yml

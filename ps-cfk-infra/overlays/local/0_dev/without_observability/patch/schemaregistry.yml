@@ -1,0 +1,16 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: sr
+spec:
+  authorization:
+    type: rbac
+  podTemplate:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+  configOverrides:
+    server:
+      - confluent.metadata.enable.server.urls.refresh=false
+      - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
