@@ -3,6 +3,8 @@ kind: KafkaRestProxy
 metadata:
   name: krp
 spec:
+  authorization:
+    type: rbac
   license:
     globalLicense: true
   podTemplate:
@@ -38,19 +40,54 @@ spec:
     jvm:
       - -XX:+UseG1GC
   dependencies:
-    kafka:
-      bootstrapEndpoint: kafka.confluent.svc.cluster.local:9071
+    mds:
       authentication:
-        type: mtls
+        bearer:
+          secretRef: mds-krp
+        type: bearer
+      endpoint: https://kafka:8090
+      tokenKeyPair:
+        secretRef: mds-token
+      tls:
+        enabled: true
+
+
+    kafka:
+      bootstrapEndpoint: kafka:9073
+      authentication:
+        type: oauthbearer
+        oauthbearer:
+          secretRef: mds-krp
       tls:
         enabled: true
     schemaRegistry:
-      url: https://sr.confluent.svc.cluster.local:8081
+      url: https://sr:8081
       tls:
         enabled: true
+      authentication:
+        type: basic
+        basic:
+          secretRef: mds-krp
     interceptor:
       enabled: true
-      publishMs: 15000
-
+      publishMs: 60000
+      configs:
+        - confluent.monitoring.interceptor.bootstrap.servers=kafka:9073
+      producer:
+        authentication:
+          type: oauthbearer
+          oauthbearer:
+            secretRef: mds-krp
+        bootstrapEndpoint: kafka:9073
+        tls:
+          enabled: true
+      consumer:
+        authentication:
+          type: oauthbearer
+          oauthbearer:
+            secretRef: mds-krp
+        bootstrapEndpoint: kafka:9073
+        tls:
+          enabled: true
 
 

@@ -7,9 +7,7 @@ resources:
   - ../../../../bases/04_sr
   - ../../../../bases/05_connect
   - ../../../../bases/06_krp
-
-#  - ../../../../bases/07_ksql
-
+  - ../../../../bases/07_ksql
   - ../../../../bases/08_c3
   - svc/bootstrap.yml
   - svc/mds.yml
