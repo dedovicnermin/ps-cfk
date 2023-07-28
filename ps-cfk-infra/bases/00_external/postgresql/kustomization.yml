@@ -4,8 +4,8 @@ kind: Kustomization
 namespace: postgresql
 
 resources:
-  #  - namespace.yml
-  #- 0-postgres-config.yml
+  - namespace.yml
+  - 0-postgres-config.yml
   - 1-postgres-pvc-pv.yaml
   - 2-postgres-deployment.yaml
   - 3-postgres-service.yaml

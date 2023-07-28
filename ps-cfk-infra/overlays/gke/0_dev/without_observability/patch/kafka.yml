@@ -1,0 +1,37 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+spec:
+  telemetry:
+    global: false
+
+  configOverrides:
+    server:
+      - kafka.rest.client.client.id=dev.confluentps.kafkarestclient
+      - kafka.rest.admin.client.id=dev.confluentps.kafkarestadmin
+      - kafka.rest.admin.ssl.keystore.location=/mnt/sslcerts/keystore.p12
+      - kafka.rest.admin.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - kafka.rest.admin.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - kafka.rest.admin.ssl.truststore.location=/mnt/sslcerts/truststore.p12
+      - kafka.rest.admin.ssl.truststore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - auto.create.topics.enable=true
+      - confluent.cluster.link.enable=true
+      - confluent.balancer.heal.uneven.load.trigger=ANY_UNEVEN_LOAD
+
+
+  dataVolumeCapacity: 150Gi
+
+  podTemplate:
+    resources:
+      requests:
+        cpu: 2.0
+        memory: 8Gi
+
+
+  metricReporter:
+    enabled: true
+    authentication:
+      type: mtls
+    tls:
+      enabled: true

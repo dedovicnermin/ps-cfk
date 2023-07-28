@@ -3,22 +3,13 @@ kind: KsqlDB
 metadata:
   name: ksql
 spec:
-  tls:
-    secretRef: tls-ksql
-  authorization:
-    type: rbac
 
   podTemplate:
-    labels:
-      tags.datadoghq.com/env: "dev"
-      tags.datadoghq.com/site: "gke"
-    annotations:
-      ad.datadoghq.com/tags: |
-        {"env": "dev","application": "confluent-ps-cfk", "site": "gke"}
     resources:
       requests:
         cpu: 100m
         memory: 256Mi
+
 
   telemetry:
     global: false

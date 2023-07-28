@@ -3,22 +3,14 @@ kind: KsqlDB
 metadata:
   name: ksql
 spec:
-  tls:
-    secretRef: tls-ksql
-  authorization:
-    type: rbac
+  internalTopicReplicationFactor: 1
 
   podTemplate:
-    labels:
-      tags.datadoghq.com/env: "dev"
-      tags.datadoghq.com/site: "gke"
-    annotations:
-      ad.datadoghq.com/tags: |
-        {"env": "dev","application": "confluent-ps-cfk", "site": "gke"}
     resources:
       requests:
         cpu: 100m
-        memory: 256Mi
+        memory: 516Mi
+
 
   telemetry:
     global: false
@@ -31,7 +23,7 @@ spec:
       - ksql.logging.processing.stream.name=KPL
       - ksql.logging.processing.topic.auto.create=true
       - ksql.logging.processing.topic.partitions=1
-      - ksql.logging.processing.topic.replication.factor=3
+      - ksql.logging.processing.topic.replication.factor=1
       - ksql.access.validator.enable=on
       - confluent.metadata.server.urls.fail.on.401=true
       - confluent.metadata.bootstrap.server.urls=https://kafka.dev.svc.cluster.local:8090
@@ -62,5 +54,5 @@ spec:
         log4j.logger.processing=ERROR, stdout
       - log4j.additivity.processing=false
 
-  internalTopicReplicationFactor: 3
+
 

@@ -3,11 +3,12 @@ kind: KafkaRestProxy
 metadata:
   name: krp
 spec:
+
   podTemplate:
     resources:
       requests:
-        cpu: 1.0
-        memory: 1Gi
+        cpu: 500m
+        memory: 216Mi
   configOverrides:
     server:
       - confluent.metadata.enable.server.urls.refresh=false

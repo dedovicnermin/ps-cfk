@@ -3,8 +3,6 @@ kind: KafkaRestProxy
 metadata:
   name: krp
 spec:
-  authorization:
-    type: rbac
   podTemplate:
     resources:
       requests:
@@ -14,41 +12,3 @@ spec:
     server:
       - confluent.metadata.enable.server.urls.refresh=false
       - kafka.rest.confluent.metadata.enable.server.urls.refresh=false
-  dependencies:
-    mds:
-      endpoint: https://kafka.qa.svc.cluster.local:8090
-      tokenKeyPair:
-        secretRef: mds-token
-      authentication:
-        type: bearer
-        bearer:
-          secretRef: mds-krp
-      tls:
-        enabled: true
-    kafka:
-      authentication:
-        type: oauthbearer
-        oauthbearer:
-          secretRef: mds-krp
-      tls:
-        enabled: true
-      bootstrapEndpoint: kafka.qa.svc.cluster.local:9073
-    interceptor:
-      configs:
-        - confluent.monitoring.interceptor.bootstrap.servers=kafka.qa.svc.cluster.local:9073
-      producer:
-        authentication:
-          type: oauthbearer
-          oauthbearer:
-            secretRef: mds-krp
-        bootstrapEndpoint: kafka.qa.svc.cluster.local:9073
-        tls:
-          enabled: true
-      consumer:
-        authentication:
-          type: oauthbearer
-          oauthbearer:
-            secretRef: mds-krp
-        bootstrapEndpoint: kafka.qa.svc.cluster.local:9073
-        tls:
-          enabled: true

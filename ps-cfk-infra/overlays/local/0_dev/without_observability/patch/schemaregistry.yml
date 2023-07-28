@@ -1,13 +1,15 @@
 apiVersion: platform.confluent.io/v1beta1
-kind: KafkaRestProxy
+kind: SchemaRegistry
 metadata:
-  name: krp
+  name: sr
 spec:
+  authorization:
+    type: rbac
   podTemplate:
     resources:
       requests:
-        cpu: 1.0
-        memory: 1Gi
+        cpu: 100m
+        memory: 100Mi
   configOverrides:
     server:
       - confluent.metadata.enable.server.urls.refresh=false
