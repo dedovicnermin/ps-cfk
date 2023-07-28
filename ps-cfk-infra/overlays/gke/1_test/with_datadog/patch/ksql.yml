@@ -19,35 +19,7 @@ spec:
       requests:
         cpu: 100m
         memory: 256Mi
-  dependencies:
-    schemaRegistry:
-      url: https://sr.test.svc.cluster.local:8081
-      tls:
-        enabled: true
-    connect:
-      url: https://connect.test.svc.cluster.local:8083
-      tls:
-        enabled: true
-    kafka:
-      discovery:
-        name: kafka
-      tls:
-        enabled: true
-      authentication:
-        type: mtls
-    mds:
-      endpoint: https://kafka.test.svc.cluster.local:8090
-      tokenKeyPair:
-        secretRef: mds-token
-      authentication:
-        type: bearer
-        bearer:
-          secretRef: mds-ksql
-      tls:
-        enabled: true
 
-    interceptor:
-      enabled: true
 
   telemetry:
     global: false
