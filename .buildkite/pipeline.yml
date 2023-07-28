@@ -86,6 +86,19 @@ steps:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
 
+  - group: ":database: (POSTGRES)"
+    key: "postgres"
+    steps:
+      - label: ":k8s::database: Build Postgres Deployment"
+        commands:
+          - kustomize build ps-cfk-infra/bases/00_external/postgresql > /dev/null
+        plugins:
+          - docker#v5.8.0:
+              image: dedovicnermin/pscfk-buildkite:0.0.6
+              propagate-uid-gid: true
+
+
+
   - group: ":rocket: APP :hammer:"
     key: "dev_app"
     steps:
