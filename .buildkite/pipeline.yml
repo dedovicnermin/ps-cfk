@@ -29,12 +29,12 @@ steps:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
               propagate-uid-gid: true
-      - label: "No monitoring service/CFK - incomplete :one-does-not-simply::kafka:"
+      - label: "W/O Observability / CFK :one-does-not-simply::kafka:"
         commands:
           - echo "yourock" > gib.txt
           - kubectl create secret generic license-secret -n cfk-operator --from-file=license.txt=gib.txt --dry-run=client -o yaml > ps-cfk-infra/bases/01_operator/license-secret.yml
           - kustomize build --enable-helm ps-cfk-infra/environments/rbac_ingress_init/without_observability > /dev/null
-          #          - kustomize build ps-cfk-infra/environments/gke/0_dev/without_observability > /dev/null
+          - kustomize build ps-cfk-infra/environments/gke/0_dev/without_observability > /dev/null
         plugins:
           - docker#v5.8.0:
               image: dedovicnermin/pscfk-buildkite:0.0.6
