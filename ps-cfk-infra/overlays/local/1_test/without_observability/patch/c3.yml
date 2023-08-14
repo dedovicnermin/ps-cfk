@@ -1,0 +1,23 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ControlCenter
+metadata:
+  name: c3
+spec:
+  dataVolumeCapacity: 10Gi
+  configOverrides:
+    server:
+      - confluent.controlcenter.mds.client.max.requests.queued.per.destination=2048
+      - confluent.controlcenter.mode.enable=all
+      - confluent.controlcenter.command.topic.replication=1
+      - confluent.controlcenter.replication.factor=1
+      - confluent.metrics.reporter.topic.replicas=1
+      - confluent.metrics.topic.replication=1
+      - confluent.monitoring.interceptor.topic.replication=1
+      - confluent.controlcenter.internal.topics.replication=1
+  #      - confluent.controlcenter.streams.confluent.metadata.enable.server.urls.refresh=false
+  #      - confluent.metadata.enable.server.urls.refresh=false
+  podTemplate:
+    resources:
+      requests:
+        cpu: 1.0
+        memory: 1Gi
