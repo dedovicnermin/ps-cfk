@@ -1,6 +1,6 @@
-`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml`
+`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.3/cert-manager.yaml`
 ```
-kustomize build bases/0_external/cert-manager/1_init | kubectl apply -f -
+kustomize build bases/00_external/cert-manager/1_init | kubectl apply -f -
 kustomize build bases/0_external/cert-manager/2_crds | kubectl apply -f -
 ```
 

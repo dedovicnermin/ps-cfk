@@ -1,0 +1,90 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kraft-cert
+spec:
+  commonName: kraft
+  dnsNames:
+    # short name
+    - 'kraft'
+    - 'kraftnode'
+
+    # short name + namespace
+    - 'kraft.confluent'
+    - 'kraft.dev'
+    - 'kraft.test'
+    - 'kraft.qa'
+    - 'kraft.prod'
+    - 'kraft.dr'
+
+    # k8 short
+    - 'kraft.confluent.svc'
+    - 'kraft.dev.svc'
+    - 'kraft.test.svc'
+    - 'kraft.qa.svc'
+    - 'kraft.prod.svc'
+    - 'kraft.dr.svc'
+
+    # k8 full
+    - 'kraft.confluent.svc.cluster.local'
+    - 'kraft.dev.svc.cluster.local'
+    - 'kraft.test.svc.cluster.local'
+    - 'kraft.qa.svc.cluster.local'
+    - 'kraft.prod.svc.cluster.local'
+    - 'kraft.dr.svc.cluster.local'
+
+    # wildcard X instances
+    - '*.kraft.confluent.svc.cluster.local'
+    - '*.kraft.dev.svc.cluster.local'
+    - '*.kraft.test.svc.cluster.local'
+    - '*.kraft.qa.svc.cluster.local'
+    - '*.kraft.prod.svc.cluster.local'
+    - '*.kraft.dr.svc.cluster.local'
+
+    # gke external
+    - '*.confluent.gke.confluentps.io'
+    - '*.dr.gke.confluentps.io'
+    - '*.dev.gke.confluentps.io'
+    - '*.test.gke.confluentps.io'
+    - '*.qa.gke.confluentps.io'
+    - '*.prod.gke.confluentps.io'
+    - '*.gke.confluentps.io'
+
+    # eks
+    - '*.confluent.eks.confluentps.io'
+    - '*.dr.eks.confluentps.io'
+    - '*.dev.eks.confluentps.io'
+    - '*.test.eks.confluentps.io'
+    - '*.qa.eks.confluentps.io'
+    - '*.prod.eks.confluentps.io'
+    - '*.eks.confluentps.io'
+
+    # aks
+    - '*.confluent.aks.confluentps.io'
+    - '*.dr.aks.confluentps.io'
+    - '*.dev.aks.confluentps.io'
+    - '*.test.aks.confluentps.io'
+    - '*.qa.aks.confluentps.io'
+    - '*.prod.aks.confluentps.io'
+    - '*.aks.confluentps.io'
+
+    # local
+    - '*.dr.local.confluentps.io'
+    - '*.dev.local.confluentps.io'
+    - '*.test.local.confluentps.io'
+    - '*.qa.local.confluentps.io'
+    - '*.prod.local.confluentps.io'
+    - '*.local.confluentps.io'
+
+
+  renewBefore: 24h
+  duration: 17520h # two years
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  issuerRef:
+    kind: ClusterIssuer
+    name: ca-issuer
+    group: cert-manager.io
+  secretName: tls-kraft

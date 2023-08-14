@@ -1,0 +1,50 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ClusterLink
+metadata:
+  name: cl001
+spec:
+  destinationKafkaCluster:
+    kafkaRestClassRef:
+      name: default
+  sourceKafkaCluster:
+    bootstrapEndpoint: kafka.dev.svc.cluster.local:9071
+    kafkaRestClassRef:
+      name: default
+      namespace: dev
+    authentication:
+      type: mtls
+    tls:
+      enabled: true
+      secretRef: kafka-pkcs12
+  mirrorTopics:
+    - name: test001
+      state: ACTIVE
+    - name: test002
+      state: ACTIVE
+  mirrorTopicOptions:
+    autoCreateTopics:
+      enabled: true
+      topicFilters:
+        - filterType: INCLUDE
+          name: 'test001'
+          patternType: LITERAL
+        - filterType: INCLUDE
+          name: 'test002'
+          patternType: LITERAL
+  consumerGroupFilters:
+    - name: '*'
+      patternType: LITERAL
+      filterType: INCLUDE
+    - name: ConfluentTelemetry
+      patternType: PREFIXED
+      filterType: EXCLUDE
+    - name: '_confluent-controlcenter'
+      patternType: PREFIXED
+      filterType: EXCLUDE
+  aclFilters:
+    - accessFilter:
+        operation: any
+        permissionType: any
+      resourceFilter:
+        patternType: any
+        resourceType: any

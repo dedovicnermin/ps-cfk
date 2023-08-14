@@ -56,6 +56,20 @@ spec:
     - 'sr.qa.eks.confluentps.io'
     - 'sr.prod.eks.confluentps.io'
     - 'sr.eks.confluentps.io'
+    - 'sr.confluent.aks.confluentps.io'
+    - 'sr.dr.aks.confluentps.io'
+    - 'sr.dev.aks.confluentps.io'
+    - 'sr.test.aks.confluentps.io'
+    - 'sr.qa.aks.confluentps.io'
+    - 'sr.prod.aks.confluentps.io'
+    - 'sr.aks.confluentps.io'
+    - 'sr.confluent.local.confluentps.io'
+    - 'sr.dr.local.confluentps.io'
+    - 'sr.dev.local.confluentps.io'
+    - 'sr.test.local.confluentps.io'
+    - 'sr.qa.local.confluentps.io'
+    - 'sr.prod.local.confluentps.io'
+    - 'sr.local.confluentps.io'
   issuerRef:
     kind: ClusterIssuer
     name: ca-issuer

@@ -72,6 +72,22 @@ spec:
     - 'ksql.qa.eks.confluentps.io'
     - 'ksql.prod.eks.confluentps.io'
     - 'ksql.eks.confluentps.io'
+
+    - 'ksql.confluent.aks.confluentps.io'
+    - 'ksql.dr.aks.confluentps.io'
+    - 'ksql.dev.aks.confluentps.io'
+    - 'ksql.test.aks.confluentps.io'
+    - 'ksql.qa.aks.confluentps.io'
+    - 'ksql.prod.aks.confluentps.io'
+    - 'ksql.aks.confluentps.io'
+
+    - 'ksql.confluent.local.confluentps.io'
+    - 'ksql.dr.local.confluentps.io'
+    - 'ksql.dev.local.confluentps.io'
+    - 'ksql.test.local.confluentps.io'
+    - 'ksql.qa.local.confluentps.io'
+    - 'ksql.prod.local.confluentps.io'
+    - 'ksql.local.confluentps.io'
   renewBefore: 24h
   duration: 17520h # two years
   privateKey:

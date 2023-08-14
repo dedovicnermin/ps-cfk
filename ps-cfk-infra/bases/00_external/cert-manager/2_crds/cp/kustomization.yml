@@ -5,6 +5,7 @@ resources:
   - tls-c3.yml
   - tls-connect.yml
   - tls-kafka.yml
+  - tls-kraft.yml
   - tls-krp.yml
   - tls-ksql.yml
   - tls-mds-token.yml
