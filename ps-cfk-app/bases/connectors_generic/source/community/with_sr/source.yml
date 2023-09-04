@@ -6,7 +6,7 @@ metadata:
   name: basesr
 spec:
   configs:
-    value.converter.schema.registry.url: https://sr.confluent.svc.cluster.local:8081
+    value.converter.schema.registry.url: https://sr:8081
     value.converter.schema.registry.basic.auth.credentials.source: "USER_INFO"
     value.converter.schema.registry.basic.auth.user.info: nermin:nermin-secret
     value.converter.schema.registry.ssl.truststore.location: /mnt/sslcerts/tls-connect/truststore.p12

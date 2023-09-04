@@ -52,6 +52,7 @@ spec:
     - 'c3.qa.kafka.confluentps.io'
     - 'c3.prod.kafka.confluentps.io'
     - 'c3.kafka.confluentps.io'
+
     - 'c3.confluent.gke.confluentps.io'
     - 'c3.dr.gke.confluentps.io'
     - 'c3.dev.gke.confluentps.io'
@@ -59,6 +60,7 @@ spec:
     - 'c3.qa.gke.confluentps.io'
     - 'c3.prod.gke.confluentps.io'
     - 'c3.gke.confluentps.io'
+
     - 'c3.confluent.eks.confluentps.io'
     - 'c3.dr.eks.confluentps.io'
     - 'c3.dev.eks.confluentps.io'
@@ -66,6 +68,21 @@ spec:
     - 'c3.qa.eks.confluentps.io'
     - 'c3.prod.eks.confluentps.io'
     - 'c3.eks.confluentps.io'
+
+    - 'c3.confluent.aks.confluentps.io'
+    - 'c3.dr.aks.confluentps.io'
+    - 'c3.dev.aks.confluentps.io'
+    - 'c3.test.aks.confluentps.io'
+    - 'c3.qa.aks.confluentps.io'
+    - 'c3.prod.aks.confluentps.io'
+    - 'c3.aks.confluentps.io'
+
+    - 'c3.dr.local.confluentps.io'
+    - 'c3.dev.local.confluentps.io'
+    - 'c3.test.local.confluentps.io'
+    - 'c3.qa.local.confluentps.io'
+    - 'c3.prod.local.confluentps.io'
+
   renewBefore: 24h
   duration: 17520h # two years
   privateKey:

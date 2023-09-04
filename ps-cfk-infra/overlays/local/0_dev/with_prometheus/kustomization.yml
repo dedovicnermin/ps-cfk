@@ -6,8 +6,8 @@ resources:
   - ../../../../bases/10_observability/with_prometheus/03_kafka
   - ../../../../bases/10_observability/with_prometheus/04_sr
   - ../../../../bases/10_observability/with_prometheus/05_connect
-#  - ../../../../bases/10_observability/with_prometheus/06_krp
-#  - ../../../../bases/10_observability/with_prometheus/07_ksql
+  - ../../../../bases/10_observability/with_prometheus/06_krp
+  - ../../../../bases/10_observability/with_prometheus/07_ksql
   - ../../../../bases/10_observability/with_prometheus/08_c3
   - svc/bootstrap.yml
   - svc/mds.yml

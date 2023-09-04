@@ -43,6 +43,7 @@ spec:
     - '*.connect.qa.svc.cluster.local'
     - '*.connect.prod.svc.cluster.local'
     - '*.connect.dr.svc.cluster.local'
+
     - '*.confluent.kafka.confluentps.io'
     - '*.dr.kafka.confluentps.io'
     - '*.dev.kafka.confluentps.io'
@@ -50,6 +51,7 @@ spec:
     - '*.qa.kafka.confluentps.io'
     - '*.prod.kafka.confluentps.io'
     - '*.kafka.confluentps.io'
+
     - '*.confluent.gke.confluentps.io'
     - '*.dr.gke.confluentps.io'
     - '*.dev.gke.confluentps.io'
@@ -57,6 +59,7 @@ spec:
     - '*.qa.gke.confluentps.io'
     - '*.prod.gke.confluentps.io'
     - '*.gke.confluentps.io'
+
     - '*.confluent.eks.confluentps.io'
     - '*.dr.eks.confluentps.io'
     - '*.dev.eks.confluentps.io'
@@ -64,6 +67,21 @@ spec:
     - '*.qa.eks.confluentps.io'
     - '*.prod.eks.confluentps.io'
     - '*.eks.confluentps.io'
+
+    - '*.confluent.aks.confluentps.io'
+    - '*.dr.aks.confluentps.io'
+    - '*.dev.aks.confluentps.io'
+    - '*.test.aks.confluentps.io'
+    - '*.qa.aks.confluentps.io'
+    - '*.prod.aks.confluentps.io'
+    - '*.aks.confluentps.io'
+
+    - '*.dr.local.confluentps.io'
+    - '*.dev.local.confluentps.io'
+    - '*.test.local.confluentps.io'
+    - '*.qa.local.confluentps.io'
+    - '*.prod.local.confluentps.io'
+    - '*.local.confluentps.io'
 
   renewBefore: 24h
   duration: 17520h # two years

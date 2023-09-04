@@ -1,0 +1,50 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KRaftController
+metadata:
+  name: kraft
+  annotations:
+    platform.confluent.io/broker-id-offset: "1000"
+spec:
+  dataVolumeCapacity: 10Gi
+  image:
+    application: confluentinc/cp-server:7.5.0
+    init: confluentinc/confluent-init-container:2.7.0
+  tls:
+    secretRef: tls-kraft
+
+  listeners:
+    controller:
+      tls:
+        enabled: true
+      authentication:
+        type: mtls
+        principalMappingRules:
+          - RULE:.*CN[\s]?=[\s]?([a-zA-Z0-9.]*)?.*/$1/
+  replicas: 3
+  storageClass:
+    name: cfk-storage-delete
+  podTemplate:
+    tolerations:
+      - key: app
+        operator: Equal
+        value: zookeeper
+        effect: NoSchedule
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - zookeeper
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - zookeeper
+

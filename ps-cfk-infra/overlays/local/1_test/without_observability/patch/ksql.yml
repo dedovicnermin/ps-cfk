@@ -1,0 +1,58 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksql
+spec:
+  internalTopicReplicationFactor: 1
+
+  podTemplate:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 516Mi
+
+
+  telemetry:
+    global: false
+
+
+  configOverrides:
+    server:
+      - ksql.logging.processing.rows.include=true
+      - ksql.logging.processing.stream.auto.create=true
+      - ksql.logging.processing.stream.name=KPL
+      - ksql.logging.processing.topic.auto.create=true
+      - ksql.logging.processing.topic.partitions=1
+      - ksql.logging.processing.topic.replication.factor=1
+      - ksql.access.validator.enable=on
+      - confluent.metadata.server.urls.fail.on.401=true
+      - confluent.metadata.bootstrap.server.urls=https://kafka:8090
+      - confluent.metadata.ssl.keystore.location=/mnt/sslcerts/keystore.p12
+      - confluent.metadata.ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - confluent.metadata.ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - confluent.metadata.ssl.endpoint.identification.algorithm=HTTPS
+#      - confluent.metadata.enable.server.urls.refresh=false
+      - access.control.allow.origin=*
+      - access.control.allow.methods=GET,POST,HEAD
+      - access.control.allow.headers=X-Requested-With,Content-Type,Accept,Origin,Authorization
+      - ssl.keystore.location=/mnt/sslcerts/keystore.p12
+      - ssl.keystore.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+      - ssl.key.password=${file:/mnt/sslcerts/jksPassword.txt:jksPassword}
+
+      - ksql.streams.consumer.client.id=ksql.dev.confluentps.consumerclient
+      - consumer.confluent.monitoring.interceptor.bootstrap.servers=kafka:9073
+      - producer.confluent.monitoring.interceptor.bootstrap.servers=kafka:9073
+      - ksql.streams.admin.client.id=ksql.dev.confluentps.adminclient
+
+
+    log4j:
+      - log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+      - log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+      - |
+        log4j.appender.stdout.layout.ConversionPattern=[%d] %p %m (%c:%L)%n
+      - |
+        log4j.logger.processing=ERROR, stdout
+      - log4j.additivity.processing=false
+
+
+

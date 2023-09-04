@@ -1,0 +1,66 @@
+[
+  {
+    "name": "acl.filters",
+    "value": "{\"aclFilters\":[{\"resourceFilter\":{\"patternType\":\"any\",\"resourceType\":\"any\"},\"accessFilter\":{\"operation\":\"any\",\"permissionType\":\"any\"}}]}"
+  },
+  {
+    "name": "acl.sync.enable",
+    "value": "true"
+  },
+  {
+    "name": "auto.create.mirror.topics.enable",
+    "value": "true"
+  },
+  {
+    "name": "auto.create.mirror.topics.filters",
+    "value": "{\"topicFilters\":[{\"name\":\"*\",\"patternType\":\"LITERAL\",\"filterType\":\"INCLUDE\"}]}"
+  },
+  {
+    "name": "bootstrap.servers",
+    "value": "kafka.dev.svc.cluster.local:9071"
+  },
+  {
+    "name": "config.providers",
+    "value": null
+  },
+  {
+    "name": "config.providers.file.class",
+    "value": null
+  },
+  {
+    "name": "consumer.offset.group.filters",
+    "value": "{\"groupFilters\":[{\"name\":\"*\",\"patternType\":\"LITERAL\",\"filterType\":\"INCLUDE\"},{\"name\":\"ConfluentTelemetry\",\"patternType\":\"PREFIXED\",\"filterType\":\"EXCLUDE\"},{\"name\":\"_confluent-controlcenter\",\"patternType\":\"PREFIXED\",\"filterType\":\"EXCLUDE\"}]}"
+  },
+  {
+    "name": "consumer.offset.sync.enable",
+    "value": "true"
+  },
+  {
+    "name": "local.listener.name",
+    "value": "TOKEN"
+  },
+  {
+    "name": "security.protocol",
+    "value": "SSL"
+  },
+  {
+    "name": "ssl.keystore.certificate.chain",
+    "value": null
+  },
+  {
+    "name": "ssl.keystore.key",
+    "value": null
+  },
+  {
+    "name": "ssl.keystore.type",
+    "value": "PEM"
+  },
+  {
+    "name": "ssl.truststore.certificates",
+    "value": null
+  },
+  {
+    "name": "ssl.truststore.type",
+    "value": "PEM"
+  }
+]

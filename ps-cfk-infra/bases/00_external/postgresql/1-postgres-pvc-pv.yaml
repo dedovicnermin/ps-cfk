@@ -2,7 +2,6 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  namespace: postgresql
   name: postgres-pv-volume  # Sets PV's name
   labels:
     app: postgres
@@ -18,7 +17,6 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  namespace: postgresql
   name: postgres-pv-claim  # Sets name of PVC
   labels:
     app: postgres

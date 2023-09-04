@@ -21,7 +21,7 @@ extract_principal_mtls_sasl_ssl_credentials() {
   folder=$2
 
   mkdir -p "$folder/pem"
-  extract_credentials $secret $folder
+  extract_credentials "$secret" "$folder"
 }
 
 
@@ -30,5 +30,5 @@ extract_principal_mtls_sasl_ssl_credentials() {
 #extract_principal_mtls_sasl_ssl_credentials tls-nejra nejra
 
 
-extract_principal_mtls_sasl_ssl_credentials "$1" $2
+extract_principal_mtls_sasl_ssl_credentials "$1" "$2"
 

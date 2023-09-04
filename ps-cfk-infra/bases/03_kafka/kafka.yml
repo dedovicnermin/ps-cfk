@@ -8,8 +8,8 @@ spec:
   storageClass:
     name: cfk-storage-delete
   image:
-    application: confluentinc/cp-server:7.4.0
-    init: confluentinc/confluent-init-container:2.6.0
+    application: confluentinc/cp-server:7.5.0
+    init: confluentinc/confluent-init-container:2.7.0
   dataVolumeCapacity: 50Gi
   passwordEncoder:
     secretRef: password-encoder-secret
@@ -19,6 +19,7 @@ spec:
     type: rbac
     superUsers:
       - User:kafka
+      - User:kraft
   listeners:
     internal:
       authentication:
@@ -45,6 +46,11 @@ spec:
           type: ldap
         tls:
           enabled: true
+      - name: nonsecure
+        port: 9095
+        tls:
+          enabled: false
+
 
   podTemplate:
     tolerations:
@@ -108,7 +114,6 @@ spec:
         type: ldap
       tokenKeyPair:
         secretRef: mds-token
-
   dependencies:
     zookeeper:
       endpoint: zookeeper:2182

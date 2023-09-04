@@ -33,8 +33,8 @@ spec:
         memory: 1Gi
   replicas: 1
   image:
-    application: dedovicnermin/cfk-connect:1.3.4.1
-    init: confluentinc/confluent-init-container:2.6.0
+    application: dedovicnermin/cfk-connect:1.4.2
+    init: confluentinc/confluent-init-container:2.7.0
   tls:
     secretRef: tls-connect
   configOverrides:

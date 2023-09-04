@@ -15,9 +15,19 @@ ps-cfk-infra/bases/00_external/ingress-nginx/charts
 ps-cfk-infra/bases/00_external/datadog/charts
 ps-cfk-infra/bases/00_external/elk/charts
 ps-cfk-infra/bases/00_external/openldap/charts
+
 ps-cfk-infra/bases/01_operator/charts
+ps-cfk-infra/bases/01_operator/license-secret.yml
+
+ps-cfk-infra/bases/01_operator_kraft/license-secret.yml
+ps-cfk-infra/bases/01_operator_kraft/charts
+
 ps-cfk-infra/bases/01_operator/local/charts
 ps-cfk-infra/bases/01_operator/local/license-secret.yml
+
+ps-cfk-infra/bases/01_operator/local/kraft/charts
+ps-cfk-infra/bases/01_operator/local/kraft/license-secret.yml
+
 ps-cfk-infra/bases/05_connect/image/debezium
 ps-cfk-infra/bases/05_connect/image/debezium/**
 
@@ -41,7 +51,7 @@ ps-cfk-app/overlays/0_dev/connectors/debezium_oracle
 
 
 
-ps-cfk-infra/bases/01_operator/license-secret.yml
+
 ps-cfk-tf/gke/terraform.tfstate.backup
 /out/production/ps-cfk/assets/cfkapp_gke.gif
 /out/production/ps-cfk/assets/cfkinfra_gke.gif
@@ -655,3 +665,5 @@ ps-cfk-tf/gke/terraform.tfstate.backup
 /out/production/ps-cfk/.gitignore
 /out/production/ps-cfk/README.md
 ps-cfk-app/test.sh
+
+playground

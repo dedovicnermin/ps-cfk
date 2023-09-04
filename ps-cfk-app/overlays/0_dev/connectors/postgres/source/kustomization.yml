@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../../bases/connectors_generic/source/community/with_sr/keyvalue
+
+patches:
+  - target:
+      group: platform.confluent.io
+      version: v1beta1
+      kind: Connector
+      labelSelector: conntype=source
+    path: pgsource.yml
+  - target:
+      kind: Connector
+      name: basesr
+      group: platform.confluent.io
+      version: v1beta1
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: pgsource001

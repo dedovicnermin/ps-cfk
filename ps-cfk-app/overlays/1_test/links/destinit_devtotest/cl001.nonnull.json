@@ -1,0 +1,542 @@
+[
+  {
+    "name": "acl.filters",
+    "value": "{\"aclFilters\":[{\"resourceFilter\":{\"patternType\":\"any\",\"resourceType\":\"any\"},\"accessFilter\":{\"operation\":\"any\",\"permissionType\":\"any\"}}]}",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "acl.sync.enable",
+    "value": "true",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "acl.sync.ms",
+    "value": "5000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "auto.create.mirror.topics.enable",
+    "value": "true",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "auto.create.mirror.topics.filters",
+    "value": "{\"topicFilters\":[{\"name\":\"*\",\"patternType\":\"LITERAL\",\"filterType\":\"INCLUDE\"}]}",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "availability.check.consecutive.failure.threshold",
+    "value": "5",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "availability.check.ms",
+    "value": "60000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "bootstrap.servers",
+    "value": "kafka.dev.svc.cluster.local:9071",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "client.dns.lookup",
+    "value": "use_all_dns_ips",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "cluster.link.paused",
+    "value": "false",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "cluster.link.retry.timeout.ms",
+    "value": "300000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "confluent.replica.fetch.backoff.max.ms",
+    "value": "1000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "connections.max.idle.ms",
+    "value": "600000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "consumer.group.prefix.enable",
+    "value": "false",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "consumer.offset.group.filters",
+    "value": "{\"groupFilters\":[{\"name\":\"*\",\"patternType\":\"LITERAL\",\"filterType\":\"INCLUDE\"},{\"name\":\"ConfluentTelemetry\",\"patternType\":\"PREFIXED\",\"filterType\":\"EXCLUDE\"},{\"name\":\"_confluent-controlcenter\",\"patternType\":\"PREFIXED\",\"filterType\":\"EXCLUDE\"}]}",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "consumer.offset.sync.enable",
+    "value": "true",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "consumer.offset.sync.ms",
+    "value": "30000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "link.fetcher.enforce.max.lagging.partitions.ms",
+    "value": "300000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "link.fetcher.lagging.partition.ms",
+    "value": "300000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "link.fetcher.max.lagging.partitions",
+    "value": "-1",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "link.mode",
+    "value": "DESTINATION",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.listener.name",
+    "value": "TOKEN",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "local.sasl.kerberos.kinit.cmd",
+    "value": "/usr/bin/kinit",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.kerberos.min.time.before.relogin",
+    "value": "60000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.kerberos.ticket.renew.jitter",
+    "value": "0.05",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.kerberos.ticket.renew.window.factor",
+    "value": "0.8",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.refresh.buffer.seconds",
+    "value": "300",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.refresh.min.period.seconds",
+    "value": "60",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.refresh.window.factor",
+    "value": "0.8",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.refresh.window.jitter",
+    "value": "0.05",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.retry.backoff.max.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.login.retry.backoff.ms",
+    "value": "100",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.mechanism",
+    "value": "GSSAPI",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.clock.skew.seconds",
+    "value": "30",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.jwks.endpoint.refresh.ms",
+    "value": "3600000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.jwks.endpoint.retry.backoff.ms",
+    "value": "100",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.scope.claim.name",
+    "value": "scope",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.sasl.oauthbearer.sub.claim.name",
+    "value": "sub",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.security.protocol",
+    "value": "PLAINTEXT",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.enabled.protocols",
+    "value": "TLSv1.2,TLSv1.3",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.endpoint.identification.algorithm",
+    "value": "https",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.keymanager.algorithm",
+    "value": "SunX509",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.keystore.type",
+    "value": "JKS",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.protocol",
+    "value": "TLSv1.3",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.trustmanager.algorithm",
+    "value": "PKIX",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "local.ssl.truststore.type",
+    "value": "JKS",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "metadata.max.age.ms",
+    "value": "300000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "num.cluster.link.fetchers",
+    "value": "1",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "reconnect.backoff.max.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "reconnect.backoff.ms",
+    "value": "50",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.fetch.backoff.ms",
+    "value": "1000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.fetch.max.bytes",
+    "value": "5242880",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.fetch.min.bytes",
+    "value": "1",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.fetch.response.max.bytes",
+    "value": "10485760",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.fetch.wait.max.ms",
+    "value": "500",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.socket.receive.buffer.bytes",
+    "value": "-1",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "replica.socket.timeout.ms",
+    "value": "30000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "request.timeout.ms",
+    "value": "30000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "retry.backoff.ms",
+    "value": "100",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "reverse.connection.setup.timeout.ms",
+    "value": "60000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.kerberos.kinit.cmd",
+    "value": "/usr/bin/kinit",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.kerberos.min.time.before.relogin",
+    "value": "60000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.kerberos.ticket.renew.jitter",
+    "value": "0.05",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.kerberos.ticket.renew.window.factor",
+    "value": "0.8",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.refresh.buffer.seconds",
+    "value": "300",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.refresh.min.period.seconds",
+    "value": "60",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.refresh.window.factor",
+    "value": "0.8",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.refresh.window.jitter",
+    "value": "0.05",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.retry.backoff.max.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.login.retry.backoff.ms",
+    "value": "100",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.mechanism",
+    "value": "GSSAPI",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.clock.skew.seconds",
+    "value": "30",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.jwks.endpoint.refresh.ms",
+    "value": "3600000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.jwks.endpoint.retry.backoff.ms",
+    "value": "100",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.scope.claim.name",
+    "value": "scope",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "sasl.oauthbearer.sub.claim.name",
+    "value": "sub",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "security.protocol",
+    "value": "SSL",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "socket.connection.setup.timeout.max.ms",
+    "value": "30000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "socket.connection.setup.timeout.ms",
+    "value": "10000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.enabled.protocols",
+    "value": "TLSv1.2,TLSv1.3",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.endpoint.identification.algorithm",
+    "value": "https",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.keymanager.algorithm",
+    "value": "SunX509",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.keystore.type",
+    "value": "PEM",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "ssl.protocol",
+    "value": "TLSv1.3",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.trustmanager.algorithm",
+    "value": "PKIX",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "ssl.truststore.type",
+    "value": "PEM",
+    "source": "DYNAMIC_CLUSTER_LINK_CONFIG",
+    "is_default": false
+  },
+  {
+    "name": "topic.config.sync.include",
+    "value": "min.compaction.lag.ms,max.compaction.lag.ms,message.timestamp.difference.max.ms,max.message.bytes,retention.bytes,retention.ms,delete.retention.ms,cleanup.policy,message.timestamp.type",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  },
+  {
+    "name": "topic.config.sync.ms",
+    "value": "5000",
+    "source": "DEFAULT_CONFIG",
+    "is_default": true
+  }
+]

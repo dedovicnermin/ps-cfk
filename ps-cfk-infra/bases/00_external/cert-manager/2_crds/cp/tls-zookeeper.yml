@@ -78,7 +78,21 @@ spec:
     - '*.zookeeper.qa.kafka.confluentps.io'
     - '*.zookeeper.prod.kafka.confluentps.io'
     - '*.zookeeper.dr.kafka.confluentps.io'
+    - '*.confluent.aks.confluentps.io'
+    - '*.dr.aks.confluentps.io'
+    - '*.dev.aks.confluentps.io'
+    - '*.test.aks.confluentps.io'
+    - '*.qa.aks.confluentps.io'
+    - '*.prod.aks.confluentps.io'
+    - '*.aks.confluentps.io'
 
+    - '*.confluent.local.confluentps.io'
+    - '*.dr.local.confluentps.io'
+    - '*.dev.local.confluentps.io'
+    - '*.test.local.confluentps.io'
+    - '*.qa.local.confluentps.io'
+    - '*.prod.local.confluentps.io'
+    - '*.local.confluentps.io'
     - 'localhost'
   issuerRef:
     kind: ClusterIssuer

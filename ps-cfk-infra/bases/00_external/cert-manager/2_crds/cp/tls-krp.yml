@@ -49,6 +49,7 @@ spec:
     - 'krp.qa.gke.confluentps.io'
     - 'krp.prod.gke.confluentps.io'
     - 'krp.gke.confluentps.io'
+
     - 'krp.confluent.eks.confluentps.io'
     - 'krp.dr.eks.confluentps.io'
     - 'krp.dev.eks.confluentps.io'
@@ -56,6 +57,22 @@ spec:
     - 'krp.qa.eks.confluentps.io'
     - 'krp.prod.eks.confluentps.io'
     - 'krp.eks.confluentps.io'
+
+    - 'krp.confluent.aks.confluentps.io'
+    - 'krp.dr.aks.confluentps.io'
+    - 'krp.dev.aks.confluentps.io'
+    - 'krp.test.aks.confluentps.io'
+    - 'krp.qa.aks.confluentps.io'
+    - 'krp.prod.aks.confluentps.io'
+    - 'krp.aks.confluentps.io'
+
+    - 'krp.confluent.local.confluentps.io'
+    - 'krp.dr.local.confluentps.io'
+    - 'krp.dev.local.confluentps.io'
+    - 'krp.test.local.confluentps.io'
+    - 'krp.qa.local.confluentps.io'
+    - 'krp.prod.local.confluentps.io'
+    - 'krp.local.confluentps.io'
   renewBefore: 24h
   duration: 17520h # two years
   privateKey:

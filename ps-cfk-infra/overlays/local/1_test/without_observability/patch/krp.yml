@@ -1,0 +1,18 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestProxy
+metadata:
+  name: krp
+spec:
+
+  podTemplate:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 216Mi
+  configOverrides:
+    log4j:
+      - log4j.additivity.io.confluent.kafkarest.security.config.ConfluentSecureKafkaRestConfig=false
+      - |
+        log4j.logger.io.confluent.kafkarest.security.config.ConfluentSecureKafkaRestConfig=WARN, stdout
+      - log4j.logger.org.apache.kafka.clients.admin.AdminClientConfig=WARN, stdout
+      - log4j.additivity.org.apache.kafka.clients.admin.AdminClientConfig=false
