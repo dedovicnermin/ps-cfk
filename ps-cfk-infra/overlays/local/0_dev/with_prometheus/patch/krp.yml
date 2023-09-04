@@ -9,4 +9,7 @@ spec:
       requests:
         cpu: 500m
         memory: 216Mi
-
+  configOverrides:
+    server:
+      - confluent.metadata.enable.server.urls.refresh=false
+      - kafka.rest.confluent.metadata.enable.server.urls.refresh=false

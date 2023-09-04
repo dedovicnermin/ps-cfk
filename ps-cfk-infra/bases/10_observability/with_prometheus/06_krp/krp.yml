@@ -11,7 +11,7 @@ spec:
         - kafka.producer:*
         - kafka.admin:*
 
-#domain<beanpropertyName1=beanPropertyValue1, beanpropertyName2=beanPropertyValue2, ...><key1, key2, ...>attrName: value
+
 #  podTemplate:
 #    labels:
 #      admission.datadoghq.com/enabled: "true"

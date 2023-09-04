@@ -5,7 +5,6 @@ namespace: pg
 
 resources:
   - namespace.yml
-    #  - psql-init-cm.yml
   - 0-postgres-config.yml
   - 1-postgres-pvc-pv.yaml
   - 2-postgres-deployment.yaml
