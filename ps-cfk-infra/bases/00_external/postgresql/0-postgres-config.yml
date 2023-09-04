@@ -5,7 +5,7 @@ metadata:
   labels:
     app: postgres
 data:
-  POSTGRES_DB: postgresdb
+  POSTGRES_DB: pscfk
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: secret
 

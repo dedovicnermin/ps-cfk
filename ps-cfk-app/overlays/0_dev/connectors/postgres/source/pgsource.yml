@@ -1,0 +1,16 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: pgsource001
+spec:
+  class: io.confluent.connect.jdbc.JdbcSourceConnector
+  taskMax: 1
+  configs:
+    connection.url: jdbc:postgresql://postgres.pg.svc.cluster.local:5432/pscfk
+    connection.user: admin
+    connection.password: secret
+    table.whitelist: "custacct, shipto, billto, addr"
+    numeric.mapping: best_fit
+    mode: timestamp+incrementing
+    incrementing.column.name:
+

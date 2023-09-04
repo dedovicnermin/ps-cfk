@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: postgresql
   name: postgres  # Sets Deployment name
 spec:
   replicas: 1
@@ -11,24 +10,41 @@ spec:
       app: postgres
   template:
     metadata:
-      namespace: postgresql
       labels:
         app: postgres
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - general
+      securityContext:
+        fsGroup: 54321
       containers:
         - name: postgres
-          image: postgres:10.1 # Sets Image
+          image: postgres:10.1
           imagePullPolicy: "IfNotPresent"
           ports:
-            - containerPort: 5432  # Exposes container port
+            - containerPort: 5432
           envFrom:
             - configMapRef:
                 name: postgres-config
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
+                #            - mountPath: /docker-entrypoint-initdb.d
+                # name: psql-init
+
       volumes:
         - name: postgredb
           persistentVolumeClaim:
             claimName: postgres-pv-claim
+              #        - name: psql-init
+              #  configMap:
+              #name: psql-init-cm
+
 

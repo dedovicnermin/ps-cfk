@@ -1,0 +1,234 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KRaftController
+metadata:
+  name: kraft
+spec:
+  metrics:
+    prometheus:
+      blacklist:
+        - kafka.consumer:type=*,id=*
+        - kafka.consumer:type=*,client-id=*
+        - kafka.consumer:type=*,client-id=*,node-id=*
+        - kafka.producer:type=*,id=*
+        - kafka.producer:type=*,client-id=*
+        - kafka.producer:type=*,client-id=*,node-id=*
+        - kafka.*:type=kafka-metrics-count,*
+        - kafka.admin.client:*
+        - kafka.server:type=*,cipher=*,protocol=*,listener=*,networkProcessor=*
+        - kafka.server:type=*
+      rules:
+        - labels:
+            partition: $5
+            topic: $4
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), topic=(.+), partition=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            clientId: $3
+            partition: $5
+            topic: $4
+          name: kafka_server_$1_$2
+          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), topic=(.+), partition=(.*)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            broker: $4:$5
+            clientId: $3
+          name: kafka_server_$1_$2
+          pattern: kafka.server<type=(.+), name=(.+), clientId=(.+), brokerHost=(.+),brokerPort=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            $6: $7
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            $6: $7
+            quantile: 0.$8
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.*), (.+)=(.+)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+            $7: $8
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          valueFactor: "1"
+        - labels:
+            $4: $5
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $3: $4
+          name: kafka_$1_$2
+          pattern: kafka.(\w+)<type=(.+), (.+)=(.+)><>Value
+          valueFactor: "1"
+        - name: kafka_server_kafkarequesthandlerpool_requesthandleravgidlepercent_total
+          pattern: kafka.server<type=KafkaRequestHandlerPool, name=RequestHandlerAvgIdlePercent><>OneMinuteRate
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client_software_name: $1
+            client_software_version: $2
+            listener: $3
+            network_processor: $4
+          name: kafka_server_socketservermetrics_connections
+          pattern: kafka.server<type=socket-server-metrics, clientSoftwareName=(.+),
+            clientSoftwareVersion=(.+), listener=(.+), networkProcessor=(.+)><>connections
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            listener: $1
+            network_processor: $2
+          name: kafka_server_socketservermetrics_$3
+          pattern: 'kafka.server<type=socket-server-metrics, listener=(.+), networkProcessor=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - name: kafka_coordinator_$1_$2_$3
+          pattern: kafka.coordinator.(\w+)<type=(.+), name=(.+)><>(Count|Value)
+          valueFactor: "1"
+        - labels:
+            $4: $5
+            quantile: 0.$6
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.*)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            quantile: 0.$4
+          name: kafka_$1_$2_$3
+          pattern: kafka.(\w+)<type=(.+), name=(.+)><>(\d+)thPercentile
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+            $7: $8
+          name: confluent_$1_$2
+          pattern: confluent.(\w+)<type=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+            $5: $6
+          name: confluent_$1_$2
+          pattern: confluent.(.+)<type=(.+), (.+)=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            $3: $4
+          name: confluent_$1_$2
+          pattern: confluent.(.+)<type=(.+), (.+)=(.+)><>Value
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client-id: $3
+            user: $2
+          name: kafka_server_$1_$4
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), user=(.+), client-id=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            user: $2
+          name: kafka_server_$1_$3
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), user=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - labels:
+            client-id: $2
+          name: kafka_server_$1_$3
+          pattern: 'kafka.server<type=(Produce|Fetch|Request), client-id=(.+)><>(.+):'
+          type: GAUGE
+          valueFactor: "1"
+        - pattern : 'kafka.server.link<type=ClusterLinkFetcherManager, name=(.+), (.+)=(.+), (.+)=(.+)><>Value'
+          name: kafka_server_link_clusterlinkfetchermanager_$1
+          type: GAUGE
+          labels:
+            "$2": "$3"
+            "$4": "$5"
+        # kafka.server:type=cluster-link,link-name={linkName}
+        - pattern : 'kafka.server<type=cluster-link, (.+)=(.+)><>(fetch-throttle-time-avg|fetch-throttle-time-max)'
+          name: kafka_server_cluster_link_$3
+          type: GAUGE
+          labels:
+            "$1": "$2"
+        # kafka.server:type=cluster-link-metadata-metrics,link-name={linkName}, mechanism={mechanism}
+        - pattern : 'kafka.server<type=cluster-link-metadata-metrics, (.+)=(.+), (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_metadata_metrics_$5
+          type: GAUGE
+          labels:
+            "$1": "$2"
+            "$3": "$4"
+        # kafka.server:type=cluster-link-fetcher-metrics,link-name={linkName},broker-id={id},fetcher-id={id}, mechanism={mechanism}
+        - pattern : 'kafka.server<type=cluster-link-fetcher-metrics, (.+)=(.+), (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_fetcher_metrics_$9
+          type: GAUGE
+          labels:
+            "$1": "$2"
+            "$3": "$4"
+            "$5": "$6"
+            "$7": "$8"
+        # kafka.server:type=cluster-link-fetcher-metrics,link-name={linkName},broker-id={id},fetcher-id={id}
+        - pattern : 'kafka.server<type=cluster-link-fetcher-metrics, (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_fetcher_metrics_$7
+          type: GAUGE
+          labels:
+            "$1": "$2"
+            "$3": "$4"
+            "$5": "$6"
+        # kafka.server:type=cluster-link-metrics, mode=destination, state=active, link-name={link_name}, name=link-count
+        # kafka.server:type=cluster-link-metrics, mode=destination, state=paused, link-name={link_name}, name=link-count
+        # kafka.server:type=cluster-link-metrics, mode=destination, state=unavailable, link-name={link_name}, name=link-count
+        - pattern : 'kafka.server<type=cluster-link-metrics, (.+)=(.+), (.+)=(.+), (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_metrics_$7
+          type: GAUGE
+          labels:
+            "$1": "$2"
+            "$3": "$4"
+            "$5": "$6"
+        # kafka.server:type=cluster-link-metrics,state=Mirror,link-name={link_name},name=mirror-topic-count
+        # kafka.server:type=cluster-link-metrics,state=PausedMirror,link-name={link_name},name=mirror-topic-count
+        # kafka.server:type=cluster-link-metrics,state=PendingStoppedMirror,link-name={link_name},name=mirror-topic-count
+        # kafka.server:type=cluster-link-metrics,state=FailedMirror,link-name={link_name},name=mirror-topic-count
+        - pattern : 'kafka.server<type=cluster-link-metrics, (.+)=(.+), (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_metrics_$5
+          type: GAUGE
+          labels:
+            "$1": "$2"
+            "$3": "$4"
+        # kafka.server:type=cluster-link-metrics,name=mirror-partition-count,link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=failed-mirror-partition-count,link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(linked-leader-epoch-change-rate, linked-leader-epoch-change-total),link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(linked-topic-partition-addition-rate, linked-topic-partition-addition-total),link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(consumer-offset-committed-rate, consumer-offset-committed-total),link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(topic-config-update-rate, topic-config-update-total),link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(acls-added-rate, acls-added-total),link-name={linkName}
+        # kafka.server:type=cluster-link-metrics,name=(acls-deleted-rate, acls-deleted-total),link-name={linkName
+        - pattern : 'kafka.server<type=cluster-link-metrics, (.+)=(.+)><>(.+):'
+          name: kafka_server_cluster_link_metrics_$3
+          type: GAUGE
+          labels:
+            "$1": "$2"
+        # kafka.server:type=cluster-link-source-metrics,request={request},link-id={linkUUID}
+        - pattern : 'kafka.server<type=cluster-link-source-metrics, request=(.+), link-id=(.+)><>Value'
+          name: kafka_server_cluster_link_source_metrics
+          type: GAUGE
+          labels:
+            request: "$1"
+            linkId: "$2"

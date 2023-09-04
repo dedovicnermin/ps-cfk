@@ -16,7 +16,7 @@ cat << EOF > /tmp/pscfk_bump_rf.json
   "partitions": [
     {
       "topic": "$TOPIC",
-      "partition": 0,
+      "partition": $REPLICAS,
       "replicas": [0,1,2]
     }
   ]
